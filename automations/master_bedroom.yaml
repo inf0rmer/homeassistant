@@ -357,3 +357,29 @@
     - target:
         entity_id: input_boolean.dnd_master_bedroom
       service: input_boolean.turn_off
+
+- id: master_bedroom_blind_down
+  alias: "[Master Bedroom] Blinds Down"
+  trigger:
+    - event_data:
+        command: down_close
+        device_ieee: ec:1b:bd:ff:fe:bb:5a:82
+      event_type: zha_event
+      platform: event
+  action:
+    service: cover.close_cover
+    target:
+      entity_id: cover.master_bedroom_blind_cover
+
+- id: master_bedroom_blind_up
+  alias: "[Master Bedroom] Blinds Up"
+  trigger:
+    - event_data:
+        command: up_open
+        device_ieee: ec:1b:bd:ff:fe:bb:5a:82
+      event_type: zha_event
+      platform: event
+  action:
+    service: cover.open_cover
+    target:
+      entity_id: cover.master_bedroom_blind_cover
