@@ -139,5 +139,3 @@ hacs:
 
 circadian_lighting:
 
-airvisual:
-  api_key: !env_var AIRVISUAL_API_KEY

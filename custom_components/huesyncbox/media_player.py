@@ -1,34 +1,89 @@
-import logging
-
 import asyncio
-import async_timeout
-
-from homeassistant.components.media_player import (
-    MediaPlayerEntity, PLATFORM_SCHEMA)
-from homeassistant.components.media_player.const import (
-    SUPPORT_TURN_OFF, SUPPORT_TURN_ON, SUPPORT_SELECT_SOURCE, SUPPORT_PLAY, SUPPORT_STOP, SUPPORT_PAUSE, SUPPORT_VOLUME_SET, SUPPORT_VOLUME_STEP, SUPPORT_SELECT_SOUND_MODE, MEDIA_TYPE_MUSIC, SUPPORT_PREVIOUS_TRACK, SUPPORT_NEXT_TRACK)
-from homeassistant.const import (
-    STATE_OFF, STATE_IDLE, STATE_PLAYING
-)
-from homeassistant.components.light import ATTR_BRIGHTNESS, ATTR_BRIGHTNESS_STEP
+from datetime import timedelta
+import textwrap
 
 import aiohuesyncbox
+import async_timeout
+from homeassistant.components.light import ATTR_BRIGHTNESS, ATTR_BRIGHTNESS_STEP
+from homeassistant.components.media_player import MediaPlayerEntity
+from homeassistant.components.media_player.const import (
+    MEDIA_TYPE_MUSIC,
+    SUPPORT_NEXT_TRACK,
+    SUPPORT_PAUSE,
+    SUPPORT_PLAY,
+    SUPPORT_PREVIOUS_TRACK,
+    SUPPORT_SELECT_SOUND_MODE,
+    SUPPORT_SELECT_SOURCE,
+    SUPPORT_STOP,
+    SUPPORT_TURN_OFF,
+    SUPPORT_TURN_ON,
+    SUPPORT_VOLUME_SET,
+)
+from homeassistant.const import STATE_IDLE, STATE_OFF, STATE_PLAYING
 
-from .const import MANUFACTURER_NAME, DOMAIN, LOGGER, ATTR_SYNC, ATTR_SYNC_TOGGLE, ATTR_MODE, ATTR_MODE_NEXT, ATTR_MODE_PREV, MODES, ATTR_INTENSITY, ATTR_INTENSITY_NEXT, ATTR_INTENSITY_PREV, INTENSITIES, ATTR_INPUT, ATTR_INPUT_NEXT, ATTR_INPUT_PREV, INPUTS, ATTR_ENTERTAINMENT_AREA
+from .const import (
+    ATTR_ENTERTAINMENT_AREA,
+    ATTR_INPUT,
+    ATTR_INPUT_NEXT,
+    ATTR_INPUT_PREV,
+    ATTR_INTENSITY,
+    ATTR_INTENSITY_NEXT,
+    ATTR_INTENSITY_PREV,
+    ATTR_MODE,
+    ATTR_MODE_NEXT,
+    ATTR_MODE_PREV,
+    ATTR_SYNC,
+    ATTR_SYNC_TOGGLE,
+    DOMAIN,
+    INTENSITIES,
+    LOGGER,
+    MODES,
+)
 
-SUPPORT_HUESYNCBOX = SUPPORT_TURN_ON | SUPPORT_TURN_OFF | SUPPORT_SELECT_SOURCE | SUPPORT_PLAY | SUPPORT_PAUSE | SUPPORT_STOP | SUPPORT_VOLUME_SET | SUPPORT_SELECT_SOUND_MODE | SUPPORT_PREVIOUS_TRACK | SUPPORT_NEXT_TRACK
+from .helpers import log_config_entry, redacted
+from .huesyncbox import (
+    PhilipsHuePlayHdmiSyncBox,
+    async_retry_if_someone_else_is_syncing,
+)
+
+SUPPORT_HUESYNCBOX = (
+    SUPPORT_TURN_ON
+    | SUPPORT_TURN_OFF
+    | SUPPORT_SELECT_SOURCE
+    | SUPPORT_PLAY
+    | SUPPORT_PAUSE
+    | SUPPORT_STOP
+    | SUPPORT_VOLUME_SET
+    | SUPPORT_SELECT_SOUND_MODE
+    | SUPPORT_PREVIOUS_TRACK
+    | SUPPORT_NEXT_TRACK
+)
+
+SCAN_INTERVAL = timedelta(seconds=2)
 
 MAX_BRIGHTNESS = 200
+
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Setup from configuration.yaml, not supported, only through integration."""
     pass
 
+
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Setup from config_entry."""
-    LOGGER.debug("%s async_setup_entry\nconfig_entry:\n%s\nhass.data\n%s" % (__name__, config_entry, str(hass.data[DOMAIN])))
-    entity = HueSyncBoxMediaPlayerEntity(hass.data[DOMAIN][config_entry.data["unique_id"]])
+    LOGGER.debug(
+        "%s async_setup_entry\nconfig_entry:\n%s\nhass.data\n%s"
+        % (
+            __name__,
+            textwrap.indent(log_config_entry(config_entry), "  "),
+            [redacted(v) for v in hass.data[DOMAIN].keys()],
+        )
+    )
+    entity = HueSyncBoxMediaPlayerEntity(
+        hass.data[DOMAIN][config_entry.data["unique_id"]]
+    )
     async_add_entities([entity], update_before_add=True)
+
 
 async def async_unload_entry(hass, config_entry):
     # Not sure what to do, entities seem to disappear by themselves
@@ -39,7 +94,7 @@ async def async_unload_entry(hass, config_entry):
 class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
     """Representation of a HueSyncBox as mediaplayer."""
 
-    def __init__(self, huesyncbox):
+    def __init__(self, huesyncbox: PhilipsHuePlayHdmiSyncBox) -> None:
         self._huesyncbox = huesyncbox
         self._available = False
         huesyncbox.entity = self
@@ -50,9 +105,7 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
         # Only return the identifiers so the entry gets linked properly
         # Managing deviceinfo is done elsewhere
         return {
-            'identifiers': {
-                (DOMAIN, self._huesyncbox.api.device.unique_id)
-            },
+            "identifiers": {(DOMAIN, self._huesyncbox.api.device.unique_id)},
         }
 
     async def async_update(self):
@@ -93,37 +146,26 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
         """Return the state of the entity."""
         state = STATE_PLAYING
         device_state = self._huesyncbox.api.execution.mode
-        if device_state == 'powersave':
+        if device_state == "powersave":
             state = STATE_OFF
-        if device_state == 'passthrough':
+        if device_state == "passthrough":
             state = STATE_IDLE
         return state
 
     async def async_turn_off(self):
         """Turn off media player."""
-        await self._huesyncbox.api.execution.set_state(mode='powersave')
-        self.async_schedule_update_ha_state(True)
+        await self._huesyncbox.api.execution.set_state(mode="powersave")
 
     async def async_turn_on(self):
         """Turn the media player on."""
-        await self._huesyncbox.api.execution.set_state(mode='passthrough')
-        self.async_schedule_update_ha_state(True)
+        await self._huesyncbox.api.execution.set_state(mode="passthrough")
 
     async def async_media_play(self):
         """Send play command."""
-        try:
-            await self._huesyncbox.api.execution.set_state(sync_active=True)
-        except aiohuesyncbox.InvalidState:
-            # Most likely another application is already syncing to the bridge
-            # Since there is no way to ask the user what to do just
-            # stop the active application and try to activate again
-            for id, info in self._huesyncbox.api.hue.groups.items():
-                if info["active"]:
-                    LOGGER.info(f'Deactivating syncing for {info["owner"]}')
-                    await self._huesyncbox.api.hue.set_group_state(id, active=False)
-            await self._huesyncbox.api.execution.set_state(sync_active=True)
-
-        self.async_schedule_update_ha_state(True)
+        await async_retry_if_someone_else_is_syncing(
+            self._huesyncbox,
+            lambda: self._huesyncbox.api.execution.set_state(sync_active=True),
+        )
 
     async def async_media_pause(self):
         """Send pause command."""
@@ -135,7 +177,6 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
     async def async_media_stop(self):
         """Send stop command."""
         await self._huesyncbox.api.execution.set_state(sync_active=False)
-        self.async_schedule_update_ha_state(True)
 
     @property
     def source(self):
@@ -159,16 +200,23 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
         for input in self._huesyncbox.api.hdmi.inputs:
             if input.name == source:
                 await self._huesyncbox.api.execution.set_state(hdmi_source=input.id)
-                self.async_schedule_update_ha_state()
                 break
+
+    @staticmethod
+    def get_hue_target_from_id(id: str):
+        try:
+            return f"groups/{int(id)}"
+        except ValueError:
+            return id
 
     async def async_select_entertainment_area(self, area_name):
         """Select entertainmentarea."""
         # Area is the user given name, so needs to be mapped back to a valid API value."""
         group = self._get_group_from_area_name(area_name)
         if group:
-            await self._huesyncbox.api.execution.set_state(hue_target=f"groups/{group.id}")
-            self.async_schedule_update_ha_state()
+            await self._huesyncbox.api.execution.set_state(
+                hue_target=self.get_hue_target_from_id(group.id)
+            )
 
     def _get_group_from_area_name(self, area_name):
         """Get the group object by entertainment area name."""
@@ -186,11 +234,12 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
 
     def _get_selected_entertainment_area(self):
         """Return the name of the active entertainment area."""
-        hue_target = self._huesyncbox.api.execution.hue_target # note that this is a string like "groups/123"
+        hue_target = (
+            self._huesyncbox.api.execution.hue_target
+        )  # note that this is a string like "groups/123"
         selected_area = None
         try:
-            parts = hue_target.split('/')
-            id = parts[1]
+            id = hue_target.replace("groups/", "")
             for group in self._huesyncbox.api.hue.groups:
                 if group.id == id:
                     selected_area = group.name
@@ -204,17 +253,22 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
         api = self._huesyncbox.api
         mode = api.execution.mode
 
-        attributes =  {
-            'mode': mode,
-            'entertainment_area_list': self._get_entertainment_areas(),
-            'entertainment_area': self._get_selected_entertainment_area()
+        attributes = {
+            "mode": mode,
+            "entertainment_area_list": self._get_entertainment_areas(),
+            "entertainment_area": self._get_selected_entertainment_area(),
         }
 
-        if mode != 'powersave':
-            attributes['brightness'] = self.scale(api.execution.brightness, [0, MAX_BRIGHTNESS], [0, 1])
+        for index in range(len(api.hdmi.inputs)):
+            attributes[f"hdmi{index+1}_status"] = api.hdmi.inputs[index].status
+
+        if mode != "powersave":
+            attributes["brightness"] = self.scale(
+                api.execution.brightness, [0, MAX_BRIGHTNESS], [0, 1]
+            )
             if not mode in MODES:
                 mode = api.execution.last_sync_mode
-            attributes['intensity'] = getattr(api.execution, mode).intensity
+            attributes["intensity"] = getattr(api.execution, mode).intensity
         return attributes
 
     async def async_set_sync_state(self, sync_state):
@@ -232,8 +286,10 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
                 mode = None
 
         # Entertainment area
-        group = self._get_group_from_area_name(sync_state.get(ATTR_ENTERTAINMENT_AREA, None))
-        hue_target = f"groups/{group.id}" if group else None
+        group = self._get_group_from_area_name(
+            sync_state.get(ATTR_ENTERTAINMENT_AREA, None)
+        )
+        hue_target = self.get_hue_target_from_id(group.id) if group else None
 
         state = {
             "sync_active": sync_state.get(ATTR_SYNC, None),
@@ -241,23 +297,60 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
             # "hdmi_active": ,
             # "hdmi_active_toggle": None,
             "mode": mode,
-            "mode_cycle": 'next' if ATTR_MODE_NEXT in sync_state else 'previous' if ATTR_MODE_PREV in sync_state else None,
+            "mode_cycle": "next"
+            if ATTR_MODE_NEXT in sync_state
+            else "previous"
+            if ATTR_MODE_PREV in sync_state
+            else None,
             "hdmi_source": sync_state.get(ATTR_INPUT, None),
-            "hdmi_source_cycle": 'next' if ATTR_INPUT_NEXT in sync_state else 'previous' if ATTR_INPUT_PREV in sync_state else None,
-            "brightness": int(self.scale(sync_state[ATTR_BRIGHTNESS], [0, 1], [0, MAX_BRIGHTNESS])) if ATTR_BRIGHTNESS in sync_state else None,
-            "brightness_step": int(self.scale(sync_state[ATTR_BRIGHTNESS_STEP], [-1, 1], [-MAX_BRIGHTNESS, MAX_BRIGHTNESS])) if ATTR_BRIGHTNESS_STEP in sync_state else None,
+            "hdmi_source_cycle": "next"
+            if ATTR_INPUT_NEXT in sync_state
+            else "previous"
+            if ATTR_INPUT_PREV in sync_state
+            else None,
+            "brightness": int(
+                self.scale(sync_state[ATTR_BRIGHTNESS], [0, 1], [0, MAX_BRIGHTNESS])
+            )
+            if ATTR_BRIGHTNESS in sync_state
+            else None,
+            "brightness_step": int(
+                self.scale(
+                    sync_state[ATTR_BRIGHTNESS_STEP],
+                    [-1, 1],
+                    [-MAX_BRIGHTNESS, MAX_BRIGHTNESS],
+                )
+            )
+            if ATTR_BRIGHTNESS_STEP in sync_state
+            else None,
             "intensity": sync_state.get(ATTR_INTENSITY, None),
-            "intensity_cycle": 'next' if ATTR_INTENSITY_NEXT in sync_state else 'previous' if ATTR_INTENSITY_PREV in sync_state else None,
+            "intensity_cycle": "next"
+            if ATTR_INTENSITY_NEXT in sync_state
+            else "previous"
+            if ATTR_INTENSITY_PREV in sync_state
+            else None,
             "hue_target": hue_target,
         }
 
-        await self._huesyncbox.api.execution.set_state(**state)
-        self.async_schedule_update_ha_state(True)
+        try:
+            await async_retry_if_someone_else_is_syncing(
+                self._huesyncbox,
+                lambda: self._huesyncbox.api.execution.set_state(**state),
+            )
+        except aiohuesyncbox.RequestError as e:
+            if "13: Invalid Key" in e.args[0]:
+                # Clarify this specific case as people will run into it
+                # Use a warning so it is visually separated from the actual error
+                LOGGER.warning(
+                    "This error most likely occured because the service call resulted in an empty message to the syncbox. Make sure that the selected options would result in an action on the syncbox (e.g. requesting only `sync_toggle:false` would cause such an error)."
+                )
+            raise
 
     async def async_set_sync_mode(self, sync_mode):
         """Select sync mode."""
-        await self._huesyncbox.api.execution.set_state(mode=sync_mode)
-        self.async_schedule_update_ha_state(True)
+        await async_retry_if_someone_else_is_syncing(
+            self._huesyncbox,
+            lambda: self._huesyncbox.api.execution.set_state(mode=sync_mode),
+        )
 
     async def async_set_intensity(self, intensity, mode):
         """Set intensity for sync mode."""
@@ -265,17 +358,13 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
             mode = self.get_mode()
 
         # Intensity is per mode so update accordingly
-        state = {
-            mode: {'intensity': intensity}
-        }
+        state = {mode: {"intensity": intensity}}
         await self._huesyncbox.api.execution.set_state(**state)
-        self.async_schedule_update_ha_state(True)
 
     async def async_set_brightness(self, brightness):
         """Set brightness"""
         api_brightness = self.scale(brightness, [0, 1], [0, MAX_BRIGHTNESS])
         await self._huesyncbox.api.execution.set_state(brightness=api_brightness)
-        self.async_schedule_update_ha_state(True)
 
     def get_mode(self):
         mode = self._huesyncbox.api.execution.mode
@@ -297,13 +386,14 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
 
         return output_min + (value_scaled * output_spread)
 
-
     # Below properties and methods are temporary to get a "free" UI with the mediaplayer card
 
     @property
     def volume_level(self):
         """Volume level of the media player (0..1) is mapped brightness for free UI."""
-        return self.scale(self._huesyncbox.api.execution.brightness, [0, MAX_BRIGHTNESS], [0, 1])
+        return self.scale(
+            self._huesyncbox.api.execution.brightness, [0, MAX_BRIGHTNESS], [0, 1]
+        )
 
     async def async_set_volume_level(self, volume):
         """Set volume level of the media player (0..1), abuse to control brightness for free UI."""
@@ -345,10 +435,7 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
     async def async_media_previous_track(self):
         """Send previous track command, abuse to cycle modes for now."""
         await self._huesyncbox.api.execution.cycle_sync_mode(False)
-        self.async_schedule_update_ha_state(True)
 
     async def async_media_next_track(self):
         """Send next track command, abuse to cycle modes for now."""
         await self._huesyncbox.api.execution.cycle_sync_mode(True)
-        self.async_schedule_update_ha_state(True)
-
