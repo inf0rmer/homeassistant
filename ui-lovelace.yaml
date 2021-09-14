@@ -710,7 +710,7 @@ views:
             title: Lights
             type: entities
           - entities:
-              - entity: cover.master_bedroom_blind
+              - entity: cover.master_bedroom_blind_cover
             show_header_toggle: false
             title: Blinds
             type: entities
