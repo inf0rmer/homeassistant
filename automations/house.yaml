@@ -29,6 +29,9 @@
       at: "07:45:00"
   condition:
     - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+    - condition: state
       entity_id: input_boolean.house_was_cleaned
       state: "off"
     - condition: time
