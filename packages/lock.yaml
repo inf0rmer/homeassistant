@@ -1,7 +1,0 @@
-lock:
-  - platform: nello
-    username: !env_var NELLO_USERNAME
-    password: !env_var NELLO_PASSWORD
-  # - platform: nuki
-  #   host: !env_var NUKI_ADDRESS
-  #   token: !env_var NUKI_TOKEN

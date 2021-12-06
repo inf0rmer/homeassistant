@@ -23,7 +23,5 @@ homekit:
       name: Dining Room Cabinet Plug
     switch.christmas_tree:
       name: Christmas Tree
-    lock.nello_ecf41382:
-      name: Building Door
     sensor.home_sensor_average_temperature:
       name: Avg. Home Temperature

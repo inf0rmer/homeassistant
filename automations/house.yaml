@@ -231,24 +231,6 @@
           - scene.sunset
       service: scene.turn_on
 
-# - id: building_door_bell_ring
-#   alias: "[House] Building Door Bell Ring"
-#   trigger:
-#     - event_data: {}
-#       event_type: nello_bell_ring
-#       platform: event
-#   condition:
-#     - condition: state
-#       entity_id: binary_sensor.someone_home
-#       state: "on"
-#   action:
-#     - data:
-#         data:
-#           type: announce
-#         message: Someone is at the door downstairs
-#         target: media_player.everywhere
-#       service: notify.alexa_media
-
 - id: house_reset
   alias: "[House] Reset"
   trigger:

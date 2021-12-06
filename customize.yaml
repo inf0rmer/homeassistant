@@ -7,9 +7,6 @@ sensor.kitchen_light_level:
 sensor.home_sensor_average_temperature:
   friendly_name: Avg. Home Temperature
 
-lock.nello_ecf41382:
-  friendly_name: Building Door
-
 switch.dining_room_cabinet:
   icon: mdi:lightbulb
 switch.balcony_plug:
