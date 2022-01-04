@@ -15,8 +15,8 @@ emma_bedtime:
         entity_id: light.emmas_bedroom_nightlight
         rgb_color:
           - 255
-          - 30
-          - 30
+          - 0
+          - 255
       service: light.turn_on
     - data:
         entity_id: input_boolean.presence_emmas_bedroom
