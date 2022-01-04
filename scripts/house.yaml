@@ -43,8 +43,8 @@ good_night:
         brightness: 30
         rgb_color:
           - 255
-          - 30
-          - 30
+          - 0
+          - 255
       target:
         entity_id: light.emmas_bedroom_nightlight
       service: light.turn_on
@@ -82,11 +82,6 @@ house_wake_up:
       service: homeassistant.turn_off
     - target:
         entity_id: group.sleeping_bedrooms
-      service: homeassistant.turn_off
-    - delay:
-        minutes: 5
-    - target:
-        entity_id: group.presence_bedrooms
       service: homeassistant.turn_off
 
 house_wake_up_no_delay:
