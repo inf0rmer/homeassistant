@@ -116,20 +116,6 @@ views:
                       type: "custom:button-card"
               - type: horizontal-stack
                 cards:
-                  - entity: lock.nello_ecf41382
-                    icon: "mdi:office-building"
-                    show_state: false
-                    name: Open Building Door
-                    size: 25%
-                    styles:
-                      card:
-                        - font-size: 12px
-                    tap_action:
-                      action: call-service
-                      service: lock.unlock
-                      service_data:
-                        entity_id: lock.nello_ecf41382
-                    type: "custom:button-card"
                   - entity: lock.front_door
                     icon: "mdi:door"
                     show_state: false
@@ -179,7 +165,6 @@ views:
                 cards:
                   - entities:
                       - lock.front_door
-                      - lock.nello_ecf41382
                     title: Doors
                     show_header_toggle: false
                     type: entities
