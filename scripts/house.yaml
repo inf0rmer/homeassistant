@@ -11,16 +11,14 @@ good_night:
         entity_id: input_boolean.bruno_good_night_pressed
       service: input_boolean.turn_off
     - target:
-        entity_id: group.presence_bedrooms
-      service: homeassistant.turn_on
-    - target:
-        entity_id: group.sleeping_bedrooms
+        entity_id: 
+         - input_boolean.presence_emmas_bedroom_sleeping
+         - input_boolean.sleeping_emmas_bedroom
+         - input_boolean.presence_master_bedroom_sleeping
+         - input_boolean.sleeping_master_bedroom
       service: homeassistant.turn_on
     - target:
         entity_id: group.presence_other_rooms
-      service: homeassistant.turn_off
-    - target:
-        entity_id: group.presence_living_room
       service: homeassistant.turn_off
     - service: light.turn_off
       entity_id: light.master_bedroom
@@ -80,7 +78,14 @@ house_wake_up:
         entity_id: group.dnd_house
       service: homeassistant.turn_off
     - target:
-        entity_id: group.sleeping_bedrooms
+        entity_id: 
+         - input_boolean.presence_emmas_bedroom_sleeping
+         - input_boolean.sleeping_emmas_bedroom
+         - input_boolean.presence_master_bedroom_sleeping
+         - input_boolean.sleeping_master_bedroom
+      service: homeassistant.turn_off
+    - target:
+        entity_id: group.presence_bedrooms
       service: homeassistant.turn_off
 
 house_wake_up_no_delay:
@@ -90,7 +95,11 @@ house_wake_up_no_delay:
         entity_id: group.dnd_house
       service: homeassistant.turn_off
     - target:
-        entity_id: group.sleeping_bedrooms
+        entity_id: 
+         - input_boolean.presence_emmas_bedroom_sleeping
+         - input_boolean.sleeping_emmas_bedroom
+         - input_boolean.presence_master_bedroom_sleeping
+         - input_boolean.sleeping_master_bedroom
       service: homeassistant.turn_off
     - target:
         entity_id: group.presence_bedrooms
