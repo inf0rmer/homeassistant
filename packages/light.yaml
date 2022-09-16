@@ -57,7 +57,8 @@ light:
     name: Office
     entities:
       - light.office_desk_lightstrip
-      - light.office_key_light
+      - light.office_key_light_left
+      - light.office_key_light_right
 
   - platform: group
     name: Dining Room

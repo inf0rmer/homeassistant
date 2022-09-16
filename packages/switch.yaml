@@ -21,7 +21,8 @@ switch:
     disable_brightness_adjust: true
     lights_ct:
       - light.office_desk_lightstrip
-      - light.office_key_light
+      - light.office_key_light_left
+      - light.office_key_light_right
 
   - platform: circadian_lighting
     name: dining_room
