@@ -14,3 +14,60 @@ office_work_start:
     - data:
         entity_id: light.office_desk_lightstrip
       service: light.turn_on
+
+office_streaming_start:
+  alias: "[Office] Start Streaming"
+  sequence:
+    - data:
+        entity_id: input_boolean.dnd_living_room
+      service: input_boolean.turn_on
+    - data:
+        entity_id: light.office_desk_lightstrip
+        brightness: 100
+        rgb_color:
+          - 255
+          - 164
+          - 74
+      service: light.turn_on
+    - data:
+        entity_id: light.living_room_ceiling_desk
+        brightness: 100
+        rgb_color:
+          - 255
+          - 128
+          - 26
+      service: light.turn_on
+    - data:
+        entity_id: light.living_room_ceiling_sofa
+        brightness: 100
+        rgb_color:
+          - 255
+          - 128
+          - 26
+      service: light.turn_on
+    - data:
+        entity_id: light.living_room_standing_lamp_desk
+        brightness: 100
+        rgb_color:
+          - 255
+          - 128
+          - 26
+      service: light.turn_on
+    - data:
+        entity_id: group.light_tv
+      service: light.turn_off
+    - data:
+        entity_id: light.tv_upper
+        brightness: 100
+        rgb_color:
+          - 255
+          - 128
+          - 26
+      service: light.turn_on
+
+office_streaming_stop:
+  alias: "[Office] Stop Streaming"
+  sequence:
+    - data:
+        entity_id: input_boolean.dnd_living_room
+      service: input_boolean.turn_off

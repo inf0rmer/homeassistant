@@ -440,6 +440,20 @@ views:
                     service_data:
                       entity_id: script.house_stop_cleaning
                   type: "custom:button-card"
+              - entity: script.office_streaming_start
+                icon: "mdi:video-check"
+                show_state: false
+                name: Start Streaming
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                      entity_id: script.office_streaming_start
+                type: "custom:button-card"
           - type: horizontal-stack
             cards:
               - entity: binary_sensor.presence_living_room
