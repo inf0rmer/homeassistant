@@ -35,6 +35,7 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.dining_room
+      - light.espresso_bar
 
   - platform: circadian_lighting
     name: kitchen
@@ -85,9 +86,6 @@ switch:
       - light.master_bedroom_ceiling
       - light.master_bedroom_lightstrip_left
       - light.master_bedroom_lightstrip_right
-    lights_rgb:
-      - light.master_bedroom_bedside_lamp_1
-      - light.master_bedroom_bedside_lamp_2
 
   - platform: circadian_lighting
     name: emmas_bedroom

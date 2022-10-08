@@ -65,6 +65,7 @@ light:
     entities:
       - light.dining_room_ceiling_table
       - light.dining_room_ceiling_kitchen
+      - light.espresso_bar
 
   - platform: group
     name: Living Room
@@ -79,17 +80,9 @@ light:
   - platform: group
     name: Master Bedroom
     entities:
-      - light.master_bedroom_bedside_lamp_1
-      - light.master_bedroom_bedside_lamp_2
       - light.master_bedroom_ceiling
       - light.master_bedroom_lightstrip_left
       - light.master_bedroom_lightstrip_right
-  
-  - platform: group
-    name: Master Bedroom Bedside
-    entities:
-      - light.master_bedroom_bedside_lamp_1
-      - light.master_bedroom_bedside_lamp_2
 
   - platform: group
     name: Master Bedroom Lightstrips
