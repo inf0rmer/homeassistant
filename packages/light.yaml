@@ -65,7 +65,6 @@ light:
     entities:
       - light.dining_room_ceiling_table
       - light.dining_room_ceiling_kitchen
-      - light.espresso_bar
 
   - platform: group
     name: Living Room

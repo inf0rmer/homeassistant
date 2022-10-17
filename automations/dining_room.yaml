@@ -292,3 +292,27 @@
         title: "Wake up"
         message: ""
       service: notify.mobile_app_brunos_ipad
+
+- id: dining_room_espresso_bar_light_on
+  alias: "[Dining Room] Turn on Espresso Bar Light"
+  trigger:
+    - entity_id: sensor.espresso_bar_socket_power
+      platform: numeric_state
+      above: 0
+  action:
+    - target:
+        entity_id: light.espresso_bar
+      service: light.turn_on
+
+- id: dining_room_espresso_bar_light_off
+  alias: "[Dining Room] Turn off Espresso Bar Light"
+  trigger:
+    - entity_id: sensor.espresso_bar_socket_power
+      platform: numeric_state
+      below: 1
+      for:
+        seconds: 30
+  action:
+    - target:
+        entity_id: light.espresso_bar
+      service: light.turn_off
