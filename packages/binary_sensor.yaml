@@ -20,196 +20,196 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_living_room_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_living_room_motion
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_living_room_switch
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.001
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_living_room_tv
-        prob_given_true: 0.9
-        prob_given_false: 0.2
+        prob_given_true: 0.99
+        prob_given_false: 0.001
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_living_room_brunos_pc
-        prob_given_true: 0.9
-        prob_given_false: 0.3
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_living_room_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_dining_room_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_dining_room_motion
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_dining_room_switch
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.001
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_dining_room_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.001
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_master_bedroom_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_master_bedroom_motion
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_master_bedroom_switch
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_master_bedroom_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_emmas_bedroom_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_emmas_bedroom_motion
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_emmas_bedroom_switch
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_emmas_bedroom_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_kitchen_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_kitchen_motion
-        prob_given_true: 1.0
-        prob_given_false: 0.2
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_kitchen_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.2
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_hallway_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_hallway_motion
-        prob_given_true: 1.0
-        prob_given_false: 0.2
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_hallway_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_bathroom_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_bathroom_switch
-        prob_given_true: 1.0
-        prob_given_false: 0.2
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_bathroom_door
-        prob_given_true: 0.8
-        prob_given_false: 0.1
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_bathroom_shower
-        prob_given_true: 0.9
-        prob_given_false: 0.1
+        prob_given_true: 0.83
+        prob_given_false: 0.17
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_bathroom_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_balcony_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_balcony_door
-        prob_given_true: 1.0
-        prob_given_false: 0.2
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_balcony_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_laundry_room_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_laundry_room_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
   - platform: bayesian
     name: presence_closet_bayesian
-    probability_threshold: 0.6
+    probability_threshold: 0.1
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_closet_door
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
       - entity_id: input_boolean.presence_closet_assistant
-        prob_given_true: 1.0
-        prob_given_false: 0.1
+        prob_given_true: 0.99
+        prob_given_false: 0.01
         platform: state
         to_state: "on"
 
