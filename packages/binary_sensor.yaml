@@ -57,7 +57,7 @@ binary_sensor:
         friendly_name: Presence Living Room
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_living_room_motion', 'on')  || is_state('input_boolean.presence_living_room_switch', 'on') || is_state('input_boolean.presence_living_room_tv', 'on') || is_state('input_boolean.presence_living_room_assistant', 'on')}}
+          {{ is_state('input_boolean.presence_living_room_motion', 'on')  or is_state('input_boolean.presence_living_room_switch', 'on') or is_state('input_boolean.presence_living_room_tv', 'on') or is_state('input_boolean.presence_living_room_assistant', 'on')}}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_living_room.attributes.entity_id if is_state(entity, 'on') %}
@@ -68,7 +68,7 @@ binary_sensor:
         friendly_name: Presence Dining Room
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_dining_room_motion', 'on') || is_state('input_boolean.presence_dining_room_switch', 'on') || is_state('input_boolean.presence_dining_room_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_dining_room_motion', 'on') or is_state('input_boolean.presence_dining_room_switch', 'on') or is_state('input_boolean.presence_dining_room_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_dining_room.attributes.entity_id if is_state(entity, 'on') %}
@@ -80,7 +80,7 @@ binary_sensor:
         friendly_name: Presence Master Bedroom
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_master_bedroom_motion', 'on') || is_state('input_boolean.presence_master_bedroom_switch', 'on') || is_state('input_boolean.presence_master_bedroom_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_master_bedroom_motion', 'on') or is_state('input_boolean.presence_master_bedroom_switch', 'on') or is_state('input_boolean.presence_master_bedroom_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_master_bedroom.attributes.entity_id if is_state(entity, 'on') %}
@@ -91,7 +91,7 @@ binary_sensor:
         friendly_name: Presence Emma's Bedroom
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_emmas_bedroom_motion', 'on') || is_state('input_boolean.presence_emmas_bedroom_switch', 'on') || is_state('input_boolean.presence_emmas_bedroom_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_emmas_bedroom_motion', 'on') or is_state('input_boolean.presence_emmas_bedroom_switch', 'on') or is_state('input_boolean.presence_emmas_bedroom_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_emmas_bedroom.attributes.entity_id if is_state(entity, 'on') %}
@@ -102,7 +102,7 @@ binary_sensor:
         friendly_name: Presence Kitchen
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_kitchen_motion', 'on') || is_state('input_boolean.presence_kitchen_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_kitchen_motion', 'on') or is_state('input_boolean.presence_kitchen_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_kitchen.attributes.entity_id if is_state(entity, 'on') %}
@@ -113,7 +113,7 @@ binary_sensor:
         friendly_name: Presence Hallway
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_hallway_motion', 'on') || is_state('input_boolean.presence_hallway_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_hallway_motion', 'on') or is_state('input_boolean.presence_hallway_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_hallway.attributes.entity_id if is_state(entity, 'on') %}
@@ -124,7 +124,7 @@ binary_sensor:
         friendly_name: Presence Bathroom
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_bathroom_switch', 'on') || is_state('input_boolean.presence_bathroom_door', 'on') || input_boolean.presence_bathroom_assistant }}
+          {{ is_state('input_boolean.presence_bathroom_switch', 'on') or is_state('input_boolean.presence_bathroom_door', 'on') or is_state('input_boolean.presence_bathroom_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_bathroom.attributes.entity_id if is_state(entity, 'on') %}
@@ -146,7 +146,7 @@ binary_sensor:
         friendly_name: Presence Balcony
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_balcony_door', 'on') || {{ is_state('input_boolean.presence_balcony_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_balcony_door', 'on') or is_state('input_boolean.presence_balcony_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_balcony.attributes.entity_id if is_state(entity, 'on') %}
@@ -157,7 +157,7 @@ binary_sensor:
         friendly_name: Presence Closet
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_closet_door', 'on') || {{ is_state('input_boolean.presence_closet_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_closet_door', 'on') or is_state('input_boolean.presence_closet_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_closet.attributes.entity_id if is_state(entity, 'on') %}
