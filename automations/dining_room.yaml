@@ -311,7 +311,7 @@
       platform: numeric_state
       below: 1
       for:
-        seconds: 30
+        seconds: 15
   action:
     - target:
         entity_id: light.espresso_bar
