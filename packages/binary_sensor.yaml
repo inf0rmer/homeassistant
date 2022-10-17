@@ -20,7 +20,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_living_room_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_living_room_motion
@@ -51,7 +51,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_dining_room_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_dining_room_motion
@@ -72,7 +72,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_master_bedroom_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_master_bedroom_motion
@@ -93,7 +93,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_emmas_bedroom_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_emmas_bedroom_motion
@@ -114,7 +114,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_kitchen_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_kitchen_motion
@@ -130,7 +130,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_hallway_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_hallway_motion
@@ -146,7 +146,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_bathroom_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_bathroom_switch
@@ -172,7 +172,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_balcony_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_balcony_door
@@ -188,7 +188,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_laundry_room_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_laundry_room_assistant
@@ -199,7 +199,7 @@ binary_sensor:
 
   - platform: bayesian
     name: presence_closet_bayesian
-    probability_threshold: 0.8
+    probability_threshold: 0.6
     prior: 0.5
     observations:
       - entity_id: input_boolean.presence_closet_door
