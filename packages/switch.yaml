@@ -35,7 +35,6 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.dining_room
-      - light.espresso_bar
 
   - platform: circadian_lighting
     name: kitchen
