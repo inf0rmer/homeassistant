@@ -153,7 +153,7 @@
       entity_id: input_boolean.presence_sarah
       state: "on"
   action:
-    - service: notify.mobile_app_sarah_pimentels_iphone
+    - service: notify.mobile_app_sarah_abrantes_iphone
       data:
         title: Bruno is arriving
         message: Hi Sarah, Bruno will be home in a few minutes.
