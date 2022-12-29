@@ -73,6 +73,7 @@ light:
       - light.living_room_ceiling_sofa
       - light.living_room_standing_lamp_desk
       - light.tv_upper
+      - light.tv_lower
       - light.tv_right
       - light.tv_left
 
