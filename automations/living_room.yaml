@@ -136,11 +136,10 @@
       from: "False"
       platform: state
       to: "True"
-    - platform: device
-      type: turned_on
-      entity_id: remote.living_room
-      device_id: 35a38a06bd4b14614d71bd768e60493e
-      domain: remote
+    - platform: state
+      entity_id: media_player.living_room_apple_tv
+      from: standby
+      to: idle
   condition:
     - condition: state
       entity_id: binary_sensor.someone_home
@@ -157,11 +156,10 @@
       from: "True"
       platform: state
       to: "False"
-    - platform: device
-      type: turned_off
-      entity_id: remote.living_room
-      device_id: 35a38a06bd4b14614d71bd768e60493e
-      domain: remote
+    - platform: state
+      entity_id: media_player.living_room_apple_tv
+      from: idle
+      to: standby
   action:
     - delay:
         minutes: 5
@@ -495,11 +493,10 @@
 - id: living_room_apple_tv_on
   alias: "[Living Room] Apple TV On"
   trigger:
-    - platform: device
-      type: turned_on
-      entity_id: remote.living_room
-      device_id: 35a38a06bd4b14614d71bd768e60493e
-      domain: remote
+    - platform: state
+      entity_id: media_player.living_room_apple_tv
+      from: standby
+      to: idle
   action:
     - device_id: 3b9c9604911bac523cc1f78e6e3b2bca
       domain: huesyncbox
@@ -516,11 +513,10 @@
 - id: living_room_apple_tv_off
   alias: "[Living Room] Apple TV Off"
   trigger:
-    - platform: device
-      type: turned_off
-      entity_id: remote.living_room
-      device_id: 35a38a06bd4b14614d71bd768e60493e
-      domain: remote
+    - platform: state
+      entity_id: media_player.living_room_apple_tv
+      from: idle
+      to: standby
   action:
     - device_id: 3b9c9604911bac523cc1f78e6e3b2bca
       domain: huesyncbox
@@ -528,3 +524,5 @@
       type: sync_off
     - entity_id: input_boolean.dnd_living_room
       service: input_boolean.turn_off
+    - entity_id: light.living_room
+      service: light.turn_on
