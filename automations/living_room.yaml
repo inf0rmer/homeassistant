@@ -139,6 +139,7 @@
     - platform: device
       type: turned_on
       entity_id: remote.living_room
+      device_id: 35a38a06bd4b14614d71bd768e60493e
       domain: remote
   condition:
     - condition: state
@@ -159,6 +160,7 @@
     - platform: device
       type: turned_off
       entity_id: remote.living_room
+      device_id: 35a38a06bd4b14614d71bd768e60493e
       domain: remote
   action:
     - delay:
@@ -496,6 +498,7 @@
     - platform: device
       type: turned_on
       entity_id: remote.living_room
+      device_id: 35a38a06bd4b14614d71bd768e60493e
       domain: remote
   action:
     - entity_id: media_player.sync_box
@@ -514,6 +517,7 @@
     - platform: device
       type: turned_off
       entity_id: remote.living_room
+      device_id: 35a38a06bd4b14614d71bd768e60493e
       domain: remote
   action:
     - entity_id: media_player.sync_box
