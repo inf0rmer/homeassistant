@@ -501,7 +501,9 @@
       device_id: 35a38a06bd4b14614d71bd768e60493e
       domain: remote
   action:
-    - entity_id: media_player.sync_box
+    - device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+      domain: huesyncbox
+      entity_id: media_player.sync_box
       type: sync_on
     - entity_id: input_boolean.dnd_living_room
       service: input_boolean.turn_on
@@ -520,7 +522,9 @@
       device_id: 35a38a06bd4b14614d71bd768e60493e
       domain: remote
   action:
-    - entity_id: media_player.sync_box
+    - device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+      domain: huesyncbox
+      entity_id: media_player.sync_box
       type: sync_off
     - entity_id: input_boolean.dnd_living_room
       service: input_boolean.turn_off
