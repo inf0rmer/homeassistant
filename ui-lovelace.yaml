@@ -1,6 +1,5 @@
 title: Home
 preload_cards:
-  - weather-card
   - xiaomi-vacuum-card
   - xiaomi-vacuum-map-card
   - mini-media-player
@@ -192,10 +191,6 @@ views:
                     type: entities
           - type: vertical-stack
             cards:
-              - type: horizontal-stack
-                cards:
-                  - entity: weather.weather
-                    type: "custom:weather-card"
               - type: horizontal-stack
                 cards:
                   - entities:
