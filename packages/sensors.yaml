@@ -1,5 +1,31 @@
 sensor:
-  - platform: google_wifi
+  - platform: afvalinfo
+    id: Afval thuis
+    resources:
+      - type: gft
+        friendly_name: Compost
+      - type: kerstboom
+        friendly_name: Christmas Tree
+      - type: pbd
+        friendly_name: Plastic
+      - type: papier
+        friendly_name: Paper
+      - type: restafval
+        friendly_name: Other Trash
+      - type: trash_type_today
+        friendly_name: Trash Today
+      - type: trash_type_tomorrow
+        friendly_name: Trash Tomorrow
+    location: Haarlem
+    postcode: 2026vn
+    streetnumber: '30'
+    streetnumbersuffix: ''
+    district: ''
+    diftarcode: ''
+    dateformat: '%d-%m-%Y'
+    locale: nl
+    notrashtext: None
+    getwholeyear: false
 
   - platform: min_max
     name: hallway_sensor_average_light_level
