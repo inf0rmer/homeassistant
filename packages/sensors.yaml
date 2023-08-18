@@ -24,7 +24,7 @@ sensor:
     diftarcode: ''
     dateformat: '%d-%m-%Y'
     locale: nl
-    notrashtext: No
+    notrashtext: "No"
     getwholeyear: false
 
   - platform: min_max
