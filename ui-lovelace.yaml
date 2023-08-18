@@ -115,22 +115,6 @@ views:
                       type: "custom:button-card"
               - type: horizontal-stack
                 cards:
-                  - entity: lock.front_door
-                    icon: "mdi:door"
-                    show_state: false
-                    name: Open Front Door
-                    size: 25%
-                    styles:
-                      card:
-                        - font-size: 12px
-                    tap_action:
-                      action: call-service
-                      service: lock.unlock
-                      service_data:
-                        entity_id: lock.front_door
-                    type: "custom:button-card"
-              - type: horizontal-stack
-                cards:
                   - entity: input_boolean.presence_someone
                     icon: "mdi:account-multiple"
                     show_state: false
@@ -162,11 +146,12 @@ views:
                       - person.sarah_abrantes
               - type: horizontal-stack
                 cards:
-                  - entities:
-                      - lock.front_door
-                    title: Doors
-                    show_header_toggle: false
+                  - entities: 
+                      - sensor.afvalinfo_afval_thuis_trash_today
+                      - entity: sensor.afvalinfo_afval_thuis_trash_tomorrow
+                    title: Trash Collection
                     type: entities
+
               - type: horizontal-stack
                 cards:
                   - type: "custom:xiaomi-vacuum-card"
