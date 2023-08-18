@@ -1,0 +1,447 @@
+2023-08-18 12:56:29.240 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration circadian_lighting which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2023-08-18 12:56:29.241 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration huesyncbox which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2023-08-18 12:56:29.241 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration harmony_ac which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2023-08-18 12:56:29.242 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration tradfri which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2023-08-18 12:56:29.242 ERROR (SyncWorker_0) [homeassistant.loader] The custom integration 'tradfri' does not have a version key in the manifest file and was blocked from loading. See https://developers.home-assistant.io/blog/2021/01/29/custom-integration-changes#versions for more details
+2023-08-18 12:56:29.243 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration xiaomi_cloud_map_extractor which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2023-08-18 12:56:29.244 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2023-08-18 12:56:30.263 WARNING (MainThread) [homeassistant.components.lovelace] Cannot register panel at lovelace-admin, it is already defined in <homeassistant.components.lovelace.dashboard.LovelaceYAML object at 0x7f6d666ee090>
+2023-08-18 12:56:31.484 ERROR (MainThread) [homeassistant.components.tplink] The tplink integration does not support YAML setup, please remove it from your configuration file
+2023-08-18 12:56:32.387 ERROR (MainThread) [homeassistant.components.vacuum] The xiaomi_miio platform for the vacuum integration does not support platform setup. Please remove it from your config.
+2023-08-18 12:56:32.453 WARNING (SyncWorker_3) [miio.device] Found an unsupported model 'roborock.vacuum.a51' for class 'RoborockVacuum'. If this is working for you, please open an issue at https://github.com/rytilahti/python-miio/
+2023-08-18 12:56:33.386 ERROR (MainThread) [homeassistant.components.remote] The harmony platform for the remote integration does not support platform setup. Please remove it from your config.
+2023-08-18 12:56:33.943 WARNING (SyncWorker_5) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 12:56:34.002 ERROR (MainThread) [homeassistant.components.sensor] Error adding entities for domain sensor with platform speedtestdotnet
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 592, in state
+    numerical_value = float(value)  # type:ignore[arg-type]
+                      ^^^^^^^^^^^^
+ValueError: could not convert string to float: 'unavailable'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 504, in async_add_entities
+    await asyncio.gather(*tasks)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 788, in _async_add_entity
+    await entity.add_to_platform_finish()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 1006, in add_to_platform_finish
+    self.async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 742, in async_write_ha_state
+    self._async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 810, in _async_write_ha_state
+    state = self._stringify_state(available)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 748, in _stringify_state
+    if (state := self.state) is None:
+                 ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 594, in state
+    raise ValueError(
+ValueError: Sensor sensor.speedtest_ping has device class 'None', state class 'measurement' unit 'ms' and suggested precision 'None' thus indicating it has a numeric value; however, it has the non-numeric value: 'unavailable' (<class 'str'>)
+2023-08-18 12:56:34.021 ERROR (MainThread) [homeassistant.components.sensor] Error while setting up speedtestdotnet platform for sensor
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 592, in state
+    numerical_value = float(value)  # type:ignore[arg-type]
+                      ^^^^^^^^^^^^
+ValueError: could not convert string to float: 'unavailable'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 361, in _async_setup_platform
+    await asyncio.gather(*pending)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 504, in async_add_entities
+    await asyncio.gather(*tasks)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 788, in _async_add_entity
+    await entity.add_to_platform_finish()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 1006, in add_to_platform_finish
+    self.async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 742, in async_write_ha_state
+    self._async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 810, in _async_write_ha_state
+    state = self._stringify_state(available)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 748, in _stringify_state
+    if (state := self.state) is None:
+                 ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 594, in state
+    raise ValueError(
+ValueError: Sensor sensor.speedtest_ping has device class 'None', state class 'measurement' unit 'ms' and suggested precision 'None' thus indicating it has a numeric value; however, it has the non-numeric value: 'unavailable' (<class 'str'>)
+2023-08-18 12:56:34.916 ERROR (MainThread) [homeassistant.components.sensor] Error adding entities for domain sensor with platform mobile_app
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 590, in state
+    numerical_value = int(value)
+                      ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'Not Charging'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 504, in async_add_entities
+    await asyncio.gather(*tasks)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 788, in _async_add_entity
+    await entity.add_to_platform_finish()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 1006, in add_to_platform_finish
+    self.async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 742, in async_write_ha_state
+    self._async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 810, in _async_write_ha_state
+    state = self._stringify_state(available)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 748, in _stringify_state
+    if (state := self.state) is None:
+                 ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 594, in state
+    raise ValueError(
+ValueError: Sensor sensor.brunos_ipad_pro_battery_state has device class 'battery', state class 'None' unit 'None' and suggested precision 'None' thus indicating it has a numeric value; however, it has the non-numeric value: 'Not Charging' (<class 'str'>)
+2023-08-18 12:56:34.929 ERROR (MainThread) [homeassistant.components.sensor] Error while setting up mobile_app platform for sensor
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 590, in state
+    numerical_value = int(value)
+                      ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'Not Charging'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 361, in _async_setup_platform
+    await asyncio.gather(*pending)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 504, in async_add_entities
+    await asyncio.gather(*tasks)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 788, in _async_add_entity
+    await entity.add_to_platform_finish()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 1006, in add_to_platform_finish
+    self.async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 742, in async_write_ha_state
+    self._async_write_ha_state()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 810, in _async_write_ha_state
+    state = self._stringify_state(available)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 748, in _stringify_state
+    if (state := self.state) is None:
+                 ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 594, in state
+    raise ValueError(
+ValueError: Sensor sensor.brunos_ipad_pro_battery_state has device class 'battery', state class 'None' unit 'None' and suggested precision 'None' thus indicating it has a numeric value; however, it has the non-numeric value: 'Not Charging' (<class 'str'>)
+2023-08-18 12:56:36.465 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 12:56:36.468 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Harmony Hub' for harmony integration not ready yet: Harmony Hub: Unable to connect to HUB at: 192.168.86.182:8088; Retrying in background
+2023-08-18 12:56:36.709 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Christmas Tree' for tplink integration not ready yet: Unable to connect to the device: None: Multiple exceptions: [Errno 111] Connect call failed ('127.0.0.1', 9999), [Errno 101] Network unreachable; Retrying in background
+2023-08-18 12:56:37.398 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Mi Air Purifier 3C' for xiaomi_miio integration not ready yet: Unable to discover the device 192.168.86.242; Retrying in background
+2023-08-18 12:56:39.757 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Christmas Tree' for tplink integration not ready yet: Unable to connect to the device: 192.168.86.223: [Errno 113] Connect call failed ('192.168.86.223', 9999); Retrying in background
+2023-08-18 12:56:39.758 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Balcony Plug' for tplink integration not ready yet: Unable to connect to the device: 192.168.86.124: [Errno 113] Connect call failed ('192.168.86.124', 9999); Retrying in background
+2023-08-18 12:56:41.783 ERROR (MainThread) [custom_components.harmony_ac.climate] Unable to update from temperature sensor: could not convert string to float: 'unavailable'
+2023-08-18 12:56:41.785 WARNING (MainThread) [homeassistant.helpers.entity] Entity climate.harmony_climate_controller (<class 'custom_components.harmony_ac.climate.HarmonyIRClimate'>) is using self.async_update_ha_state(), without enabling force_update. Instead it should use self.async_write_ha_state(), please report it to the custom integration author.
+2023-08-18 12:56:41.832 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'current_a' when rendering '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}'
+2023-08-18 12:56:41.836 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1908, in forgiving_float_filter
+    return float(value)
+           ^^^^^^^^^^^^
+ValueError: could not convert string to float: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 563, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2179, in _render_with_context
+    return template.render(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1911, in forgiving_float_filter
+    raise_no_default("float", value)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1609, in raise_no_default
+    raise ValueError(
+ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 684, in async_render_to_info
+    render_info._result = self.async_render(variables, strict=strict, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 565, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}' but no default was specified
+2023-08-18 12:56:41.838 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'current_a' when rendering '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}'
+2023-08-18 12:56:41.838 ERROR (MainThread) [homeassistant.helpers.template_entity] TemplateError('ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}' but no default was specified') while processing template 'Template<template=({{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.homelab_amps'
+2023-08-18 12:56:41.840 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'current_power_w' when rendering '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}'
+2023-08-18 12:56:41.842 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1908, in forgiving_float_filter
+    return float(value)
+           ^^^^^^^^^^^^
+ValueError: could not convert string to float: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 563, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2179, in _render_with_context
+    return template.render(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1911, in forgiving_float_filter
+    raise_no_default("float", value)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1609, in raise_no_default
+    raise ValueError(
+ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 684, in async_render_to_info
+    render_info._result = self.async_render(variables, strict=strict, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 565, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}' but no default was specified
+2023-08-18 12:56:41.845 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'current_power_w' when rendering '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}'
+2023-08-18 12:56:41.846 ERROR (MainThread) [homeassistant.helpers.template_entity] TemplateError('ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}' but no default was specified') while processing template 'Template<template=({{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.homelab_watts'
+2023-08-18 12:56:41.847 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'total_energy_kwh' when rendering '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
+2023-08-18 12:56:41.847 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1908, in forgiving_float_filter
+    return float(value)
+           ^^^^^^^^^^^^
+ValueError: could not convert string to float: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 563, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2179, in _render_with_context
+    return template.render(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1911, in forgiving_float_filter
+    raise_no_default("float", value)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1609, in raise_no_default
+    raise ValueError(
+ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 684, in async_render_to_info
+    render_info._result = self.async_render(variables, strict=strict, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 565, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}' but no default was specified
+2023-08-18 12:56:41.850 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'total_energy_kwh' when rendering '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
+2023-08-18 12:56:41.851 ERROR (MainThread) [homeassistant.helpers.template_entity] TemplateError('ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}' but no default was specified') while processing template 'Template<template=({{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.homelab_total_kw'
+2023-08-18 12:56:41.852 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'voltage' when rendering '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}'
+2023-08-18 12:56:41.854 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1908, in forgiving_float_filter
+    return float(value)
+           ^^^^^^^^^^^^
+ValueError: could not convert string to float: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 563, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2179, in _render_with_context
+    return template.render(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1911, in forgiving_float_filter
+    raise_no_default("float", value)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1609, in raise_no_default
+    raise ValueError(
+ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 684, in async_render_to_info
+    render_info._result = self.async_render(variables, strict=strict, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 565, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}' but no default was specified
+2023-08-18 12:56:41.857 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'voltage' when rendering '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}'
+2023-08-18 12:56:41.858 ERROR (MainThread) [homeassistant.helpers.template_entity] TemplateError('ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}' but no default was specified') while processing template 'Template<template=({{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.homelab_volts'
+2023-08-18 12:56:41.860 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'today_energy_kwh' when rendering '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}'
+2023-08-18 12:56:41.861 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1908, in forgiving_float_filter
+    return float(value)
+           ^^^^^^^^^^^^
+ValueError: could not convert string to float: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 563, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2179, in _render_with_context
+    return template.render(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.11/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1911, in forgiving_float_filter
+    raise_no_default("float", value)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1609, in raise_no_default
+    raise ValueError(
+ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 684, in async_render_to_info
+    render_info._result = self.async_render(variables, strict=strict, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 565, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}' but no default was specified
+2023-08-18 12:56:41.863 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'homeassistant.util.read_only_dict.ReadOnlyDict object' has no attribute 'today_energy_kwh' when rendering '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}'
+2023-08-18 12:56:41.864 ERROR (MainThread) [homeassistant.helpers.template_entity] TemplateError('ValueError: Template error: float got invalid input '' when rendering template '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}' but no default was specified') while processing template 'Template<template=({{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.homelab_today_kw'
+2023-08-18 12:56:41.939 WARNING (MainThread) [homeassistant.components.homeassistant.triggers.numeric_state] Error initializing '[Dining Room] Turn on Espresso Bar Light' trigger: In 'numeric_state' condition: unknown entity sensor.espresso_bar_socket_power
+2023-08-18 12:56:41.957 WARNING (MainThread) [homeassistant.components.homeassistant.triggers.numeric_state] Error initializing '[Dining Room] Turn off Espresso Bar Light' trigger: In 'numeric_state' condition: unknown entity sensor.espresso_bar_socket_power
+2023-08-18 12:56:42.059 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/discovery_flow.py", line 95, in _async_start
+    await gather_with_concurrency(
+  File "/usr/src/homeassistant/homeassistant/util/async_.py", line 185, in gather_with_concurrency
+    return await gather(
+           ^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/util/async_.py", line 183, in sem_task
+    return await task
+           ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 856, in async_init
+    flow, result = await task
+                   ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 884, in _async_init
+    result = await self._async_handle_step(flow, flow.init_step, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/data_entry_flow.py", line 393, in _async_handle_step
+    result: FlowResult = await getattr(flow, method)(user_input)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/huesyncbox/config_flow.py", line 65, in async_step_zeroconf
+    "host": discovery_info["host"],
+            ~~~~~~~~~~~~~~^^^^^^^^
+TypeError: 'ZeroconfServiceInfo' object is not subscriptable
+2023-08-18 12:56:44.978 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 12:56:47.370 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x129B:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.396 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x209B:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.496 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x7C2C:1:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.514 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x86D3:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.526 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xE005:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.581 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x2F3B:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.591 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xE005:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.612 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x0FB7:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.672 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xB979:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.695 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x3A17:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.776 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x129B:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.787 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x2F3B:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.799 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x209B:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.810 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x3A17:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.840 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x5307:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.886 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x0FB7:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.961 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x7C2C:1:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:47.971 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x31D1:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.061 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xB680:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.073 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x0FB7:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.083 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xB979:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.095 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x5307:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.174 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x9FAF:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.212 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x9FAF:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.351 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x5E08:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.363 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x31D1:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.375 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x7C2C:1:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.408 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x5307:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.420 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xF7B6:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.430 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xE005:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.440 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x31D1:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.453 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xB979:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.486 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xB680:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.498 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x67C4:3:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.529 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xB680:11:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.647 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x3ADC:3:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.658 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x67C4:3:0x0300]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.688 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x2F3B:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.699 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x209B:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.709 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xF7B6:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.747 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x3ADC:3:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.924 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x86D3:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:48.941 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x3ADC:3:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.002 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x9611:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.039 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x9B17:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.057 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x67C4:3:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.135 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x9611:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.282 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xF2E5:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.458 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0xF2E5:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.470 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x091D:11:0x0008]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.525 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x9B17:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.590 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x091D:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:49.639 WARNING (MainThread) [homeassistant.components.zha.core.cluster_handlers] [0x5E08:11:0x0006]: async_initialize: all attempts have failed: [DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>'), DeliveryError('Failed to deliver message: <EmberStatus.DELIVERY_FAILED: 102>')]
+2023-08-18 12:56:58.349 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 12:57:03.167 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/prometheus/__init__.py", line 173, in handle_state_changed
+    self._remove_labelsets(old_state.entity_id, old_friendly_name)
+  File "/usr/src/homeassistant/homeassistant/components/prometheus/__init__.py", line 227, in _remove_labelsets
+    for _, metric in self._metrics.items():
+RuntimeError: dictionary changed size during iteration
+2023-08-18 12:57:03.170 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/prometheus/__init__.py", line 173, in handle_state_changed
+    self._remove_labelsets(old_state.entity_id, old_friendly_name)
+  File "/usr/src/homeassistant/homeassistant/components/prometheus/__init__.py", line 227, in _remove_labelsets
+    for _, metric in self._metrics.items():
+RuntimeError: dictionary changed size during iteration
+2023-08-18 12:57:03.994 WARNING (SyncWorker_1) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 12:57:21.873 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 12:57:33.994 WARNING (SyncWorker_23) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 12:58:03.995 WARNING (SyncWorker_31) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 12:58:05.069 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 12:58:33.995 WARNING (SyncWorker_31) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 12:59:03.996 WARNING (SyncWorker_32) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 12:59:28.269 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 12:59:33.997 WARNING (SyncWorker_9) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:00:03.997 WARNING (SyncWorker_14) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:00:33.998 WARNING (SyncWorker_28) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:00:51.469 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 13:01:03.998 WARNING (SyncWorker_28) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:01:34.000 WARNING (SyncWorker_9) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:02:03.999 WARNING (SyncWorker_26) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:02:14.861 ERROR (MainThread) [aioharmony.harmonyclient] 192.168.86.182: Unable to determine if XMPP is enabled: [Errno 113] Connect call failed ('192.168.86.182', 5222)
+2023-08-18 13:02:34.000 WARNING (SyncWorker_3) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:03:04.001 WARNING (SyncWorker_26) [homeassistant.components.google_wifi.sensor] Unable to fetch data from Google Wifi
+2023-08-18 13:03:04.995 ERROR (MainThread) [homeassistant.components.tplink] The tplink integration does not support YAML setup, please remove it from your configuration file

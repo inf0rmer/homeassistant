@@ -125,8 +125,8 @@ prometheus:
 
 system_health:
 
-hacs:
-  token: !env_var GITHUB_TOKEN
+# hacs:
+#   token: !env_var GITHUB_TOKEN
 
 circadian_lighting:
 

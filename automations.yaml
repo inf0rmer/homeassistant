@@ -1,0 +1,32 @@
+- id: '1675238803234'
+  alias: '[Living Room] Sync Lights when Apple TV on'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 35a38a06bd4b14614d71bd768e60493e
+    entity_id: remote.living_room
+    domain: remote
+  condition: []
+  action:
+  - device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+    domain: huesyncbox
+    entity_id: media_player.sync_box
+    type: sync_on
+  mode: single
+- id: '1675238848020'
+  alias: '[Living Room] Stop LightSync when Apple TV Off'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 35a38a06bd4b14614d71bd768e60493e
+    entity_id: remote.living_room
+    domain: remote
+  condition: []
+  action:
+  - device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+    domain: huesyncbox
+    entity_id: media_player.sync_box
+    type: sync_off
+  mode: single
