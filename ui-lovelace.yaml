@@ -149,13 +149,10 @@ views:
                   - entities: 
                       - sensor.afvalinfo_afval_thuis_trash_today
                       - sensor.afvalinfo_afval_thuis_trash_tomorrow
-                    title: Trash Collection
-                    type: entities
-                  - entities: 
                       - sensor.afvalinfo_afval_thuis_compost
                       - sensor.afvalinfo_afval_thuis_paper
                       - sensor.afvalinfo_afval_thuis_plastic
-                    title: Upcoming Collection
+                    title: Trash Collection
                     type: entities
               - type: horizontal-stack
                 cards:
