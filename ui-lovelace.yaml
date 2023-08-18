@@ -148,10 +148,15 @@ views:
                 cards:
                   - entities: 
                       - sensor.afvalinfo_afval_thuis_trash_today
-                      - entity: sensor.afvalinfo_afval_thuis_trash_tomorrow
+                      - sensor.afvalinfo_afval_thuis_trash_tomorrow
                     title: Trash Collection
                     type: entities
-
+                  - entities: 
+                      - sensor.afvalinfo_afval_thuis_compost
+                      - sensor.afvalinfo_afval_thuis_paper
+                      - sensor.afvalinfo_afval_thuis_plastic
+                    title: Upcoming Collection
+                    type: entities
               - type: horizontal-stack
                 cards:
                   - type: "custom:xiaomi-vacuum-card"
