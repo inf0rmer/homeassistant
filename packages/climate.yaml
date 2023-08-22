@@ -1,5 +1,2 @@
 climate:
-  - platform: harmony_ac
-    remote_entity: remote.harmony_hub
-    device_id: 70099516
-    temp_sensor: sensor.living_room_sensor_temperature
+  

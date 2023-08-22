@@ -282,7 +282,7 @@
       data:
         title: "Trash Collection tomorrow"
         message: "{{trigger.to_state}}"
-    - service: notify.mobile_app_bruno_abrantes_iphone
+    - service: notify.mobile_app_bruno_s_iphone
       data:
         title: "Trash Collection tomorrow}"
         message: "{{trigger.to_state}}"

@@ -1,7 +1,4 @@
 binary_sensor:
-  - platform: workday
-    country: DE
-
   - platform: trend
     sensors:
       # Tracks 3 humidity readings over 10 minutes. If the change is greater than 10%, evals to true. (10/(60*10))

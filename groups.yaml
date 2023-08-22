@@ -50,14 +50,6 @@ presence:
     - binary_sensor.presence_sarah
     - binary_sensor.presence_someone
 
-harmony_hub:
-  name: Living Room Entertainment Control
-  entities:
-    - sensor.watch_tv
-    - sensor.watch_netflix
-    - sensor.watch_cartoons
-    - sensor.listen_music
-
 dnd_bedrooms:
   name: Do Not Disturb Bedrooms
   all: true

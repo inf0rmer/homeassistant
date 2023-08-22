@@ -71,18 +71,6 @@ sensor:
 
   - platform: template
     sensors:
-      watch_tv:
-        friendly_name: Watch TV
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Watch TV') }}"
-      watch_cartoons:
-        friendly_name: Watch Cartoons
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Watch Cartoons') }}"
-      tv_activity:
-        friendly_name: TV Activity
-        value_template: "{{ is_state('sensor.watch_tv', 'True') or is_state('sensor.watch_cartoons', 'True') or is_state('sensor.listen_music', 'True') }}"
-
-  - platform: template
-    sensors:
       homelab_amps:
         value_template: '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}'
         unit_of_measurement: "A"
