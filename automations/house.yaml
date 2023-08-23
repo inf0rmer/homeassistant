@@ -281,8 +281,8 @@
     - service: notify.mobile_app_sarah_abrantes_iphone
       data:
         title: "Trash Collection tomorrow"
-        message: "{{trigger.to_state}}"
+        message: "{{trigger.to_state.state}}"
     - service: notify.mobile_app_bruno_s_iphone
       data:
         title: "Trash Collection tomorrow}"
-        message: "{{trigger.to_state}}"
+        message: "{{trigger.to_state.state}}"
