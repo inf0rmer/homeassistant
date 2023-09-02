@@ -15,7 +15,7 @@ input_boolean:
     name: Do Not Disturb Hallway
   dnd_laundry_room:
     name: Do Not Disturb Laundry Room
-  dnd_bathroom:
+  dnd_bathroom_1st_floor:
     name: Do Not Disturb Bathroom
   dnd_balcony:
     name: Do Not Disturb Balcony
@@ -46,10 +46,8 @@ input_boolean:
   presence_laundry_room_assistant:
   presence_balcony_door:
   presence_balcony_assistant:
-  presence_bathroom_switch:
-  presence_bathroom_door:
-  presence_bathroom_shower:
-  presence_bathroom_assistant:
+  presence_bathroom_1st_floor_switch:
+  presence_bathroom_1st_floor_assistant:
   presence_closet_door:
 
   presence_bruno:

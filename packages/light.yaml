@@ -110,10 +110,9 @@ light:
       - light.hallway_ceiling_front_door
 
   - platform: group
-    name: Bathroom
+    name: Bathroom 1st Floor
     entities:
-      - light.switch_bathroom_ceiling
-      - light.bathroom_vanity
+      - light.switch_bathroom_1st_floor_ceiling
 
   - platform: group
     name: Closet

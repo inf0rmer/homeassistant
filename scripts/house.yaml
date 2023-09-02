@@ -127,7 +127,7 @@ house_nobody_home:
     - target:
         entity_id: 
           - group.presence_balcony
-          - group.presence_bathroom
+          - group.presence_bathroom_1st_floor
           - group.presence_closet
           - group.presence_balcony
           - group.presence_dining_room

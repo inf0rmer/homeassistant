@@ -172,7 +172,7 @@ views:
                       - light.laundry_room
                       - light.hallway
                       - light.office
-                      - light.bathroom
+                      - light.bathroom_1st_floor
                       - light.closet
                     title: Lights
                     type: entities
@@ -1024,7 +1024,7 @@ views:
         columns: 1
         square: false
         cards:
-          - entity: binary_sensor.presence_bathroom
+          - entity: binary_sensor.presence_bathroom_1st_floor
             name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
             label: "[[[return entity.attributes.reason]]]"
             show_label: true
@@ -1037,27 +1037,26 @@ views:
                 - font-size: 10px
             tap_action:
               action: call-service
-              service: '[[[ if (states["input_boolean.presence_bathroom_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
+              service: '[[[ if (states["input_boolean.presence_bathroom_1st_floor_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
               service_data:
-                entity_id: input_boolean.presence_bathroom_assistant
+                entity_id: input_boolean.presence_bathroom_1st_floor_assistant
             hold_action:
               action: call-service
               service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
               service_data:
-                entity_id: group.presence_bathroom
+                entity_id: group.presence_bathroom_1st_floor
             type: "custom:button-card"
-          - entity: light.bathroom
+          - entity: light.bathroom_1st_floor
             name: Light
             theme: Backend-selected
             type: light
           - entities:
-              - entity: light.switch_bathroom_ceiling
-              - entity: light.bathroom_vanity
+              - entity: light.switch_bathroom_1st_floor_ceiling
             show_header_toggle: false
             title: Lights
             type: entities
           - entities:
-              - entity: sensor.bathroom_sensor_temperature
+              - entity: sensor.bathroom_1st_floor_sensor_temperature
                 name: Temperature
             type: "custom:mini-graph-card"
 

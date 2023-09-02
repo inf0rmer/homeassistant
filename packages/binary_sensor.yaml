@@ -1,20 +1,4 @@
 binary_sensor:
-  - platform: trend
-    sensors:
-      # Tracks 3 humidity readings over 10 minutes. If the change is greater than 10%, evals to true. (10/(60*10))
-      presence_bathroom_shower_on:
-        max_samples: 3
-        entity_id: sensor.bathroom_humidity
-        sample_duration: 600
-        min_gradient: 0.01666
-        # Tracks 2 humidity readings over 5 minutes. If the change decrease is greater than 5%, evals to true. (-5/(60*5))
-        # Bumped samples down from 4 to 2, because it was staying on way too long.
-      presence_bathroom_shower_off:
-        max_samples: 2
-        entity_id: sensor.bathroom_humidity
-        sample_duration: 300
-        min_gradient: -0.016666
-
   - platform: template
     sensors:
       hallway_combined_sensor_motion:
@@ -117,14 +101,14 @@ binary_sensor:
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}
-      presence_bathroom:
-        friendly_name: Presence Bathroom
+      presence_bathroom_1st_floor:
+        friendly_name: Presence Bathroom 1st Floor
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_bathroom_switch', 'on') or is_state('input_boolean.presence_bathroom_door', 'on') or is_state('input_boolean.presence_bathroom_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_bathroom_1st_floor_switch', 'on') or is_state('input_boolean.presence_bathroom_1st_floor_assistant', 'on') }}
         attribute_templates:
           reason: >
-            {% for entity in states.group.presence_bathroom.attributes.entity_id if is_state(entity, 'on') %}
+            {% for entity in states.group.presence_bathroom_1st_floor.attributes.entity_id if is_state(entity, 'on') %}
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}

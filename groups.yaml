@@ -66,7 +66,7 @@ dnd_other_rooms:
     - input_boolean.dnd_kitchen
     - input_boolean.dnd_hallway
     - input_boolean.dnd_laundry_room
-    - input_boolean.dnd_bathroom
+    - input_boolean.dnd_bathroom_1st_floor
     - input_boolean.dnd_balcony
 
 dnd_house:
@@ -124,11 +124,9 @@ presence_balcony:
     - input_boolean.presence_balcony_door
     - input_boolean.presence_balcony_assistant
 
-presence_bathroom:
+presence_bathroom_1st_floor:
   entities:
-    - input_boolean.presence_bathroom_switch
-    - input_boolean.presence_bathroom_door
-    - input_boolean.presence_bathroom_shower
+    - input_boolean.presence_bathroom_1st_floor_switch
     - input_boolean.presence_bathroom_assistant
 
 presence_closet:

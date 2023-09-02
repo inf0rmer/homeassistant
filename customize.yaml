@@ -28,7 +28,7 @@ input.dnd_hallway:
   hidden: true
 input.dnd_laundry_room:
   hidden: true
-input.dnd_bathroom:
+input.dnd_bathroom_1st_floor:
   hidden: true
 input.dnd_balcony:
   hidden: true
