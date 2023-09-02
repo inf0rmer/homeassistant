@@ -4,13 +4,13 @@
 - id: bathroom_1st_floor_lights_on
   alias: "[Bathroom 1st Floor] Lights On"
   trigger:
-    - entity_id: binary_sensor.presence_bathroom
+    - entity_id: binary_sensor.presence_bathroom_1st_floor
       from: "off"
       platform: state
       to: "on"
   condition:
     - condition: state
-      entity_id: binary_sensor.presence_bathroom
+      entity_id: binary_sensor.presence_bathroom_1st_floor
       state: "on"
     - condition: state
       entity_id: input_boolean.dnd_bathroom
