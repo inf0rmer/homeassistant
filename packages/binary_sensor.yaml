@@ -105,7 +105,7 @@ binary_sensor:
         friendly_name: Presence Hallway 1st Floor
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_hallway_1st_floor_motion', 'on') or is_state('input_boolean.presence_hallway_1st_floor_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_hallway_1st_floor_stairs_motion', 'on') or is_state('input_boolean.presence_hallway_1st_floor_ceiling_motion', 'on') or is_state('input_boolean.presence_hallway_1st_floor_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_hallway_1st_floor.attributes.entity_id if is_state(entity, 'on') %}
