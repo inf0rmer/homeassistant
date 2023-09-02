@@ -34,21 +34,20 @@ views:
                       service_data:
                         entity_id: group.dnd_house
                     type: "custom:button-card"
-                  - card:
-                      entity: script.good_night
-                      icon: "mdi:sleep"
-                      show_state: false
-                      name: Good Night
-                      size: 25%
-                      styles:
-                        card:
-                          - font-size: 12px
-                      tap_action:
-                        action: call-service
-                        service: script.turn_on
-                        service_data:
-                          entity_id: script.good_night
-                      type: "custom:button-card"
+                  - entity: script.good_night
+                    icon: "mdi:sleep"
+                    show_state: false
+                    name: Good Night
+                    size: 25%
+                    styles:
+                      card:
+                        - font-size: 12px
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.good_night
+                    type: "custom:button-card"
                   - type: conditional
                     conditions:
                       - entity: group.dnd_bedrooms
