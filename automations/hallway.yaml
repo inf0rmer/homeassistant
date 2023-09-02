@@ -2,9 +2,9 @@
 # Hallway #
 ###########
 
-###########
+########################
 # Hallway Ground Floor #
-###########
+########################
 
 - id: hallway_ground_floor_lights_on
   alias: "[Hallway Ground Floor] Lights On"
@@ -116,4 +116,237 @@
       service: input_boolean.turn_off
     - target:
         entity_id: light.hallway_ground_floor_assistant
+      service: light.turn_off
+
+
+########################
+# Hallway 1st Floor #
+########################
+
+- id: hallway_1st_floor_lights_on
+  alias: "[Hallway 1st Floor] Lights On"
+  trigger:
+    - entity_id: binary_sensor.presence_hallway_1st_floor
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.presence_hallway_1st_floor
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.dnd_hallway
+      state: "off"
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hallway
+      service: switch.turn_on
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_hallway', 'brightness') | int }}"
+        transition: 3
+      target:
+        entity_id: light.hallway_1st_floor
+      service: light.turn_on
+
+- id: hallway_1st_floor_lights_off
+  alias: "[Hallway 1st Floor] Lights Off"
+  trigger:
+    - entity_id: binary_sensor.presence_hallway_1st_floor
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hallway
+      service: switch.turn_off
+    - data:
+        transition: 2
+      target:
+        entity_id: light.hallway_1st_floor
+      service: light.turn_off
+
+- id: hallway_1st_floor_presence_on_motion
+  alias: "[Hallway 1st Floor] Presence On (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hallway_1st_floor_sensor_motion
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_1st_floor_motion
+      service: input_boolean.turn_on
+
+- id: hallway_1st_floor_presence_off_motion
+  alias: "[Hallway 1st Floor] Presence Off (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hallway_1st_floor_sensor_motion
+      from: "on"
+      platform: state
+      to: "off"
+      for:
+        minutes: 3
+  condition:
+    - condition: state
+      entity_id: input_boolean.dnd_hallway
+      state: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_1st_floor_motion
+      service: input_boolean.turn_off
+
+- id: hallway_1st_floor_presence_on_assistant
+  alias: "[Hallway 1st Floor] Presence On (Assistant)"
+  trigger:
+    - entity_id: light.hallway_1st_floor_assistant
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_1st_floor_assistant
+      service: input_boolean.turn_on
+
+- id: hallway_1st_floor_presence_off_assistant
+  alias: "[Hallway 1st Floor] Presence Off (Assistant)"
+  trigger:
+    - entity_id: light.hallway_1st_floor_assistant
+      from: "on"
+      platform: state
+      to: "off"
+    - entity_id: input_boolean.presence_hallway_1st_floor_assistant
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_1st_floor_assistant
+      service: input_boolean.turn_off
+    - target:
+        entity_id: light.hallway_1st_floor_assistant
+      service: light.turn_off
+
+########################
+# Hallway 2nd Floor #
+########################
+
+- id: hallway_2nd_floor_lights_on
+  alias: "[Hallway 2nd Floor] Lights On"
+  trigger:
+    - entity_id: binary_sensor.presence_hallway_2nd_floor
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.presence_hallway_2nd_floor
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.dnd_hallway
+      state: "off"
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hallway
+      service: switch.turn_on
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_hallway', 'brightness') | int }}"
+        transition: 3
+      target:
+        entity_id: light.hallway_2nd_floor
+      service: light.turn_on
+
+- id: hallway_2nd_floor_lights_off
+  alias: "[Hallway 2nd Floor] Lights Off"
+  trigger:
+    - entity_id: binary_sensor.presence_hallway_2nd_floor
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hallway
+      service: switch.turn_off
+    - data:
+        transition: 2
+      target:
+        entity_id: light.hallway_2nd_floor
+      service: light.turn_off
+
+- id: hallway_2nd_floor_presence_on_motion
+  alias: "[Hallway 2nd Floor] Presence On (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hallway_2nd_floor_sensor_motion
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_2nd_floor_motion
+      service: input_boolean.turn_on
+
+- id: hallway_2nd_floor_presence_off_motion
+  alias: "[Hallway 2nd Floor] Presence Off (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hallway_2nd_floor_sensor_motion
+      from: "on"
+      platform: state
+      to: "off"
+      for:
+        minutes: 3
+  condition:
+    - condition: state
+      entity_id: input_boolean.dnd_hallway
+      state: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_2nd_floor_motion
+      service: input_boolean.turn_off
+
+- id: hallway_2nd_floor_presence_on_assistant
+  alias: "[Hallway 2nd Floor] Presence On (Assistant)"
+  trigger:
+    - entity_id: light.hallway_2nd_floor_assistant
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_2nd_floor_assistant
+      service: input_boolean.turn_on
+
+- id: hallway_2nd_floor_presence_off_assistant
+  alias: "[Hallway 2nd Floor] Presence Off (Assistant)"
+  trigger:
+    - entity_id: light.hallway_2nd_floor_assistant
+      from: "on"
+      platform: state
+      to: "off"
+    - entity_id: input_boolean.presence_hallway_2nd_floor_assistant
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_2nd_floor_assistant
+      service: input_boolean.turn_off
+    - target:
+        entity_id: light.hallway_2nd_floor_assistant
       service: light.turn_off
