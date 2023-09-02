@@ -852,15 +852,15 @@ views:
             theme: Backend-selected
             type: light
           - entities:
-              - entity: hallway_ground_floor_ceiling_entrance
-              - entity: hallway_ground_floor_ceiling_stairs
+              - entity: light.hallway_ground_floor_ceiling_entrance
+              - entity: light.hallway_ground_floor_ceiling_stairs
             show_header_toggle: false
             title: Lights
             type: entities
           - entities:
               - entity: sensor.hallway_ground_floor_sensor_average_temperature
                 name: Temperature
-              - entity: sensor.hallway_ground_floor_sensor_average_light_level
+              - entity: sensor.hallway_sensor_average_light_level
                 name: Light Level
             type: "custom:mini-graph-card"
 
