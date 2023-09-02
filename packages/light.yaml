@@ -75,7 +75,8 @@ light:
       - light.master_bedroom_ceiling
 
   - platform: group
-    name: "Emma's Bedroom"
+    name: Emmas Bedroom
+    friendly_name: "Emma's Bedroom"
     entities:
       - light.emmas_bedroom_ceiling
 
