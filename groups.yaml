@@ -1,8 +1,6 @@
 all_light_switches:
   name: All Light Switches
   entities:
-    - switch.balcony_plug
-    - switch.dining_room_cabinet
     - switch.christmas_tree
 
 all_motion_sensors:
@@ -24,9 +22,9 @@ all_occupancy_sensors:
     - binary_sensor.presence_master_bedroom
     - binary_sensor.presence_emmas_bedroom
     - binary_sensor.presence_kitchen
-    - binary_sensor.presence_hallway
-    - binary_sensor.presence_balcony
-    - binary_sensor.presence_laundry_room
+    - binary_sensor.presence_hallway_ground_floor
+    - binary_sensor.presence_hallway_1st_floor
+    - binary_sensor.presence_hallway_2nd_floor
 
 light_kitchen_ceiling:
   name: Light Kitchen Ceiling
@@ -64,10 +62,10 @@ dnd_other_rooms:
     - input_boolean.dnd_living_room
     - input_boolean.dnd_dining_room
     - input_boolean.dnd_kitchen
-    - input_boolean.dnd_hallway
-    - input_boolean.dnd_laundry_room
+    - input_boolean.dnd_hallway_ground_floor
+    - input_boolean.dnd_hallway_1st_floor
+    - input_boolean.dnd_hallway_2nd_floor
     - input_boolean.dnd_bathroom_1st_floor
-    - input_boolean.dnd_balcony
 
 dnd_house:
   name: Do Not Disturb
@@ -110,20 +108,20 @@ presence_kitchen:
     - input_boolean.presence_kitchen_switch
     - input_boolean.presence_kitchen_assistant
 
-presence_hallway:
+presence_hallway_ground_floor:
   entities:
-    - input_boolean.presence_hallway_motion
-    - input_boolean.presence_hallway_assistant
+    - input_boolean.presence_hallway_ground_floor_motion
+    - input_boolean.presence_hallway_ground_floor_assistant
 
-presence_laundry_room:
+presence_hallway_first_floor:
   entities:
-    - input_boolean.presence_laundry_room_light
-    - input_boolean.presence_laundry_room_assistant
+    - input_boolean.presence_hallway_first_floor_motion
+    - input_boolean.presence_hallway_first_floor_assistant
 
-presence_balcony:
+presence_hallway_second_floor:
   entities:
-    - input_boolean.presence_balcony_door
-    - input_boolean.presence_balcony_assistant
+    - input_boolean.presence_hallway_second_floor_motion
+    - input_boolean.presence_hallway_second_floor_assistant
 
 presence_bathroom_1st_floor:
   entities:
@@ -144,10 +142,10 @@ presence_other_rooms:
   all: true
   entities:
     - group.presence_kitchen
-    - group.presence_hallway
-    - group.presence_laundry_room
-    - group.presence_balcony
-    - group.presence_bathroom
+    - group.presence_hallway_ground_floor
+    - group.presence_hallway_1st_floor
+    - group.presence_hallway_2nd_floor
+    - group.presence_bathroom_1st_floor
     - group.presence_closet
     - input_boolean.presence_living_room
     - group.presence_dining_room

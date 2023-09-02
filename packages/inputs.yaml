@@ -41,8 +41,12 @@ input_boolean:
   presence_kitchen_motion:
   presence_kitchen_assistant:
   presence_kitchen_switch:
-  presence_hallway_motion:
-  presence_hallway_assistant:
+  presence_hallway_ground_floor_motion:
+  presence_hallway_ground_floor_assistant:
+  presence_hallway_1st_floor_motion:
+  presence_hallway_1st_floor_assistant:
+  presence_hallway_2nd_floor_motion:
+  presence_hallway_2nd_floor_assistant:
   presence_laundry_room_light:
   presence_laundry_room_assistant:
   presence_balcony_door:

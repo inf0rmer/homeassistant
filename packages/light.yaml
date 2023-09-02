@@ -31,25 +31,26 @@ light:
         turn_off:
         set_level:
 
-      hallway_assistant:
-        friendly_name: "Hallway"
+      hallway_ground_floor_assistant:
+        friendly_name: "Hallway Ground Floor"
+        turn_on:
+        turn_off:
+        set_level:
+      
+      hallway_1st_floor_assistant:
+        friendly_name: "Hallway 1st Floor"
         turn_on:
         turn_off:
         set_level:
 
-      laundry_room_assistant:
-        friendly_name: "Laundry Room"
+      hallway_2nd_floor_assistant:
+        friendly_name: "Hallway 2nd Floor"
         turn_on:
         turn_off:
         set_level:
 
-      bathroom_assistant:
-        friendly_name: "Bathroom"
-        turn_on:
-        turn_off:
-
-      balcony_assistant:
-        friendly_name: "Balcony"
+      bathroom_1st_floor_assistant:
+        friendly_name: "Bathroom 1st Floor"
         turn_on:
         turn_off:
   
@@ -61,17 +62,8 @@ light:
       - light.office_key_light_right
 
   - platform: group
-    name: Dining Room
-    entities:
-      - light.dining_room_ceiling_table
-      - light.dining_room_ceiling_kitchen
-
-  - platform: group
     name: Living Room
     entities:
-      - light.living_room_ceiling_desk
-      - light.living_room_ceiling_sofa
-      - light.living_room_standing_lamp_desk
       - light.tv_upper
       - light.tv_lower
       - light.tv_right
@@ -81,27 +73,17 @@ light:
     name: Master Bedroom
     entities:
       - light.master_bedroom_ceiling
-      - light.master_bedroom_lightstrip_left
-      - light.master_bedroom_lightstrip_right
 
   - platform: group
-    name: Master Bedroom Lightstrips
-    entities:
-      - light.master_bedroom_lightstrip_left
-      - light.master_bedroom_lightstrip_right
-
-  - platform: group
-    name: Emmas Bedroom
+    name: "Emma's Bedroom"
     entities:
       - light.emmas_bedroom_ceiling
-      - light.emmas_bedroom_nightlight
 
   - platform: group
     name: Kitchen
     entities:
-      - light.kitchen_ceiling_1
-      - light.kitchen_ceiling_2
-      - light.kitchen_counter
+      - light.kitchen_ceiling_spot_1
+      - light.kitchen_ceiling_spot_2
 
   - platform: group
     name: Hallway
@@ -122,9 +104,4 @@ light:
   - platform: group
     name: Laundry Room
     entities:
-      - light.laundry_room_ceiling
-
-  - platform: group
-    name: Balcony
-    entities:
-      - light.balcony_main
+      - light.laundry_room_ceilin
