@@ -86,10 +86,19 @@ light:
       - light.kitchen_ceiling_spot_2
 
   - platform: group
-    name: Hallway
+    name: Hallway Ground Floor
     entities:
-      - light.hallway_ceiling_bathroom
-      - light.hallway_ceiling_front_door
+      - light.hallway_ground_floor_ceiling_entrance
+  
+  - platform: group
+    name: Hallway 1st Floor
+    entities:
+      - light.hallway_1st_floor_ceiling
+
+  - platform: group
+    name: Hallway 2nd Floor
+    entities:
+      - light.hallway_2nd_floor_ceiling
 
   - platform: group
     name: Bathroom 1st Floor

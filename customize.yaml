@@ -1,6 +1,8 @@
-sensor.hallway_light_level:
+sensor.hallway_ground_floor_light_level:
   device_class: illuminance
-sensor.hallway_kitchen_light_level:
+sensor.hallway_1st_floor_light_level:
+  device_class: illuminance
+sensor.hallway_2nd_floor_light_level:
   device_class: illuminance
 sensor.kitchen_light_level:
   device_class: illuminance
