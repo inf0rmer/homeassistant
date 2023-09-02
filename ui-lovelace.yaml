@@ -847,7 +847,7 @@ views:
                   service_data:
                     entity_id: group.presence_hallway_ground_floor
                 type: "custom:button-card"
-          - entity: light.hallway
+          - entity: light.hallway_ground_floor
             name: All Lights
             theme: Backend-selected
             type: light
