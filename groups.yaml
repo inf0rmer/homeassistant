@@ -107,6 +107,7 @@ presence_emmas_bedroom:
 presence_kitchen:
   entities:
     - input_boolean.presence_kitchen_motion
+    - input_boolean.presence_kitchen_switch
     - input_boolean.presence_kitchen_assistant
 
 presence_hallway:

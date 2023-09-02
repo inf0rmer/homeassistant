@@ -40,6 +40,7 @@ input_boolean:
   presence_emmas_bedroom_assistant:
   presence_kitchen_motion:
   presence_kitchen_assistant:
+  presence_kitchen_switch:
   presence_hallway_motion:
   presence_hallway_assistant:
   presence_laundry_room_light:

@@ -83,7 +83,7 @@ binary_sensor:
         friendly_name: Presence Kitchen
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_kitchen_motion', 'on') or is_state('input_boolean.presence_kitchen_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_kitchen_motion', 'on') or is_state('input_boolean.presence_kitchen_switch', 'on') or is_state('input_boolean.presence_kitchen_assistant', 'on') }}
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_kitchen.attributes.entity_id if is_state(entity, 'on') %}
