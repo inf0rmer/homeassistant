@@ -52,7 +52,7 @@
 - id: hallway_ground_floor_presence_on_motion
   alias: "[Hallway Ground Floor] Presence On (Motion)"
   trigger:
-    - entity_id: binary_sensor.hallway_ground_floor_combined_sensor_motion
+    - entity_id: binary_sensor.hallway_ground_floor_sensor_motion
       from: "off"
       platform: state
       to: "on"
@@ -68,7 +68,7 @@
 - id: hallway_ground_floor_presence_off_motion
   alias: "[Hallway Ground Floor] Presence Off (Motion)"
   trigger:
-    - entity_id: binary_sensor.hallway_ground_floor_combined_sensor_motion
+    - entity_id: binary_sensor.hallway_ground_floor_sensor_motion
       from: "on"
       platform: state
       to: "off"
