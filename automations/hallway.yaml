@@ -166,13 +166,43 @@
         entity_id: light.hallway_1st_floor
       service: light.turn_off
 
-- id: hallway_1st_floor_presence_on_motion
-  alias: "[Hallway 1st Floor] Presence On (Motion)"
+- id: hallway_1st_floor_presence_on_stairs_motion
+  alias: "[Hallway 1st Floor] Presence On Stairs (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
       from: "off"
       platform: state
       to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_1st_floor_motion
+      service: input_boolean.turn_on
+
+- id: hallway_1st_floor_presence_off_stairs_motion
+  alias: "[Hallway 1st Floor] Presence Off Stairs (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
+      from: "on"
+      platform: state
+      to: "off"
+      for:
+        minutes: 3
+  condition:
+    - condition: state
+      entity_id: input_boolean.dnd_hallway
+      state: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hallway_1st_floor_motion
+      service: input_boolean.turn_off
+
+- id: hallway_1st_floor_presence_on_celiling_motion
+  alias: "[Hallway 1st Floor] Presence On Ceiling (Motion)"
+  trigger:
     - entity_id: binary_sensor.hallway_1st_floor_ceiling_sensor_motion
       from: "off"
       platform: state
@@ -186,15 +216,9 @@
         entity_id: input_boolean.presence_hallway_1st_floor_motion
       service: input_boolean.turn_on
 
-- id: hallway_1st_floor_presence_off_motion
-  alias: "[Hallway 1st Floor] Presence Off (Motion)"
+- id: hallway_1st_floor_presence_off_ceiling_motion
+  alias: "[Hallway 1st Floor] Presence Off Ceiling (Motion)"
   trigger:
-    - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
-      from: "on"
-      platform: state
-      to: "off"
-      for:
-        minutes: 3
     - entity_id: binary_sensor.hallway_1st_floor_ceiling_sensor_motion
       from: "on"
       platform: state
