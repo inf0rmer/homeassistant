@@ -37,11 +37,6 @@
   trigger:
     - event_data:
         command: "on"
-        device_ieee: 00:17:88:01:03:cb:b6:e4
-      event_type: zha_event
-      platform: event
-    - event_data:
-        command: "on"
         device_ieee: 00:17:88:01:03:ca:20:36
       event_type: zha_event
       platform: event
@@ -65,11 +60,6 @@
 - id: bathroom_1st_floor_presence_off_manual_switch
   alias: "[Bathroom 1st Floor] Presence Off (Switch)"
   trigger:
-    - event_data:
-        command: off_with_effect
-        device_ieee: 00:17:88:01:03:cb:b6:e4
-      event_type: zha_event
-      platform: event
     - event_data:
         command: off_with_effect
         device_ieee: 00:17:88:01:03:ca:20:36
@@ -97,11 +87,6 @@
   trigger:
     - event_data:
         command: step
-        device_ieee: 00:17:88:01:03:cb:b6:e4
-      event_type: zha_event
-      platform: event
-    - event_data:
-        command: step
         device_ieee: 00:17:88:01:03:ca:20:36
       event_type: zha_event
       platform: event
@@ -121,11 +106,6 @@
 - id: bathroom_1st_floor_manual_switch_brightness_down
   alias: "[Bathroom 1st Floor] Manual Switch Brightness Down"
   trigger:
-    - event_data:
-        command: step
-        device_ieee: 00:17:88:01:03:cb:b6:e4
-      event_type: zha_event
-      platform: event
     - event_data:
         command: step
         device_ieee: 00:17:88:01:03:ca:20:36
@@ -149,11 +129,6 @@
   trigger:
     - event_data:
         command: step
-        device_ieee: 00:17:88:01:03:cb:b6:e4
-      event_type: zha_event
-      platform: event
-    - event_data:
-        command: step
         device_ieee: 00:17:88:01:03:ca:20:36
       event_type: zha_event
       platform: event
@@ -172,11 +147,6 @@
 - id: bathroom_1st_floor_manual_presence_off_dnd_on
   alias: "[Bathroom 1st Floor] Manual Presence Off"
   trigger:
-    - event_data:
-        command: stop
-        device_ieee: 00:17:88:01:03:cb:b6:e4
-      event_type: zha_event
-      platform: event
     - event_data:
         command: stop
         device_ieee: 00:17:88:01:03:ca:20:36
