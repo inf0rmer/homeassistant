@@ -146,6 +146,14 @@ views:
                       - person.sarah_abrantes
               - type: horizontal-stack
                 cards:
+                  - type: thermostat
+                    entity: climate.house
+                  - type: thermostat
+                    entity: climate.living_room
+                  - type: thermostat
+                    entity: climate.office
+              - type: horizontal-stack
+                cards:
                   - entities: 
                       - sensor.afvalinfo_afval_thuis_trash_today
                       - sensor.afvalinfo_afval_thuis_trash_tomorrow
