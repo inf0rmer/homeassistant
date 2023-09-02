@@ -34,11 +34,7 @@ views:
                       service_data:
                         entity_id: group.dnd_house
                     type: "custom:button-card"
-                  - type: conditional
-                    conditions:
-                      - entity: group.dnd_bedrooms
-                        state: "off"
-                    card:
+                  - card:
                       entity: script.good_night
                       icon: "mdi:sleep"
                       show_state: false
