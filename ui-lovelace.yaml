@@ -268,8 +268,6 @@ views:
                       type: "custom:button-card"
               - type: horizontal-stack
                 cards:
-              - type: horizontal-stack
-                cards:
                   - entity: binary_sensor.presence_living_room
                     name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
                     label: "[[[return entity.attributes.reason]]]"
@@ -296,6 +294,8 @@ views:
             name: All Lights
             theme: Backend-selected
             type: light
+          - type: thermostat
+            entity: climate.living_room
           - entities:
               - entity: light.living_room_ceiling_sofa
               - entity: light.living_room_ceiling_desk
@@ -406,6 +406,8 @@ views:
             name: All Lights
             theme: Backend-selected
             type: light
+          - type: thermostat
+            entity: climate.office
           - entities:
               - entity: light.office_desk_lightstrip
               - entity: light.office_key_light_left
