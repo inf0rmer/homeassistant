@@ -823,30 +823,6 @@ views:
                   service_data:
                     entity_id: input_boolean.dnd_hallway
                 type: "custom:button-card"
-          - type: horizontal-stack
-            cards:
-              - entity: binary_sensor.presence_hallway_ground_floor
-                name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
-                label: "[[[return entity.attributes.reason]]]"
-                show_label: true
-                size: 10%
-                styles:
-                  card:
-                    - font-size: 12px
-                  label:
-                    - color: '[[[ if (states["sun.sun"].state == "above_horizon") return "#666"; else return "#ccc" ]]]'
-                    - font-size: 10px
-                tap_action:
-                  action: call-service
-                  service: '[[[ if (states["input_boolean.presence_hallway_ground_floor_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
-                  service_data:
-                    entity_id: input_boolean.presence_hallway_ground_floor_assistant
-                hold_action:
-                  action: call-service
-                  service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
-                  service_data:
-                    entity_id: group.presence_hallway_ground_floor
-                type: "custom:button-card"
           - entity: light.hallway_ground_floor
             name: All Lights
             theme: Backend-selected
@@ -854,6 +830,8 @@ views:
           - entities:
               - entity: light.hallway_ground_floor_ceiling_entrance
               - entity: light.hallway_ground_floor_ceiling_stairs
+              - entity: light.hallway_1st_floor_ceiling
+              - entity: light.hallway_2nd_floor_ceiling
             show_header_toggle: false
             title: Lights
             type: entities
