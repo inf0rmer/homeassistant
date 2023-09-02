@@ -169,6 +169,10 @@
 - id: hallway_1st_floor_presence_on_motion
   alias: "[Hallway 1st Floor] Presence On (Motion)"
   trigger:
+    - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
+      from: "off"
+      platform: state
+      to: "on"
     - entity_id: binary_sensor.hallway_1st_floor_sensor_motion
       from: "off"
       platform: state
@@ -185,6 +189,12 @@
 - id: hallway_1st_floor_presence_off_motion
   alias: "[Hallway 1st Floor] Presence Off (Motion)"
   trigger:
+    - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
+      from: "on"
+      platform: state
+      to: "off"
+      for:
+        minutes: 3
     - entity_id: binary_sensor.hallway_1st_floor_sensor_motion
       from: "on"
       platform: state
