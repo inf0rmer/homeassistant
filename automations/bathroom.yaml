@@ -13,7 +13,7 @@
       entity_id: binary_sensor.presence_bathroom_1st_floor
       state: "on"
     - condition: state
-      entity_id: input_boolean.dnd_bathroom
+      entity_id: input_boolean.dnd_bathroom_1st_floor
       state: "off"
   action:
     - target:
