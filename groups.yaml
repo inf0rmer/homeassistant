@@ -9,7 +9,7 @@ all_motion_sensors:
     - binary_sensor.dining_room_sensor_motion
     - binary_sensor.living_room_sensor_motion
     - binary_sensor.master_bedroom_sensor_motion
-    - binary_sensor.emmas_bedroom_sensor_motion\
+    - binary_sensor.emmas_bedroom_sensor_motion
     - binary_sensor.hallway_ground_floor_sensor_motion
     - binary_sensor.hallway_1st_floor_sensor_motion
     - binary_sensor.hallway_2nd_floor_sensor_motion
