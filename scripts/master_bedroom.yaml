@@ -13,9 +13,6 @@ sarah_good_night:
     - data:
         entity_id: light.master_bedroom
       service: light.turn_off
-    - data:
-        entity_id: cover.master_bedroom_blind
-      service: cover.close_cover
     - condition: state
       entity_id: input_boolean.bruno_good_night_pressed
       state: "on"
@@ -38,9 +35,6 @@ bruno_good_night:
     - data:
         entity_id: light.master_bedroom
       service: light.turn_off
-    - data:
-        entity_id: cover.master_bedroom_blind
-      service: cover.close_cover
     - condition: state
       entity_id: input_boolean.sarah_good_night_pressed
       state: "on"

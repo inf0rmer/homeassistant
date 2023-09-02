@@ -520,11 +520,6 @@ views:
             title: Lights
             type: entities
           - entities:
-              - entity: cover.master_bedroom_blind_cover
-            show_header_toggle: false
-            title: Blinds
-            type: entities
-          - entities:
               - entity: sensor.master_bedroom_sensor_temperature
                 name: Temperature
               - entity: sensor.master_bedroom_sensor_light_level
@@ -665,7 +660,6 @@ views:
             type: light
           - entities:
               - entity: light.emmas_bedroom_ceiling
-              - entity: light.emmas_bedroom_nightlight
             title: Lights
             type: entities
           - entities:
