@@ -11,14 +11,6 @@ emma_bedtime:
         entity_id: light.emmas_bedroom
       service: light.turn_off
     - data:
-        brightness: 30
-        entity_id: light.emmas_bedroom_nightlight
-        rgb_color:
-          - 255
-          - 0
-          - 255
-      service: light.turn_on
-    - data:
         entity_id: input_boolean.presence_emmas_bedroom
       service: input_boolean.turn_on
 
