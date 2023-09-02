@@ -76,7 +76,6 @@ light:
 
   - platform: group
     name: Emmas Bedroom
-    friendly_name: "Emma's Bedroom"
     entities:
       - light.emmas_bedroom_ceiling
 
