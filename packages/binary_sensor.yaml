@@ -45,17 +45,6 @@ binary_sensor:
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}
-      presence_dining_room:
-        friendly_name: Presence Dining Room
-        device_class: occupancy
-        value_template: >-
-          {{ is_state('input_boolean.presence_dining_room_motion', 'on') or is_state('input_boolean.presence_dining_room_switch', 'on') or is_state('input_boolean.presence_dining_room_assistant', 'on') }}
-        attribute_templates:
-          reason: >
-            {% for entity in states.group.presence_dining_room.attributes.entity_id if is_state(entity, 'on') %}
-            {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
-            {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
-            {%- endfor %}
 
       presence_master_bedroom:
         friendly_name: Presence Master Bedroom

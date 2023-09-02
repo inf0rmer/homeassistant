@@ -6,7 +6,6 @@ all_light_switches:
 all_motion_sensors:
   name: All Motion Sensors
   entities:
-    - binary_sensor.dining_room_sensor_motion
     - binary_sensor.living_room_sensor_motion
     - binary_sensor.master_bedroom_sensor_motion
     - binary_sensor.emmas_bedroom_sensor_motion
@@ -18,7 +17,6 @@ all_occupancy_sensors:
   name: All Occupancy Sensors
   entities:
     - binary_sensor.presence_living_room
-    - binary_sensor.presence_dining_room
     - binary_sensor.presence_master_bedroom
     - binary_sensor.presence_emmas_bedroom
     - binary_sensor.presence_kitchen
@@ -60,7 +58,6 @@ dnd_other_rooms:
   all: true
   entities:
     - input_boolean.dnd_living_room
-    - input_boolean.dnd_dining_room
     - input_boolean.dnd_kitchen
     - input_boolean.dnd_hallway
     - input_boolean.dnd_bathroom_1st_floor

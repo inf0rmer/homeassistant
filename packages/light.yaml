@@ -7,12 +7,6 @@ light:
         turn_off:
         set_level:
 
-      dining_room_assistant:
-        friendly_name: "Dining Room"
-        turn_on:
-        turn_off:
-        set_level:
-
       master_bedroom_assistant:
         friendly_name: "Master Bedroom"
         turn_on:

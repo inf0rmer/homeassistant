@@ -337,25 +337,6 @@ views:
               - type: conditional
                 conditions:
                   - entity: vacuum.xiaomi_vacuum_cleaner
-                    state: docked
-                card:
-                  entity: script.clean_living_room
-                  icon: "mdi:broom"
-                  show_state: false
-                  name: Clean Dining Room
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.clean_living_room
-                  type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
                     state_not: docked
                 card:
                   entity: script.house_stop_cleaning

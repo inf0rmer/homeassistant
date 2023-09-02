@@ -10,7 +10,6 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.living_room
-      - light.office_desk_lightstrip
 
   - platform: circadian_lighting
     name: office
@@ -25,18 +24,6 @@ switch:
       - light.office_key_light_right
 
   - platform: circadian_lighting
-    name: dining_room
-    min_brightness: 35
-    sleep_entity: group.sleeping_bedrooms
-    sleep_brightness: 15
-    sleep_colortemp: 2000
-    sleep_state: "on"
-    disable_entity: input_boolean.dnd_dining_room
-    disable_state: "on"
-    lights_ct:
-      - light.dining_room
-
-  - platform: circadian_lighting
     name: kitchen
     min_brightness: 35
     sleep_entity: group.sleeping_bedrooms
@@ -49,7 +36,7 @@ switch:
       - light.kitchen
 
   - platform: circadian_lighting
-    name: bathroom
+    name: bathroom_1st_floor
     min_brightness: 35
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
@@ -58,7 +45,7 @@ switch:
     disable_entity: input_boolean.dnd_bathroom
     disable_state: "on"
     lights_ct:
-      - light.bathroom_ceiling
+      - light.bathroom_1st_floor_ceiling
 
   - platform: circadian_lighting
     name: hallway
@@ -83,8 +70,6 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.master_bedroom_ceiling
-      - light.master_bedroom_lightstrip_left
-      - light.master_bedroom_lightstrip_right
 
   - platform: circadian_lighting
     name: emmas_bedroom
@@ -106,6 +91,4 @@ switch:
     sleep_colortemp: 2000
     sleep_state: "on"
     lights_ct:
-      - light.laundry_room
       - light.closet
-      - light.balcony

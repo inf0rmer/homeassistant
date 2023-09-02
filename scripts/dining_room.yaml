@@ -1,9 +1,0 @@
-clean_dining_room:
-  alias: "[Dining Room] Start Cleaning"
-  sequence:
-    - data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        zone:
-          - [23695, 25114, 30045, 27964]
-        repeats: 1
-      service: xiaomi_miio.vacuum_clean_zone

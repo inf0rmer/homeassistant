@@ -134,9 +134,6 @@
     - target:
         entity_id: input_boolean.presence_living_room_assistant
       service: input_boolean.turn_on
-    - target:
-        entity_id: input_boolean.dnd_dining_room
-      service: input_boolean.turn_off
 
 - id: living_room_presence_off_assistant
   alias: "[Living Room] Presence Off (Assistant)"

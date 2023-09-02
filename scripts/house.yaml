@@ -126,11 +126,8 @@ house_nobody_home:
       service: cover.close_cover
     - target:
         entity_id: 
-          - group.presence_balcony
           - group.presence_bathroom_1st_floor
           - group.presence_closet
-          - group.presence_balcony
-          - group.presence_dining_room
           - group.presence_emmas_bedroom
           - group.presence_hallway
           - group.presence_kitchen

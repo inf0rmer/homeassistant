@@ -4,11 +4,8 @@ homekit:
       - lock
       - script
     include_entities:
-      - switch.balcony_plug
-      - switch.dining_room_cabinet
       - switch.christmas_tree
       - light.living_room_assistant
-      - light.dining_room_assistant
       - light.master_bedroom_assistant
       - light.emmas_bedroom_assistant
       - light.kitchen_assistant
@@ -17,10 +14,6 @@ homekit:
       - light.bathroom_assistant
 
   entity_config:
-    switch.balcony_plug:
-      name: Balcony Plug
-    switch.dining_room_cabinet:
-      name: Dining Room Cabinet Plug
     switch.christmas_tree:
       name: Christmas Tree
     sensor.home_sensor_average_temperature:

@@ -6,12 +6,6 @@ office_work_start:
   alias: "[Office] Start Working"
   sequence:
     - data:
-        entity_id: input_boolean.presence_living_room_switch
-      service: input_boolean.turn_on
-    - data:
-        entity_id: input_boolean.presence_dining_room_switch
-      service: input_boolean.turn_on
-    - data:
         entity_id: light.office_desk_lightstrip
       service: light.turn_on
 
@@ -28,41 +22,6 @@ office_streaming_start:
           - 255
           - 164
           - 74
-      service: light.turn_on
-    - data:
-        entity_id: light.living_room_ceiling_desk
-        brightness: 100
-        rgb_color:
-          - 255
-          - 128
-          - 26
-      service: light.turn_on
-    - data:
-        entity_id: light.living_room_ceiling_sofa
-        brightness: 100
-        rgb_color:
-          - 255
-          - 128
-          - 26
-      service: light.turn_on
-    - data:
-        entity_id: light.living_room_standing_lamp_desk
-        brightness: 100
-        rgb_color:
-          - 255
-          - 128
-          - 26
-      service: light.turn_on
-    - data:
-        entity_id: group.light_tv
-      service: light.turn_off
-    - data:
-        entity_id: light.tv_upper
-        brightness: 100
-        rgb_color:
-          - 255
-          - 128
-          - 26
       service: light.turn_on
 
 office_streaming_stop:
