@@ -48,25 +48,20 @@ views:
                       service_data:
                         entity_id: script.good_night
                     type: "custom:button-card"
-                  - type: conditional
-                    conditions:
-                      - entity: group.dnd_bedrooms
-                        state: "on"
-                    card:
-                      entity: script.house_wake_up_no_delay
-                      icon: "mdi:sleep-off"
-                      show_state: false
-                      name: Wake Up
-                      size: 25%
-                      styles:
-                        card:
-                          - font-size: 12px
-                      tap_action:
-                        action: call-service
-                        service: script.turn_on
-                        service_data:
-                          entity_id: script.house_wake_up_no_delay
-                      type: "custom:button-card"
+                  - entity: script.house_wake_up_no_delay
+                    icon: "mdi:sleep-off"
+                    show_state: false
+                    name: Wake Up
+                    size: 25%
+                    styles:
+                      card:
+                        - font-size: 12px
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.house_wake_up_no_delay
+                    type: "custom:button-card"
                   - type: conditional
                     conditions:
                       - entity: vacuum.xiaomi_vacuum_cleaner
@@ -143,10 +138,6 @@ views:
                 cards:
                   - type: thermostat
                     entity: climate.house
-                  - type: thermostat
-                    entity: climate.living_room
-                  - type: thermostat
-                    entity: climate.office
               - type: horizontal-stack
                 cards:
                   - entities: 
