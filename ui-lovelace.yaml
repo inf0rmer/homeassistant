@@ -136,7 +136,7 @@ views:
                       - person.sarah_abrantes
               - type: horizontal-stack
                 cards:
-                  - type: thermostat
+                  - type: thermostat``
                     entity: climate.house
               - type: horizontal-stack
                 cards:
@@ -755,9 +755,8 @@ views:
             name: All Lights
             type: light
           - entities:
-              - entity: light.kitchen_counter
-              - entity: light.kitchen_ceiling_1
-              - entity: light.kitchen_ceiling_2
+              - entity: light.kitchen_ceiling_spot_1
+              - entity: light.kitchen_ceiling_spot_2
             show_header_toggle: false
             title: Lights
             type: entities
