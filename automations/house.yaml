@@ -170,6 +170,34 @@
         entity_id: script.house_nobody_home
       service: script.turn_on
 
+- id: house_thermostat_away
+  alias: "[House] Set Thermostat Away"
+  trigger:
+    - entity_id: binary_sensor.someone_home
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: climate.house
+      service: climate.set_preset_mode
+      data:
+        preset_mode: away
+
+- id: house_thermostat_home
+  alias: "[House] Set Thermostat Home"
+  trigger:
+    - entity_id: binary_sensor.someone_home
+      from: "off"
+      platform: state
+      to: "on"
+  action:
+    - target:
+        entity_id: climate.house
+      service: climate.set_preset_mode
+      data:
+        preset_mode: home
+
 - id: house_sunrise
   alias: "[House] Sunrise"
   trigger:
@@ -197,22 +225,6 @@
         entity_id:
           - scene.sunset
       service: scene.turn_on
-
-- id: house_someone_arrives
-  alias: "[House] Anyone comes home before sunset"
-  trigger:
-    - entity_id: binary_sensor.someone_home
-      from: "off"
-      platform: state
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: sun.sun
-      state: above_horizon
-  action:
-    - target:
-        entity_id: group.all_covers
-      service: cover.open_cover
 
 - id: house_someone_arrives_after_sunset
   alias: "[House] Anyone comes home after Sunset"
