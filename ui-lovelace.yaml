@@ -897,41 +897,6 @@ views:
             title: Lights
             type: entities
 
-  - path: laundry-room
-    title: Laundry Room
-    panel: false
-    cards:
-      - type: grid
-        columns: 1
-        square: false
-        cards:
-          - entity: binary_sensor.presence_laundry_room
-            name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
-            label: "[[[return entity.attributes.reason]]]"
-            show_label: true
-            size: 10%
-            styles:
-              card:
-                - font-size: 12px
-              label:
-                - color: '[[[ if (states["sun.sun"].state == "above_horizon") return "#666"; else return "#ccc" ]]]'
-                - font-size: 10px
-            tap_action:
-              action: call-service
-              service: '[[[ if (states["input_boolean.presence_laundry_room_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
-              service_data:
-                entity_id: input_boolean.presence_laundry_room_assistant
-            hold_action:
-              action: call-service
-              service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
-              service_data:
-                entity_id: group.presence_laundry_room
-            type: "custom:button-card"
-          - entity: light.laundry_room
-            name: Light
-            theme: Backend-selected
-            type: light
-
   - path: closet
     title: Closet
     panel: false
