@@ -34,13 +34,6 @@
       target:
         entity_id: light.master_bedroom_bedside
       service: light.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_master_bedroom', 'brightness') | int }}"
-        transition: 3
-      target:
-        entity_id: light.master_bedroom_lightstrips
-      service: light.turn_on
 
 - id: master_bedroom_lights_off
   alias: "[Master Bedroom] Lights Off"
@@ -62,11 +55,6 @@
         transition: 2
       target:
         entity_id: light.master_bedroom_bedside
-      service: light.turn_off
-    - data:
-        transition: 2
-      target:
-        entity_id: light.master_bedroom_lightstrips
       service: light.turn_off
 
 - id: master_bedroom_presence_on_motion
@@ -232,13 +220,6 @@
       target:
         entity_id: light.master_bedroom_bedside
       service: light.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_master_bedroom', 'brightness') | int }}"
-        transition: 3
-      target:
-        entity_id: light.master_bedroom_lightstrips
-      service: light.turn_on
 
 - id: master_bedroom_presence_off_manual_switch
   alias: "[Master Bedroom] Presence Off (Switch)"
@@ -266,9 +247,6 @@
       service: light.turn_off
     - target:
         entity_id: light.master_bedroom_bedside
-      service: light.turn_off
-    - target:
-        entity_id: light.master_bedroom_lightstrips
       service: light.turn_off
 
 - id: master_bedroom_manual_switch_brightness_up
