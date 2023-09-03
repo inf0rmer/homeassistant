@@ -47,14 +47,9 @@
 - id: living_room_presence_on_tv
   alias: "[Living Room] Presence On (TV)"
   trigger:
-    - entity_id: sensor.tv_activity
-      from: "False"
+    - entity_id: media_player.living_room_apple_tv
       platform: state
-      to: "True"
-    - platform: state
-      entity_id: media_player.living_room_apple_tv
       from: standby
-      to: idle
   condition:
     - condition: state
       entity_id: binary_sensor.someone_home
@@ -67,13 +62,8 @@
 - id: living_room_presence_off_tv
   alias: "[Living Room] Presence Off (TV)"
   trigger:
-    - entity_id: sensor.tv_activity
-      from: "True"
-      platform: state
-      to: "False"
     - platform: state
       entity_id: media_player.living_room_apple_tv
-      from: idle
       to: standby
   action:
     - delay:
