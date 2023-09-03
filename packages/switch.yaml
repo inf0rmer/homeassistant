@@ -84,7 +84,7 @@ switch:
       - light.emmas_bedroom
 
   - platform: circadian_lighting
-    name: others
+    name: closet
     min_brightness: 35
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15

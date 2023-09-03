@@ -112,6 +112,15 @@ presence_hallway_2nd_floor:
     - input_boolean.presence_hallway_2nd_floor_motion
     - input_boolean.presence_hallway_2nd_floor_assistant
 
+presence_hallway:
+  entities:
+    - input_boolean.presence_hallway_ground_floor_motion
+    - input_boolean.presence_hallway_ground_floor_assistant
+    - input_boolean.presence_hallway_1st_floor_motion
+    - input_boolean.presence_hallway_1st_floor_assistant
+    - input_boolean.presence_hallway_2nd_floor_motion
+    - input_boolean.presence_hallway_2nd_floor_assistant
+
 presence_bathroom_1st_floor:
   entities:
     - input_boolean.presence_bathroom_1st_floor_switch
@@ -119,7 +128,8 @@ presence_bathroom_1st_floor:
 
 presence_closet:
   entities:
-    - input_boolean.presence_closet_door
+    - input_boolean.presence_closet_motion
+    - input_boolean.presence_closet_assistant
 
 presence_bedrooms:
   all: true

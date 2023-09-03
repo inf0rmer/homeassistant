@@ -116,7 +116,6 @@ house_nobody_home:
           - group.presence_emmas_bedroom
           - group.presence_hallway
           - group.presence_kitchen
-          - group.presence_laundry_room
           - group.presence_living_room
           - group.presence_master_bedroom
       service: homeassistant.turn_off
