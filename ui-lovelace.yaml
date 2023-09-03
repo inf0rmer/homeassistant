@@ -888,3 +888,9 @@ views:
             name: Light
             theme: Backend-selected
             type: light
+          - entities:
+              - entity: sensor.closet_sensor_temperature
+                name: Temperature
+              - entity: sensor.closet_sensor_light_level
+                name: Light Level
+            type: "custom:mini-graph-card"
