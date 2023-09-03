@@ -8,7 +8,7 @@ switch:
     sleep_state: "on"
     disable_entity: input_boolean.dnd_living_room
     disable_state: "on"
-    lights_ct:
+    lights_rgb:
       - light.living_room
 
   - platform: circadian_lighting
@@ -18,7 +18,7 @@ switch:
     disable_entity: input_boolean.dnd_living_room
     disable_state: "on"
     disable_brightness_adjust: true
-    lights_ct:
+    lights_rgb:
       - light.office_desk_lightstrip
       - light.office_key_light_left
       - light.office_key_light_right
@@ -68,7 +68,7 @@ switch:
     sleep_state: "on"
     disable_entity: input_boolean.dnd_master_bedroom
     disable_state: "on"
-    lights_ct:
+    lights_rgb:
       - light.master_bedroom_ceiling
 
   - platform: circadian_lighting
@@ -80,7 +80,7 @@ switch:
     sleep_state: "on"
     disable_entity: input_boolean.dnd_emmas_bedroom
     disable_state: "on"
-    lights_ct:
+    lights_rgb:
       - light.emmas_bedroom
 
   - platform: circadian_lighting
