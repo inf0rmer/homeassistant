@@ -1,0 +1,5 @@
+template:
+  - sensor:
+    - name: office_sensor_temperature
+      unit_of_measurement: '°C'
+      state: "{{ state_attr('climate.office', 'current_temperature') }}"
