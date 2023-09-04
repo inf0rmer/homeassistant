@@ -74,7 +74,6 @@ presence_living_room:
     - input_boolean.presence_living_room_motion
     - input_boolean.presence_living_room_switch
     - input_boolean.presence_living_room_tv
-    - input_boolean.presence_living_room_brunos_pc
     - input_boolean.presence_living_room_assistant
 
 presence_master_bedroom:
@@ -131,6 +130,13 @@ presence_closet:
     - input_boolean.presence_closet_motion
     - input_boolean.presence_closet_assistant
 
+presence_office:
+  entities:
+    - input_boolean.presence_office_motion
+    - input_boolean.presence_office_switch
+    - input_boolean.presence_office_assistant
+    - input_boolean.presence_office_brunos_pc
+
 presence_bedrooms:
   all: true
   entities:
@@ -146,7 +152,8 @@ presence_other_rooms:
     - group.presence_hallway_2nd_floor
     - group.presence_bathroom_1st_floor
     - group.presence_closet
-    - input_boolean.presence_living_room
+    - group.presence_living_room
+    - group.presence_office
 
 sleeping_bedrooms:
   all: true
