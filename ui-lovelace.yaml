@@ -283,9 +283,7 @@ views:
           - type: thermostat
             entity: climate.living_room
           - entities:
-              - entity: light.living_room_ceiling_sofa
-              - entity: light.living_room_ceiling_desk
-              - entity: light.living_room_standing_lamp_desk
+              - entity: light.living_room_standing_lamp
               - entity: group.light_tv
               - entity: switch.christmas_tree
                 icon: "mdi:pine-tree"
