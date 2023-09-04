@@ -1,31 +1,11 @@
 cloud:
-  alexa:
-    filter:
-      include_domains:
-        - lock
-        - script
-        - cover
-      include_entities:
-        - switch.christmas_tree
-        - switch.homelab
-        - input_boolean.dnd_living_room
-        - input_boolean.dnd_master_bedroom
-        - input_boolean.dnd_emmas_bedroom
-        - input_boolean.dnd_hallway
-        - light.living_room_assistant
-        - light.master_bedroom_assistant
-        - light.emmas_bedroom_assistant
-        - light.kitchen_assistant
-        - light.hallway_assistant
-        - light.laundry_room_assistant
-        - light.bathroom_assistant
-
   google_actions:
     filter:
       include_domains:
         - lock
         - script
         - cover
+        - climate
       include_entities:
         - switch.christmas_tree
         - switch.homelab
@@ -37,6 +17,8 @@ cloud:
         - input_boolean.presence_master_bedroom_assistant
         - input_boolean.presence_emmas_bedroom_assistant
         - input_boolean.presence_kitchen_assistant
-        - input_boolean.presence_hallway_assistant
-        - input_boolean.presence_laundry_room_assistant
-        - input_boolean.presence_bathroom_assistant
+        - input_boolean.presence_office_assistant
+        - input_boolean.presence_hallway_ground_floor_assistant
+        - input_boolean.presence_hallway_1st_floor_assistant
+        - input_boolean.presence_hallway_2nd_floor_assistant
+        - input_boolean.presence_bathroom_1st_floor_assistant
