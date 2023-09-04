@@ -47,7 +47,7 @@ switch:
     disable_entity: input_boolean.dnd_bathroom
     disable_state: "on"
     lights_ct:
-      - light.bathroom_1st_floor_ceiling
+      - light.bathroom_1st_floor
 
   - platform: circadian_lighting
     name: hallway
@@ -98,5 +98,10 @@ switch:
   - platform: circadian_lighting
     name: office
     min_brightness: 35
+    sleep_entity: group.sleeping_bedrooms
+    sleep_brightness: 15
+    sleep_colortemp: 2000
+    disable_entity: input_boolean.office_dnd
+    disable_state: "on"
     lights_ct:
       - light.office
