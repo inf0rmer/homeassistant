@@ -99,3 +99,9 @@ sensor:
       - sensor.hallway_ground_floor_sensor_light_level
       - sensor.hallway_1st_floor_sensor_light_level
       - sensor.hallway_2nd_floor_sensor_light_level
+
+  - platform: template
+    name: office_sensor_temperature
+    friendly_name: Office Temperature
+    unit_of_measurement: '°C'
+    value_template: "{{ state_attr('climate.office', 'current_temperature') }}"
