@@ -6,7 +6,7 @@ office_work_start:
   alias: "[Office] Start Working"
   sequence:
     - data:
-        entity_id: light.office_desk_lightstrip
+        entity_id: light.office
       service: light.turn_on
 
 office_streaming_start:

@@ -62,6 +62,8 @@ light:
     name: Office
     entities:
       - light.office_desk_lightstrip
+      - light.office_ceiling_spot_1
+      - light.office_ceiling_spot_2
 
   - platform: group
     name: Living Room

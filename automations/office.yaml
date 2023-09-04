@@ -119,7 +119,7 @@
   trigger:
     - event_data:
         command: "on"
-        device_ieee: 00:17:88:01:03:cb:b6:e4
+        device_ieee: 00:17:88:01:06:e9:47:b2
       event_type: zha_event
       platform: event
   action:
@@ -144,7 +144,7 @@
   trigger:
     - event_data:
         command: off_with_effect
-        device_ieee: 00:17:88:01:03:cb:b6:e4
+        device_ieee: 00:17:88:01:06:e9:47:b2
       event_type: zha_event
       platform: event
   action:
@@ -169,7 +169,7 @@
   trigger:
     - event_data:
         command: step
-        device_ieee: 00:17:88:01:03:cb:b6:e4
+        device_ieee: 00:17:88:01:06:e9:47:b2
       event_type: zha_event
       platform: event
   condition:
@@ -190,7 +190,7 @@
   trigger:
     - event_data:
         command: step
-        device_ieee: 00:17:88:01:03:cb:b6:e4
+        device_ieee: 00:17:88:01:06:e9:47:b2
       event_type: zha_event
       platform: event
   condition:
@@ -206,12 +206,41 @@
       data:
         brightness_step: -50
 
+- id: office_presence_on_brunos_pc
+  alias: "[Living Room] Presence On (Bruno's PC)"
+  trigger:
+    - entity_id: device_tracker.brunos_pc
+      platform: state
+      to: "home"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_office_brunos_pc
+      service: input_boolean.turn_on
+
+- id: office_presence_off_brunos_pc
+  alias: "[Living Room] Presence Off (Bruno's PC)"
+  trigger:
+    - entity_id: device_tracker.brunos_pc
+      from: "home"
+      platform: state
+      to: "not_home"
+  action:
+    - delay:
+        minutes: 5
+    - target:
+        entity_id: input_boolean.presence_office_brunos_pc
+      service: input_boolean.turn_off
+
 - id: office_manual_switch_dnd_on
   alias: "[Office] Manual Switch Turn On DnD"
   trigger:
     - event_data:
         command: step
-        device_ieee: 00:17:88:01:03:cb:b6:e4
+        device_ieee: 00:17:88:01:06:e9:47:b2
       event_type: zha_event
       platform: event
   condition:
@@ -231,7 +260,7 @@
   trigger:
     - event_data:
         command: stop
-        device_ieee: 00:17:88:01:03:cb:b6:e4
+        device_ieee: 00:17:88:01:06:e9:47:b2
       event_type: zha_event
       platform: event
     - entity_id: input_boolean.presence_office_assistant
