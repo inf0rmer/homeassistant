@@ -393,8 +393,7 @@ views:
           - type: thermostat
             entity: climate.office
           - entities:
-              - entity: light.office_ceiling_spot_1
-              - entity: light.office_ceiling_spot_2
+              - entity: light.office_ceiling_spot
               - entity: light.office_desk_lightstrip
               - entity: light.office_key_light_left
               - entity: light.office_key_light_right
