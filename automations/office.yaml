@@ -281,7 +281,8 @@
   alias: "[Office] Air Conditioner On"
   trigger:
     - platform: numeric_state
-      entity_id: climate.office.current_temperature
+      entity_id: climate.office
+      attribute: current_temperature
       above: 23
   condition:
     - condition: state
@@ -299,7 +300,8 @@
   alias: "[Office] Air Conditioner Off"
   trigger:
     - platform: numeric_state
-      entity_id: climate.office.current_temperature
+      entity_id: climate.office
+      attribute: current_temperature
       below: 21
     - platform: state
       entity_id: binary_sensor.presence_office

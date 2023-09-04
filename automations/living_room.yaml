@@ -222,7 +222,8 @@
   alias: "[Living Room] Air Conditioner On"
   trigger:
     - platform: numeric_state
-      entity_id: climate.living_room.current_temperature
+      entity_id: climate.living_room
+      attribute: current_temperature
       above: 23
   condition:
     - condition: state
@@ -240,7 +241,8 @@
   alias: "[Living Room] Air Conditioner Off"
   trigger:
     - platform: numeric_state
-      entity_id: climate.living_room.current_temperature
+      entity_id: climate.living_room
+      attribute: current_temperature
       below: 21
     - platform: state
       entity_id: binary_sensor.presence_living_room
