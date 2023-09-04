@@ -59,6 +59,12 @@ light:
         turn_off:
   
   - platform: group
+    name: Office Ceiling Spot
+    entities:
+      - light.office_ceiling_spot_1
+      - light.office_ceiling_spot_2
+
+  - platform: group
     name: Office
     entities:
       - light.office_desk_lightstrip
