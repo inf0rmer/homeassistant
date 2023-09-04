@@ -73,7 +73,7 @@
       platform: state
       to: "off"
       for:
-        minutes: 3
+        minutes: 1
   condition:
     - condition: state
       entity_id: input_boolean.dnd_hallway
@@ -193,7 +193,7 @@
       platform: state
       to: "off"
       for:
-        minutes: 3
+        minutes: 1
   condition:
     - condition: state
       entity_id: input_boolean.dnd_hallway
@@ -227,7 +227,7 @@
       platform: state
       to: "off"
       for:
-        minutes: 3
+        minutes: 1
   condition:
     - condition: state
       entity_id: input_boolean.dnd_hallway
@@ -343,7 +343,7 @@
       platform: state
       to: "off"
       for:
-        minutes: 3
+        minutes: 1
   condition:
     - condition: state
       entity_id: input_boolean.dnd_hallway
