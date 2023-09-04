@@ -12,6 +12,7 @@ homekit:
       - light.hallway_assistant
       - light.laundry_room_assistant
       - light.bathroom_assistant
+      - light.office_assistant
 
   entity_config:
     switch.christmas_tree:

@@ -92,3 +92,9 @@ switch:
     sleep_state: "on"
     lights_ct:
       - light.closet
+
+  - platform: circadian_lighting
+    name: office
+    min_brightness: 35
+    lights_ct:
+      - light.office
