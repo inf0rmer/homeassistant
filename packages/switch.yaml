@@ -1,4 +1,8 @@
 switch:
+  - platform: aarlo
+    snapshot: True
+    doorbell_silence: True
+
   - platform: circadian_lighting
     name: living_room
     min_brightness: 35

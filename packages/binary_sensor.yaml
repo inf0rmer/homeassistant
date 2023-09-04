@@ -1,4 +1,9 @@
 binary_sensor:
+  - platform: aarlo
+    monitored_conditions:
+      - motion
+      - ding
+      - connectivity
   - platform: template
     sensors:
       hallway_combined_sensor_motion:
