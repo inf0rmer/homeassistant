@@ -67,9 +67,9 @@ light:
     name: Living Room
     entities:
       - light.tv_upper
-      - light.tv_lower
       - light.tv_right
       - light.tv_left
+      - light.living_room_standing_lamp
 
   - platform: group
     name: Master Bedroom
