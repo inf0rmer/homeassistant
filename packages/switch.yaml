@@ -87,7 +87,7 @@ switch:
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
-    disable_entity: input_boolean.office_dnd
+    disable_entity: input_boolean.dnd_office
     disable_state: "on"
     lights_ct:
       - light.office_ceiling_spot_1
