@@ -403,8 +403,6 @@ views:
           - entities:
               - entity: sensor.office_sensor_temperature
                 name: Temperature
-              - entity: sensor.office_sensor_light_level
-                name: Light Level
             type: "custom:mini-graph-card"
  
   - path: master-bedroom
