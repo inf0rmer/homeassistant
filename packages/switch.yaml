@@ -12,20 +12,6 @@ switch:
       - light.living_room
 
   - platform: circadian_lighting
-    name: office
-    min_brightness: 35
-    sleep_state: "on"
-    disable_entity: input_boolean.dnd_living_room
-    disable_state: "on"
-    disable_brightness_adjust: true
-    lights_ct:
-      - light.office_ceiling_spot_1
-      - light.office_ceiling_spot_2
-      - light.office_desk_lightstrip
-      - light.office_key_light_left
-      - light.office_key_light_right
-
-  - platform: circadian_lighting
     name: kitchen
     min_brightness: 35
     sleep_entity: group.sleeping_bedrooms
@@ -104,4 +90,8 @@ switch:
     disable_entity: input_boolean.office_dnd
     disable_state: "on"
     lights_ct:
-      - light.office
+      - light.office_ceiling_spot_1
+      - light.office_ceiling_spot_2
+      - light.office_desk_lightstrip
+      - light.office_key_light_left
+      - light.office_key_light_right
