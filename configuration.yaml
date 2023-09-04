@@ -126,12 +126,3 @@ system_health:
 #   token: !env_var GITHUB_TOKEN
 
 circadian_lighting:
-
-aarlo:
-  username: !env_var ARLO_USERNAME
-  password: !env_var ARLO_PASSWORD
-  refresh_devices_every: 2
-  stream_timeout: 120
-  reconnect_every: 90
-  tfa_source: push
-  tfa_type: PUSH
