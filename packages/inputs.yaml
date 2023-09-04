@@ -23,7 +23,6 @@ input_boolean:
   presence_living_room_motion:
   presence_living_room_switch:
   presence_living_room_tv:
-  presence_living_room_brunos_pc:
   presence_living_room_assistant:
   presence_master_bedroom_motion:
   presence_master_bedroom_switch:
@@ -53,6 +52,7 @@ input_boolean:
   presence_office_motion:
   presence_office_switch:
   presence_office_assistant:
+  presence_office_brunos_pc:
 
   presence_bruno:
     name: Bruno
@@ -63,9 +63,6 @@ input_boolean:
   presence_someone:
     name: Guest
     icon: "mdi:account-multiple"
-
-  living_room_watch_tv_fan_automation:
-    name: Living Room Fan Automation Toggle
 
   sarah_good_night_pressed:
     name: Sarah's Good Night Button Pressed
