@@ -180,10 +180,6 @@ views:
                         name: Avg. Light Level
                     type: "custom:mini-graph-card"
                     icon: "mdi:thermometer"
-              - type: horizontal-stack
-                cards:
-                  - entity: media_player.spotify_bruno_abrantes
-                    type: "custom:mini-media-player"
 
   - path: living-room
     title: Living Room
@@ -296,11 +292,7 @@ views:
           - entities:
               - entity: sensor.living_room_sensor_temperature
                 name: Temperature
-              - entity: sensor.living_room_sensor_light_level
-                name: Light Level
             type: "custom:mini-graph-card"
-          - entity: media_player.spotify_bruno_abrantes
-            type: "custom:mini-media-player"
 
   - path: office
     title: Office
@@ -509,8 +501,6 @@ views:
               - entity: sensor.master_bedroom_sensor_light_level
                 name: Light Level
             type: "custom:mini-graph-card"
-          - entity: media_player.spotify_bruno_abrantes
-            type: "custom:mini-media-player"
 
   - path: emmas-bedroom
     title: Emma's Bedroom
@@ -652,8 +642,6 @@ views:
               - entity: sensor.emmas_bedroom_sensor_light_level
                 name: Light Level
             type: "custom:mini-graph-card"
-          - entity: media_player.spotify_bruno_abrantes
-            type: "custom:mini-media-player"
 
   - path: kitchen
     title: Kitchen
@@ -759,8 +747,6 @@ views:
               - entity: sensor.kitchen_sensor_light_level
                 name: Light Level
             type: "custom:mini-graph-card"
-          - entity: media_player.spotify_bruno_abrantes
-            type: "custom:mini-media-player"
 
   - path: hallway
     title: Hallway

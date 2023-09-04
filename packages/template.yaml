@@ -3,3 +3,6 @@ template:
     - name: office_sensor_temperature
       unit_of_measurement: '°C'
       state: "{{ state_attr('climate.office', 'current_temperature') }}"
+    - name: living_room_sensor_temperature
+      unit_of_measurement: '°C'
+      state: "{{ state_attr('climate.living_room', 'current_temperature') }}"
