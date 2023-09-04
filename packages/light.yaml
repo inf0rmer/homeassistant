@@ -47,13 +47,21 @@ light:
         friendly_name: "Bathroom 1st Floor"
         turn_on:
         turn_off:
+     
+      closet_assistant:
+        friendly_name: "Closet"
+        turn_on:
+        turn_off:
+      
+      office_assistant:
+        friendly_name: "Office"
+        turn_on:
+        turn_off:
   
   - platform: group
     name: Office
     entities:
       - light.office_desk_lightstrip
-      - light.office_key_light_left
-      - light.office_key_light_right
 
   - platform: group
     name: Living Room
@@ -103,8 +111,3 @@ light:
     name: Closet
     entities:
       - light.closet_ceiling
-
-  - platform: group
-    name: Laundry Room
-    entities:
-      - light.laundry_room_ceilin

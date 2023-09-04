@@ -314,7 +314,7 @@ views:
         cards:
           - type: horizontal-stack
             cards:
-              - entity: input_boolean.dnd_living_room
+              - entity: input_boolean.dnd_office
                 icon: "mdi:weather-night"
                 show_state: false
                 name: Do Not Disturb
@@ -326,7 +326,7 @@ views:
                   action: call-service
                   service: input_boolean.toggle
                   service_data:
-                    entity_id: input_boolean.dnd_living_room
+                    entity_id: input_boolean.dnd_office
                 type: "custom:button-card"
               - type: conditional
                 conditions:
@@ -366,7 +366,7 @@ views:
                 type: "custom:button-card"
           - type: horizontal-stack
             cards:
-              - entity: binary_sensor.presence_living_room
+              - entity: binary_sensor.presence_office
                 name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
                 label: "[[[return entity.attributes.reason]]]"
                 show_label: true
@@ -379,14 +379,14 @@ views:
                     - font-size: 10px
                 tap_action:
                   action: call-service
-                  service: '[[[ if (states["input_boolean.presence_living_room_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
+                  service: '[[[ if (states["input_boolean.presence_office_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
                   service_data:
-                    entity_id: input_boolean.presence_living_room_assistant
+                    entity_id: input_boolean.presence_office_assistant
                 hold_action:
                   action: call-service
                   service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
                   service_data:
-                    entity_id: group.presence_living_room
+                    entity_id: group.presence_office
                 type: "custom:button-card"
           - entity: light.office
             name: All Lights
@@ -402,13 +402,11 @@ views:
             title: Lights
             type: entities
           - entities:
-              - entity: sensor.living_room_sensor_temperature
+              - entity: sensor.office_sensor_temperature
                 name: Temperature
-              - entity: sensor.living_room_sensor_light_level
+              - entity: sensor.office_sensor_light_level
                 name: Light Level
             type: "custom:mini-graph-card"
-          - entity: media_player.spotify_bruno_abrantes
-            type: "custom:mini-media-player"
  
   - path: master-bedroom
     title: Master Bedroom
