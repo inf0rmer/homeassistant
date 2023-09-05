@@ -317,10 +317,18 @@
       entity_id: climate.living_room
       attribute: current_temperature
       above: 24
+    - platform: state
+      entity_id: binary_sensor.presence_living_room
+      from: "off"
+      to: "on"
   condition:
     - condition: state
       entity_id: binary_sensor.presence_living_room
       state: "on"
+    - condition: state
+      entity_id: climate.living_room
+      attribute: current_temperature
+      above: 24
   action:
     - entity_id: climate.living_room
       service: climate.set_temperature

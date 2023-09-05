@@ -284,10 +284,18 @@
       entity_id: climate.office
       attribute: current_temperature
       above: 24
+    - platform: state
+      entity_id: binary_sensor.presence_office
+      from: "off"
+      to: "on"
   condition:
     - condition: state
       entity_id: binary_sensor.presence_office
       state: "on"
+    - condition: state
+      entity_id: climate.office
+      attribute: current_temperature
+      above: 24
   action:
     - entity_id: climate.office
       service: climate.set_temperature
