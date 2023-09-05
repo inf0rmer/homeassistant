@@ -367,6 +367,12 @@ views:
             type: light
           - type: thermostat
             entity: climate.office
+          - type: horizontal-stack
+            cards:
+              - type: "custom:xiaomi-vacuum-card"
+                entity: vacuum.roborock_s5
+                image: false
+                name: Robot Vacuum
           - entities:
               - entity: light.office_ceiling_spot
               - entity: light.office_desk_lightstrip
