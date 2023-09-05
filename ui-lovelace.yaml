@@ -375,6 +375,7 @@ views:
                 name: Robot Vacuum
           - entities:
               - entity: light.office_ceiling_spot
+              - entity: light.office_accent
               - entity: light.office_desk_lightstrip
               - entity: light.office_key_light_left
               - entity: light.office_key_light_right
