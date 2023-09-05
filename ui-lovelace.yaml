@@ -272,6 +272,11 @@ views:
                       service_data:
                         entity_id: group.presence_living_room
                     type: "custom:button-card"
+          - entity: media_player.living_room_apple_tv
+            name: Apple TV
+            artwork: cover
+            icon: mdi:television
+            type: custom:mini-media-player
           - entity: light.living_room
             name: All Lights
             theme: Backend-selected
