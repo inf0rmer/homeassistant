@@ -224,7 +224,7 @@
     - platform: numeric_state
       entity_id: climate.living_room
       attribute: current_temperature
-      above: 23
+      above: 24
   condition:
     - condition: state
       entity_id: binary_sensor.presence_living_room
@@ -233,7 +233,7 @@
     - entity_id: climate.living_room
       service: climate.set_temperature
       data:
-        temperature: 20
+        temperature: 21
     - entity_id: climate.living_room
       service: climate.turn_on
 
@@ -243,7 +243,7 @@
     - platform: numeric_state
       entity_id: climate.living_room
       attribute: current_temperature
-      below: 21
+      below: 22
     - platform: state
       entity_id: binary_sensor.presence_living_room
       from: "on"
