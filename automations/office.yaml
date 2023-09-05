@@ -292,7 +292,7 @@
     - condition: state
       entity_id: binary_sensor.presence_office
       state: "on"
-    - condition: state
+    - condition: numeric_state
       entity_id: climate.office
       attribute: current_temperature
       above: 24
