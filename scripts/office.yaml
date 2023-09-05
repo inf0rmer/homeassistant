@@ -2,6 +2,25 @@
 # Office #
 ##########
 
+office_start_cleaning:
+  alias: "[Office] Start Cleaning"
+  sequence:
+    - data:
+        entity_id: vacuum.roborock_s5
+      service: xiaomi_miio.vacuum_start
+
+office_stop_cleaning:
+  alias: "[Office] Stop Cleaning"
+  sequence:
+    - data:
+        entity_id: vacuum.roborock_s5
+      service: vacuum.pause
+    - delay:
+        seconds: 5
+    - data:
+        entity_id: vacuum.roborock_s5
+      service: vacuum.return_to_base
+
 office_work_start:
   alias: "[Office] Start Working"
   sequence:

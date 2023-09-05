@@ -207,47 +207,6 @@ views:
                       service_data:
                         entity_id: input_boolean.dnd_living_room
                     type: "custom:button-card"
-                  - type: conditional
-                    conditions:
-                      - entity: vacuum.xiaomi_vacuum_cleaner
-                        state: docked
-                    card:
-                      entity: script.clean_living_room
-                      icon: "mdi:broom"
-                      show_state: false
-                      name: Clean Living Room
-                      size: 25%
-                      styles:
-                        card:
-                          - font-size: 12px
-                      tap_action:
-                        action: call-service
-                        service: script.turn_on
-                        service_data:
-                          entity_id: script.clean_living_room
-                      type: "custom:button-card"
-                  - type: conditional
-                    conditions:
-                      - entity: vacuum.xiaomi_vacuum_cleaner
-                        state_not: docked
-                    card:
-                      entity: script.house_stop_cleaning
-                      icon: "mdi:cancel"
-                      show_state: false
-                      name: Stop Cleaning
-                      size: 25%
-                      styles:
-                        card:
-                          - font-size: 12px
-                          - color: red
-                        icon:
-                          - color: red
-                      tap_action:
-                        action: call-service
-                        service: script.turn_on
-                        service_data:
-                          entity_id: script.house_stop_cleaning
-                      type: "custom:button-card"
               - type: horizontal-stack
                 cards:
                   - entity: binary_sensor.presence_living_room
@@ -325,10 +284,29 @@ views:
                 type: "custom:button-card"
               - type: conditional
                 conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
+                  - entity: vacuum.roborock_s5
+                    state: docked
+                card:
+                  entity: script.office_start_cleaning
+                  icon: "mdi:broom"
+                  show_state: false
+                  name: Clean Office
+                  size: 25%
+                  styles:
+                    card:
+                      - font-size: 12px
+                  tap_action:
+                    action: call-service
+                    service: script.turn_on
+                    service_data:
+                      entity_id: script.office_start_cleaning
+                  type: "custom:button-card"
+              - type: conditional
+                conditions:
+                  - entity: vacuum.roborock_s5
                     state_not: docked
                 card:
-                  entity: script.house_stop_cleaning
+                  entity: script.office_stop_cleaning
                   icon: "mdi:cancel"
                   show_state: false
                   name: Stop Cleaning
@@ -343,7 +321,7 @@ views:
                     action: call-service
                     service: script.turn_on
                     service_data:
-                      entity_id: script.house_stop_cleaning
+                      entity_id: script.office_stop_cleaning
                   type: "custom:button-card"
               - entity: script.office_streaming_start
                 icon: "mdi:video-check"
@@ -426,47 +404,6 @@ views:
                   service_data:
                     entity_id: input_boolean.dnd_master_bedroom
                 type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    state: docked
-                card:
-                  entity: script.clean_master_bedroom
-                  icon: "mdi:broom"
-                  show_state: false
-                  name: Clean Master Bedroom
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.clean_master_bedroom
-                  type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    state_not: docked
-                card:
-                  entity: script.house_stop_cleaning
-                  icon: "mdi:cancel"
-                  show_state: false
-                  name: Stop Cleaning
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                      - color: red
-                    icon:
-                      - color: red
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.house_stop_cleaning
-                  type: "custom:button-card"
           - type: horizontal-stack
             cards:
               - entity: binary_sensor.presence_master_bedroom
@@ -531,47 +468,6 @@ views:
                   service_data:
                     entity_id: input_boolean.dnd_emmas_bedroom
                 type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    state: docked
-                card:
-                  entity: script.clean_emmas_bedroom
-                  icon: "mdi:broom"
-                  show_state: false
-                  name: Clean Emma's Bedroom
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.clean_emmas_bedroom
-                  type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    state_not: docked
-                card:
-                  entity: script.house_stop_cleaning
-                  icon: "mdi:cancel"
-                  show_state: false
-                  name: Stop Cleaning
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                      - color: red
-                    icon:
-                      - color: red
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.house_stop_cleaning
-                  type: "custom:button-card"
               - type: conditional
                 conditions:
                   - entity: input_boolean.sleeping_emmas_bedroom
@@ -672,47 +568,6 @@ views:
                   service_data:
                     entity_id: input_boolean.dnd_kitchen
                 type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    state: docked
-                card:
-                  entity: script.clean_kitchen
-                  icon: "mdi:broom"
-                  show_state: false
-                  name: Clean Kitchen
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.clean_kitchen
-                  type: "custom:button-card"
-              - type: conditional
-                conditions:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    state_not: docked
-                card:
-                  entity: script.house_stop_cleaning
-                  icon: "mdi:cancel"
-                  show_state: false
-                  name: Stop Cleaning
-                  size: 25%
-                  styles:
-                    card:
-                      - font-size: 12px
-                      - color: red
-                    icon:
-                      - color: red
-                  tap_action:
-                    action: call-service
-                    service: script.turn_on
-                    service_data:
-                      entity_id: script.house_stop_cleaning
-                  type: "custom:button-card"
           - type: horizontal-stack
             cards:
               - entity: binary_sensor.presence_kitchen
