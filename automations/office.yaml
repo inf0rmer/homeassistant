@@ -300,7 +300,7 @@
     - entity_id: climate.office
       service: climate.set_temperature
       data:
-        temperature: 21
+        temperature: 20
     - entity_id: climate.office
       service: climate.turn_on
 
@@ -310,7 +310,7 @@
     - platform: numeric_state
       entity_id: climate.office
       attribute: current_temperature
-      below: 22
+      below: 20
     - platform: state
       entity_id: binary_sensor.presence_office
       from: "on"
