@@ -7,7 +7,7 @@ office_start_cleaning:
   sequence:
     - data:
         entity_id: vacuum.roborock_s5
-      service: xiaomi_miio.vacuum_start
+      service: vacuum.start
 
 office_stop_cleaning:
   alias: "[Office] Stop Cleaning"
