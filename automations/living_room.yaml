@@ -248,6 +248,10 @@
       entity_id: binary_sensor.presence_living_room
       from: "on"
       to: "off"
+  condition:
+    - condition: state
+      entity_id: climate.living_room
+      state: "on"
   action:
     - entity_id: climate.living_room
       service: climate.turn_off

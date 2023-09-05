@@ -307,6 +307,10 @@
       entity_id: binary_sensor.presence_office
       from: "on"
       to: "off"
+  condition:
+    - condition: state
+      entity_id: climate.office
+      state: "on"
   action:
     - entity_id: climate.office
       service: climate.turn_off
