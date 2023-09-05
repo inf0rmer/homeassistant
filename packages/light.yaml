@@ -70,6 +70,7 @@ light:
       - light.office_desk_lightstrip
       - light.office_ceiling_spot_1
       - light.office_ceiling_spot_2
+      - light.office_accent
 
   - platform: group
     name: Living Room
