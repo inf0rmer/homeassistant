@@ -94,5 +94,6 @@ switch:
       - light.office_ceiling_spot_1
       - light.office_ceiling_spot_2
       - light.office_desk_lightstrip
+      - light.office_accent
       - light.office_key_light_left
       - light.office_key_light_right
