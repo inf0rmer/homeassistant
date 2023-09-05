@@ -65,9 +65,9 @@
     - platform: state
       entity_id: media_player.living_room_apple_tv
       to: standby
-  action:
-    - delay:
+      for:
         minutes: 5
+  action:
     - target:
         entity_id: input_boolean.presence_living_room_tv
       service: input_boolean.turn_off
@@ -248,6 +248,10 @@
       entity_id: binary_sensor.presence_living_room
       from: "on"
       to: "off"
+  condition:
+    - condition: state
+      entity_id: climate.living_room
+      state: "on"
   action:
     - entity_id: climate.living_room
       service: climate.turn_off
