@@ -109,6 +109,98 @@
         entity_id: input_boolean.presence_living_room_motion
       service: input_boolean.turn_off
 
+- id: living_room_presence_on_manual_switch
+  alias: "[Office] Presence On (Switch)"
+  trigger:
+    - event_data:
+        command: "on"
+        device_ieee: 00:17:88:01:03:cb:b6:e4
+      event_type: zha_event
+      platform: event
+  action:
+    - target:
+        entity_id: input_boolean.presence_living_room_switch
+      service: input_boolean.turn_on
+    - target:
+        entity_id: input_boolean.dnd_living_room
+      service: input_boolean.turn_off
+    - target:
+        entity_id: switch.circadian_lighting_living_room
+      service: switch.turn_on
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+      target:
+        entity_id: light.living_room
+      service: light.turn_on
+
+- id: living_room_presence_off_manual_switch
+  alias: "[Office] Presence Off (Switch)"
+  trigger:
+    - event_data:
+        command: off_with_effect
+        device_ieee: 00:17:88:01:03:cb:b6:e4
+      event_type: zha_event
+      platform: event
+  action:
+    - target:
+        entity_id: input_boolean.presence_living_room_switch
+      service: input_boolean.turn_off
+    - target:
+        entity_id: input_boolean.presence_living_room_motion
+      service: input_boolean.turn_off
+    - target:
+        entity_id: input_boolean.presence_living_room_assistant
+      service: input_boolean.turn_off
+    - target:
+        entity_id: switch.circadian_lighting_living_room
+      service: switch.turn_off
+    - target:
+        entity_id: light.living_room
+      service: light.turn_off
+
+- id: living_room_manual_switch_brightness_up
+  alias: "[Office] Manual Switch Brightness Up"
+  trigger:
+    - event_data:
+        command: step
+        device_ieee: 00:17:88:01:03:cb:b6:e4
+      event_type: zha_event
+      platform: event
+  condition:
+    - condition: template
+      value_template: "{%if trigger.event.data.args[0] == 0%}true{%else%}false{%endif%}"
+    - condition: state
+      entity_id: binary_sensor.presence_living_room
+      state: "on"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.living_room
+      data:
+        brightness_step: 50
+
+- id: living_room_manual_switch_brightness_down
+  alias: "[Office] Manual Switch Brightness Down"
+  trigger:
+    - event_data:
+        command: step
+        device_ieee: 00:17:88:01:03:cb:b6:e4
+      event_type: zha_event
+      platform: event
+  condition:
+    - condition: template
+      value_template: "{%if trigger.event.data.args[0] == 1%}true{%else%}false{%endif%}"
+    - condition: state
+      entity_id: binary_sensor.presence_living_room
+      state: "on"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.living_room
+      data:
+        brightness_step: -50
+
 - id: living_room_presence_on_assistant
   alias: "[Living Room] Presence On (Assistant)"
   trigger:
@@ -164,7 +256,7 @@
   trigger:
     - event_data:
         command: stop
-        device_ieee: 00:17:88:01:06:e9:47:b2
+        device_ieee: 00:17:88:01:03:cb:b6:e4
       event_type: zha_event
       platform: event
     - entity_id: input_boolean.presence_living_room_assistant
