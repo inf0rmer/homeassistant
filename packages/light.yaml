@@ -84,6 +84,7 @@ light:
     name: Master Bedroom
     entities:
       - light.master_bedroom_ceiling
+      - light.master_bedroom_closet_lightstrip
 
   - platform: group
     name: Emmas Bedroom

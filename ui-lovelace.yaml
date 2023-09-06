@@ -441,6 +441,7 @@ views:
             type: light
           - entities:
               - entity: light.master_bedroom_ceiling
+              - entity: light.master_bedroom_closet_lightstrip
             show_header_toggle: false
             title: Lights
             type: entities
