@@ -25,14 +25,7 @@
         brightness_pct: "{{ state_attr('switch.circadian_lighting_master_bedroom', 'brightness') | int }}"
         transition: 3
       target:
-        entity_id: light.master_bedroom_ceiling
-      service: light.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_master_bedroom', 'brightness') | int }}"
-        transition: 3
-      target:
-        entity_id: light.master_bedroom_bedside
+        entity_id: light.master_bedroom
       service: light.turn_on
 
 - id: master_bedroom_lights_off
@@ -49,12 +42,7 @@
     - data:
         transition: 2
       target:
-        entity_id: light.master_bedroom_ceiling
-      service: light.turn_off
-    - data:
-        transition: 2
-      target:
-        entity_id: light.master_bedroom_bedside
+        entity_id: light.master_bedroom
       service: light.turn_off
 
 - id: master_bedroom_presence_on_motion
@@ -211,14 +199,7 @@
         brightness_pct: "{{ state_attr('switch.circadian_lighting_master_bedroom', 'brightness') | int }}"
         transition: 3
       target:
-        entity_id: light.master_bedroom_ceiling
-      service: light.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_master_bedroom', 'brightness') | int }}"
-        transition: 3
-      target:
-        entity_id: light.master_bedroom_bedside
+        entity_id: light.master_bedroom
       service: light.turn_on
 
 - id: master_bedroom_presence_off_manual_switch
@@ -243,10 +224,7 @@
         entity_id: switch.circadian_lighting_master_bedroom
       service: switch.turn_off
     - target:
-        entity_id: light.master_bedroom_ceiling
-      service: light.turn_off
-    - target:
-        entity_id: light.master_bedroom_bedside
+        entity_id: light.master_bedroom
       service: light.turn_off
 
 - id: master_bedroom_manual_switch_brightness_up

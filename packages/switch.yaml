@@ -58,6 +58,7 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.master_bedroom_ceiling
+      - light.master_bedroom_closet_lightstrip
 
   - platform: circadian_lighting
     name: emmas_bedroom
