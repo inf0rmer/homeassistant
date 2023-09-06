@@ -202,6 +202,9 @@
     - target:
         entity_id: input_boolean.presence_hallway_1st_floor_motion
       service: input_boolean.turn_off
+    - target:
+        entity_id: input_boolean.presence_hallway_ground_floor_motion
+      service: input_boolean.turn_off
 
 - id: hallway_1st_floor_presence_on_celiling_motion
   alias: "[Hallway 1st Floor] Presence On Ceiling (Motion)"
