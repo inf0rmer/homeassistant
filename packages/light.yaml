@@ -63,6 +63,16 @@ light:
     entities:
       - light.office_ceiling_spot_1
       - light.office_ceiling_spot_2
+  
+  - platform: group
+    name: Office Ceiling Table
+    entities:
+      - light.office_ceiling_table_1
+      - light.office_ceiling_table_2
+      - light.office_ceiling_table_3
+      - light.office_ceiling_table_4
+      - light.office_ceiling_table_5
+      - light.office_ceiling_table_6
 
   - platform: group
     name: Office
@@ -71,6 +81,12 @@ light:
       - light.office_ceiling_spot_1
       - light.office_ceiling_spot_2
       - light.office_accent
+      - light.office_ceiling_table_1
+      - light.office_ceiling_table_2
+      - light.office_ceiling_table_3
+      - light.office_ceiling_table_4
+      - light.office_ceiling_table_5
+      - light.office_ceiling_table_6
 
   - platform: group
     name: Living Room
