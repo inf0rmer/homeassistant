@@ -329,6 +329,9 @@
       entity_id: climate.living_room
       attribute: current_temperature
       above: 24
+    - condition: state
+      entity_id: input_boolean.dnd_living_room
+      state: "off"
   action:
     - entity_id: climate.living_room
       service: climate.set_temperature
@@ -353,6 +356,9 @@
       - condition: state
         entity_id: climate.living_room
         state: "off"
+      - condition: state
+        entity_id: input_boolean.dnd_living_room
+        state: "on"
   action:
     - entity_id: climate.living_room
       service: climate.turn_off
