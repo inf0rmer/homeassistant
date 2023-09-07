@@ -45,7 +45,9 @@ switch:
     disable_entity: input_boolean.dnd_hallway
     disable_state: "on"
     lights_ct:
-      - light.hallway
+      - light.hallway_ground_floor
+      - light.hallway_1st_floor
+      - light.hallway_2nd_floor
 
   - platform: circadian_lighting
     name: master_bedroom
@@ -102,5 +104,6 @@ switch:
       - light.office_ceiling_table_6
       - light.office_desk_lightstrip
       - light.office_accent
+      - light.office_shelf_accent
       - light.office_key_light_left
       - light.office_key_light_right
