@@ -117,6 +117,7 @@ light:
     name: Hallway Ground Floor
     entities:
       - light.hallway_ground_floor_ceiling_entrance
+      - light.hallway_ground_floor_ceiling_stairs
   
   - platform: group
     name: Hallway 1st Floor
