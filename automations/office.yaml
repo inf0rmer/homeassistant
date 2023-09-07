@@ -296,6 +296,9 @@
       entity_id: climate.office
       attribute: current_temperature
       above: 24
+    - condition: state
+      entity_id: input_boolean.dnd_office
+      state: "off"
   action:
     - entity_id: climate.office
       service: climate.set_temperature
@@ -320,6 +323,9 @@
       - condition: state
         entity_id: climate.office
         state: "off"
+      - condition: state
+        entity_id: input_boolean.dnd_office
+        state: "on"
   action:
     - entity_id: climate.office
       service: climate.turn_off
