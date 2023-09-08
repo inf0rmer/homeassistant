@@ -316,7 +316,7 @@
     - platform: numeric_state
       entity_id: climate.living_room
       attribute: current_temperature
-      above: 24
+      above: 26
     - platform: state
       entity_id: binary_sensor.presence_living_room
       from: "off"
@@ -328,7 +328,7 @@
     - condition: numeric_state
       entity_id: climate.living_room
       attribute: current_temperature
-      above: 24
+      above: 26
     - condition: state
       entity_id: input_boolean.dnd_living_room
       state: "off"
