@@ -105,5 +105,3 @@ switch:
       - light.office_desk_lightstrip
       - light.office_accent
       - light.office_shelf_accent
-      - light.office_key_light_left
-      - light.office_key_light_right
