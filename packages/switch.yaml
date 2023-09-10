@@ -94,14 +94,7 @@ switch:
     disable_entity: input_boolean.dnd_office
     disable_state: "on"
     lights_ct:
-      - light.office_ceiling_spot_1
-      - light.office_ceiling_spot_2
-      - light.office_ceiling_table_1
-      - light.office_ceiling_table_2
-      - light.office_ceiling_table_3
-      - light.office_ceiling_table_4
-      - light.office_ceiling_table_5
-      - light.office_ceiling_table_6
+      - light.office_ceiling_table
       - light.office_desk_lightstrip
       - light.office_accent
       - light.office_shelf_accent
