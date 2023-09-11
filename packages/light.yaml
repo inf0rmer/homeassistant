@@ -98,6 +98,7 @@ light:
   - platform: group
     name: Kitchen
     entities:
+      - light.kitchen_ceiling_main
       - light.kitchen_ceiling_spot_1
       - light.kitchen_ceiling_spot_2
 

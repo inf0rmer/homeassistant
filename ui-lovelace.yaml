@@ -608,6 +608,7 @@ views:
             name: All Lights
             type: light
           - entities:
+              - entity: light.kitchen_ceiling_main
               - entity: light.kitchen_ceiling_spot_1
               - entity: light.kitchen_ceiling_spot_2
             show_header_toggle: false
