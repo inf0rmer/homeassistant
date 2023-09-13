@@ -127,3 +127,9 @@ light:
     name: Closet
     entities:
       - light.closet_ceiling
+  
+  - platform: group
+    name: Garden
+    entities:
+      - light.garden_poles
+      - light.garden_shed
