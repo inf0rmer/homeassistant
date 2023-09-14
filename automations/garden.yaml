@@ -24,6 +24,8 @@
       from: "on"
       platform: state
       to: "off"
+      for:
+        minutes: 3
   condition:
     - condition: state
       entity_id: input_boolean.dnd_garden
