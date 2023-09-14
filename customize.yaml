@@ -9,8 +9,6 @@ sensor.kitchen_light_level:
 sensor.home_sensor_average_temperature:
   friendly_name: Avg. Home Temperature
 
-switch.balcony_plug:
-  icon: mdi:lightbulb
 switch.christmas_tree:
   icon: mdi:pine-tree
 
@@ -28,7 +26,7 @@ input.dnd_laundry_room:
   hidden: true
 input.dnd_bathroom_1st_floor:
   hidden: true
-input.dnd_balcony:
+input.dnd_garden:
   hidden: true
 input.presence_someone:
   hidden: true
