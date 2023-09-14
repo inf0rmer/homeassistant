@@ -7,12 +7,6 @@ binary_sensor:
         value_template: >-
           {{ is_state('binary_sensor.hallway_kitchen_sensor_motion', 'on') or is_state('binary_sensor.hallway_sensor_motion', 'on') }}
 
-      balcony_combined_sensor_door:
-        friendly_name: Door Sensor Balcony Combined
-        device_class: occupancy
-        value_template: >-
-          {{ is_state('binary_sensor.balcony_door_2_sensor', 'on') or is_state('binary_sensor.balcony_door_sensor', 'on') }}
-
       presence_bruno:
         friendly_name: "Presence Bruno"
         device_class: presence
@@ -142,6 +136,17 @@ binary_sensor:
         attribute_templates:
           reason: >
             {% for entity in states.group.presence_office.attributes.entity_id if is_state(entity, 'on') %}
+            {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+            {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+            {%- endfor %}
+      presence_garden:
+        friendly_name: Presence Garden
+        device_class: occupancy
+        value_template: >-
+          {{ is_state('input_boolean.presence_garden_motion', 'on') or is_state('input_boolean.presence_garden_assistant', 'on') }}
+        attribute_templates:
+          reason: >
+            {% for entity in states.group.presence_garden.attributes.entity_id if is_state(entity, 'on') %}
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}
