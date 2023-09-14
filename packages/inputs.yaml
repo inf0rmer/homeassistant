@@ -19,6 +19,8 @@ input_boolean:
     name: Do Not Disturb Closet
   dnd_office:
     name: Do Not Disturb Office
+  dnd_garden:
+    name: Do Not Disturb Garden
 
   presence_living_room_motion:
   presence_living_room_switch:
