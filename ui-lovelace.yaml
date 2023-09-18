@@ -377,6 +377,7 @@ views:
               - entity: light.office_ceiling_spot
               - entity: light.office_ceiling_table
               - entity: light.office_accent
+              - entity: light.office_accent_2
               - entity: light.office_shelf_accent
               - entity: light.office_shelf_lightstrip_top
               - entity: light.office_shelf_lightstrip_bottom
