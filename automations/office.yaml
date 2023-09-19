@@ -52,6 +52,16 @@
       from: "off"
       platform: state
       to: "on"
+    - device_id: 7a2938da2cb4d62dbf643768886ffe9c
+      domain: zha
+      platform: device
+      type: Enter
+      subtype: sensor
+    - device_id: 7a2938da2cb4d62dbf643768886ffe9c
+      domain: zha
+      platform: device
+      type: Approach
+      subtype: sensor
   condition:
     - condition: state
       entity_id: binary_sensor.someone_home

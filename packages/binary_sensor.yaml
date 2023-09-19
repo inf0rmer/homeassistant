@@ -1,12 +1,6 @@
 binary_sensor:
   - platform: template
     sensors:
-      hallway_combined_sensor_motion:
-        friendly_name: Motion Sensor Hallway Combined
-        device_class: motion
-        value_template: >-
-          {{ is_state('binary_sensor.hallway_kitchen_sensor_motion', 'on') or is_state('binary_sensor.hallway_sensor_motion', 'on') }}
-
       presence_bruno:
         friendly_name: "Presence Bruno"
         device_class: presence
