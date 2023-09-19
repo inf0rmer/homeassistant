@@ -99,9 +99,6 @@
         minutes: 3
   condition:
     - condition: state
-      entity_id: sensor.tv_activity
-      state: "False"
-    - condition: state
       entity_id: input_boolean.dnd_living_room
       state: "off"
   action:
