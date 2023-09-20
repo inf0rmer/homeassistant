@@ -17,6 +17,13 @@
       state: "off"
   action:
     - target:
+        entity_id: switch.circadian_lighting_bathroom_1st_floor
+      service: switch.turn_on
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_bathroom_1st_floor', 'brightness') | int }}"
+        transition: 3
+      target:
         entity_id: light.bathroom_1st_floor
       service: light.turn_on
 
@@ -28,6 +35,9 @@
       platform: state
       to: "off"
   action:
+    - target:
+        entity_id: switch.circadian_lighting_bathroom_1st_floor
+      service: switch.turn_off
     - target:
         entity_id: light.bathroom_1st_floor
       service: light.turn_off
