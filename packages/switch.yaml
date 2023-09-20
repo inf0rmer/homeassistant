@@ -30,7 +30,7 @@ switch:
     sleep_brightness: 15
     sleep_colortemp: 2000
     sleep_state: "on"
-    disable_entity: input_boolean.dnd_bathroom
+    disable_entity: input_boolean.dnd_bathroom_1st_floor
     disable_state: "on"
     lights_ct:
       - light.bathroom_1st_floor
