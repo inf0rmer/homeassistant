@@ -756,6 +756,20 @@ views:
         columns: 1
         square: false
         cards:
+          - entity: input_boolean.dnd_garden
+            icon: "mdi:weather-night"
+            show_state: false
+            name: Do Not Disturb
+            size: 25%
+            styles:
+              card:
+                - font-size: 12px
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id: input_boolean.dnd_garden
+            type: "custom:button-card"
           - entity: binary_sensor.presence_garden
             name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
             label: "[[[return entity.attributes.reason]]]"
