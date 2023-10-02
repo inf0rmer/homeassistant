@@ -293,6 +293,11 @@
       entity_id: sensor.afvalinfo_afval_thuis_trash_today
       state: "Plastic, Paper"
   action:
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.4
+      target:
+        area_id: 38345693e76b4052805eb620aed23966
     - service: media_player.play_media
       data:
         media_content_id: >-
