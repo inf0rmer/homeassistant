@@ -25,3 +25,4 @@ cloud:
         - climate.house
         - climate.living_room
         - climate.office
+        - sensor.afvalinfo_afval_thuis_trash_today
