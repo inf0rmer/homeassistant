@@ -283,18 +283,21 @@
         entity_id: input_boolean.presence_someone
       service: input_boolean.turn_off
 
-- id: house_trash_tomorrow
-  alias: "[House] Warn Sarah and Bruno when there's trash collection tomorrow"
+- id: house_trash_today
+  alias: "[House] Warn Living Room when there's paper/plastic collection today"
   trigger:
-    - entity_id: sensor.afvalinfo_afval_thuis_trash_tomorrow
-      from: "No"
-      platform: state
+    - platform: time
+      at: "07:10:00"
+  conditions:
+    - condition: state
+      entity_id: sensor.afvalinfo_afval_thuis_trash_today
+      state: "Plastic, Paper"
   action:
-    - service: notify.mobile_app_sarah_abrantes_iphone
+    - service: media_player.play_media
       data:
-        title: "Trash Collection tomorrow"
-        message: "{{trigger.to_state.state}}"
-    - service: notify.mobile_app_bruno_s_iphone
-      data:
-        title: "Trash Collection tomorrow}"
-        message: "{{trigger.to_state.state}}"
+        media_content_id: >-
+          https://github.com/inf0rmer/inf0rmer.github.io/raw/develop/assets/sounds/paper_plastic.mp3
+        media_content_type: music
+        announce: true
+      target:
+        area_id: 38345693e76b4052805eb620aed23966
