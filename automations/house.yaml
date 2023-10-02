@@ -288,7 +288,7 @@
   trigger:
     - platform: time
       at: "07:10:00"
-  conditions:
+  condition:
     - condition: state
       entity_id: sensor.afvalinfo_afval_thuis_trash_today
       state: "Plastic, Paper"
