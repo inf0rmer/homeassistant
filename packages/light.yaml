@@ -75,6 +75,7 @@ light:
       - light.office_shelf_accent
       - light.office_shelf_lightstrip
       - light.office_ceiling_table
+      - light.office_display_cabinet_light
 
   - platform: group
     name: Living Room
