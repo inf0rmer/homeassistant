@@ -283,26 +283,26 @@
         entity_id: input_boolean.presence_someone
       service: input_boolean.turn_off
 
-- id: house_trash_today
-  alias: "[House] Warn Living Room when there's paper/plastic collection today"
-  trigger:
-    - platform: time
-      at: "07:10:00"
-  condition:
-    - condition: state
-      entity_id: sensor.afvalinfo_afval_thuis_trash_today
-      state: "Plastic, Paper"
-  action:
-    - service: media_player.volume_set
-      data:
-        volume_level: 0.4
-      target:
-        area_id: 38345693e76b4052805eb620aed23966
-    - service: media_player.play_media
-      data:
-        media_content_id: >-
-          https://github.com/inf0rmer/inf0rmer.github.io/raw/develop/assets/sounds/paper_plastic.mp3
-        media_content_type: music
-        announce: true
-      target:
-        area_id: 38345693e76b4052805eb620aed23966
+# - id: house_trash_today
+#   alias: "[House] Warn Living Room when there's paper/plastic collection today"
+#   trigger:
+#     - platform: time
+#       at: "07:10:00"
+#   condition:
+#     - condition: state
+#       entity_id: sensor.afvalinfo_afval_thuis_trash_today
+#       state: "Plastic, Paper"
+#   action:
+#     - service: media_player.volume_set
+#       data:
+#         volume_level: 0.4
+#       target:
+#         area_id: 38345693e76b4052805eb620aed23966
+#     - service: media_player.play_media
+#       data:
+#         media_content_id: >-
+#           https://github.com/inf0rmer/inf0rmer.github.io/raw/develop/assets/sounds/paper_plastic.mp3
+#         media_content_type: music
+#         announce: true
+#       target:
+#         area_id: 38345693e76b4052805eb620aed23966

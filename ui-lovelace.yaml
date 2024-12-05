@@ -137,7 +137,7 @@ views:
               - type: horizontal-stack
                 cards:
                   - type: thermostat
-                    entity: climate.house
+                    entity: climate.hallway
               - type: horizontal-stack
                 cards:
                   - entities: 
