@@ -585,6 +585,7 @@ views:
             entity: climate.emmas_bedroom
           - entities:
               - entity: light.emmas_bedroom_ceiling
+              - entity: light.emmas_closet_light
             title: Lights
             type: entities
           - entities:

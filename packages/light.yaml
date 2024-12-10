@@ -95,6 +95,7 @@ light:
     name: Emmas Bedroom
     entities:
       - light.emmas_bedroom_ceiling
+      - light.emmas_closet_light
 
   - platform: group
     name: Kitchen
