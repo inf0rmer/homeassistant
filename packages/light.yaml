@@ -57,23 +57,13 @@ light:
         friendly_name: "Office"
         turn_on:
         turn_off:
-  
-  - platform: group
-    name: Office Ceiling Spot
-    entities:
-      - light.office_ceiling_spot_1
-      - light.office_ceiling_spot_2
 
   - platform: group
     name: Office
     entities:
       - light.office_desk_lightstrip
-      - light.office_ceiling_spot_1
-      - light.office_ceiling_spot_2
       - light.office_accent
-      - light.office_accent_2
       - light.office_shelf_accent
-      - light.office_shelf_lightstrip
       - light.office_ceiling_table
       - light.office_display_cabinet_light
 
@@ -84,12 +74,15 @@ light:
       - light.tv_right
       - light.tv_left
       - light.living_room_standing_lamp
+      - light.living_room_ceiling_spot_1
+      - light.living_room_ceiling_spot_2
+      - light.living_room_ceiling_spot_3
+      - light.living_room_wall_lamp
 
   - platform: group
     name: Master Bedroom
     entities:
       - light.master_bedroom_ceiling
-      - light.master_bedroom_closet_lightstrip
 
   - platform: group
     name: Emmas Bedroom
@@ -100,15 +93,13 @@ light:
   - platform: group
     name: Kitchen
     entities:
-      - light.kitchen_ceiling_main
       - light.kitchen_ceiling_spot_1
       - light.kitchen_ceiling_spot_2
 
   - platform: group
     name: Hallway Ground Floor
     entities:
-      - light.hallway_ground_floor_ceiling_entrance
-      - light.hallway_ground_floor_ceiling_stairs
+      - light.hallway_ground_floor_ceiling
   
   - platform: group
     name: Hallway 1st Floor
@@ -126,9 +117,11 @@ light:
       - light.bathroom_1st_floor_ceiling
 
   - platform: group
-    name: Closet
+    name: Hobby Room
     entities:
-      - light.closet_ceiling
+      - light.hobby_room_ceiling_1
+      - light.hobby_room_ceiling_2
+      - light.hobby_room_ceiling_3      
   
   - platform: group
     name: Garden

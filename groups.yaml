@@ -41,6 +41,13 @@ light_tv:
     - light.tv_upper
     - light.tv_lower
 
+light_living_room_ceiling:
+  name: Light Living Room Ceiling
+  entities:
+    - light.living_room_ceiling_spot_1
+    - light.living_room_ceiling_spot_2
+    - light.living_room_ceiling_spot_3
+
 presence:
   name: Someone is home
   entities:

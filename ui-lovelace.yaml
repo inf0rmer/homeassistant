@@ -136,8 +136,23 @@ views:
                       - person.sarah_abrantes
               - type: horizontal-stack
                 cards:
-                  - type: thermostat
-                    entity: climate.boiler
+                  - title: Heating
+                    type: glance
+                    entities: 
+                     - climate.hallway
+                     - climate.living_room
+                     - climate.dining_room
+                     - climate.master_bedroom
+                     - climate.emmas_bedroom
+                     - climate.library
+                     - climate.office
+                     - climate.hobby_room
+              - type: horizontal-stack
+                cards:
+                  - title: Energy Usage
+                    type: energy-usage-graph
+                  - title: Gas Usage
+                    type: energy-gas-graph
               - type: horizontal-stack
                 cards:
                   - entities: 
@@ -165,8 +180,6 @@ views:
                       - light.hallway_1st_floor
                       - light.hallway_2nd_floor
                       - light.office
-                      - light.bathroom_1st_floor
-                      - light.closet
                     title: Lights
                     type: entities
           - type: vertical-stack
@@ -243,6 +256,8 @@ views:
             theme: Backend-selected
             type: light
           - entities:
+              - entity: group.light_living_room_ceiling
+              - entity: light.living_room_wall_lamp
               - entity: light.living_room_standing_lamp
               - entity: group.light_tv
               - entity: switch.christmas_tree
@@ -407,12 +422,8 @@ views:
                 image: false
                 name: Robot Vacuum
           - entities:
-              - entity: light.office_ceiling_spot
               - entity: light.office_ceiling_table
               - entity: light.office_accent
-              - entity: light.office_accent_2
-              - entity: light.office_shelf_accent
-              - entity: light.office_shelf_lightstrip
               - entity: light.office_display_cabinet_light
               - entity: light.office_desk_lightstrip
               - entity: light.office_key_light_left
@@ -481,7 +492,6 @@ views:
             entity: climate.master_bedroom
           - entities:
               - entity: light.master_bedroom_ceiling
-              - entity: light.master_bedroom_closet_lightstrip
             show_header_toggle: false
             title: Lights
             type: entities
@@ -691,10 +701,11 @@ views:
           - type: thermostat
             entity: climate.hallway
           - entities:
-              - entity: light.hallway_ground_floor_ceiling_entrance
-              - entity: light.hallway_ground_floor_ceiling_stairs
+              - entity: light.hallway_ground_floor_ceiling
               - entity: light.hallway_1st_floor_ceiling
               - entity: light.hallway_2nd_floor_ceiling
+              - entity: light.staircase_1st_floor
+              - entity: light.staircase_2nd_floor
             show_header_toggle: false
             title: Lights
             type: entities
@@ -705,46 +716,3 @@ views:
                 name: Light Level
             type: "custom:mini-graph-card"
 
-  - path: bathroom
-    title: Bathroom
-    panel: false
-    cards:
-      - type: grid
-        columns: 1
-        square: false
-        cards:
-          - entity: binary_sensor.presence_bathroom_1st_floor
-            name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
-            label: "[[[return entity.attributes.reason]]]"
-            show_label: true
-            size: 10%
-            styles:
-              card:
-                - font-size: 12px
-              label:
-                - color: '[[[ if (states["sun.sun"].state == "above_horizon") return "#666"; else return "#ccc" ]]]'
-                - font-size: 10px
-            tap_action:
-              action: call-service
-              service: '[[[ if (states["input_boolean.presence_bathroom_1st_floor_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
-              service_data:
-                entity_id: input_boolean.presence_bathroom_1st_floor_assistant
-            hold_action:
-              action: call-service
-              service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
-              service_data:
-                entity_id: group.presence_bathroom_1st_floor
-            type: "custom:button-card"
-          - entity: light.bathroom_1st_floor
-            name: Light
-            theme: Backend-selected
-            type: light
-          - entities:
-              - entity: light.bathroom_1st_floor_ceiling
-            show_header_toggle: false
-            title: Lights
-            type: entities
-          - entities:
-              - entity: sensor.bathroom_1st_floor_sensor_temperature
-                name: Temperature
-            type: "custom:mini-graph-card"
