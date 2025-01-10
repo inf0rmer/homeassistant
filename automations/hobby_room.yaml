@@ -1,0 +1,165 @@
+##########
+# Hobby Room #
+##########
+
+- id: hobby_room_lights_on
+  alias: "[Hobby Room] Lights On"
+  trigger:
+    - entity_id: binary_sensor.presence_hobby_room
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.presence_hobby_room
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.dnd_hobby_room
+      state: "off"
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hobby_room
+      service: switch.turn_on
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_hobby_room', 'brightness') | int }}"
+        transition: 3
+      target:
+        entity_id: light.hobby_room
+      service: light.turn_on
+
+- id: hobby_room_lights_off
+  alias: "[Hobby Room] Lights Off"
+  trigger:
+    - entity_id: binary_sensor.presence_hobby_room
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hobby_room
+      service: switch.turn_off
+    - data:
+        transition: 2
+      target:
+        entity_id: light.hobby_room
+      service: light.turn_off
+
+- id: hobby_room_presence_on_motion
+  alias: "[Hobby Room] Presence On (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hobby_room_sensor_motion
+      from: "off"
+      platform: state
+      to: "on"
+    - device_id: 7a2938da2cb4d62dbf643768886ffe9c
+      domain: zha
+      platform: device
+      type: Enter
+      subtype: sensor
+    - device_id: 7a2938da2cb4d62dbf643768886ffe9c
+      domain: zha
+      platform: device
+      type: Approach
+      subtype: sensor
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hobby_room_motion
+      service: input_boolean.turn_on
+
+- id: hobby_room_presence_off_motion
+  alias: "[Hobby Room] Presence Off (Motion)"
+  trigger:
+    - entity_id: binary_sensor.hobby_room_sensor_motion
+      from: "on"
+      platform: state
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: input_boolean.dnd_hobby_room
+      state: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hobby_room_motion
+      service: input_boolean.turn_off
+
+- id: hobby_room_presence_on_assistant
+  alias: "[Hobby Room] Presence On (Assistant)"
+  trigger:
+    - entity_id: light.hobby_room_assistant
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hobby_room_assistant
+      service: input_boolean.turn_on
+
+- id: hobby_room_presence_off_assistant
+  alias: "[Hobby Room] Presence Off (Assistant)"
+  trigger:
+    - entity_id: light.hobby_room_assistant
+      from: "on"
+      platform: state
+      to: "off"
+    - entity_id: input_boolean.presence_hobby_room_assistant
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: input_boolean.presence_hobby_room_assistant
+      service: input_boolean.turn_off
+    - target:
+        entity_id: light.hobby_room_assistant
+      service: light.turn_off
+
+- id: hobby_room_manual_switch_dnd_on
+  alias: "[Hobby Room] Manual Switch Turn On DnD"
+  trigger:
+    - event_data:
+        command: step
+        device_ieee: 00:17:88:01:06:e9:47:b2
+      event_type: zha_event
+      platform: event
+  condition:
+    - condition: state
+      entity_id: input_boolean.dnd_hobby_room
+      state: "off"
+  action:
+    - condition: state
+      entity_id: binary_sensor.presence_hobby_room
+      state: "on"
+    - target:
+        entity_id: input_boolean.dnd_hobby_room
+      service: input_boolean.turn_on
+
+- id: hobby_room_manual_presence_off_dnd_on
+  alias: "[Hobby Room] Manual Presence Off"
+  trigger:
+    - event_data:
+        command: stop
+        device_ieee: 00:17:88:01:06:e9:47:b2
+      event_type: zha_event
+      platform: event
+    - entity_id: input_boolean.presence_hobby_room_assistant
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: input_boolean.dnd_hobby_room
+      service: input_boolean.turn_on
+    - delay:
+        minutes: 15
+    - target:
+        entity_id: input_boolean.dnd_hobby_room
+      service: input_boolean.turn_off

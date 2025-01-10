@@ -436,6 +436,76 @@ views:
                 name: Temperature
             type: "custom:mini-graph-card"
  
+  - path: hobby-room
+    title: Hobby Room
+    panel: false
+    cards:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: horizontal-stack
+            cards:
+              - entity: input_boolean.dnd_office
+                icon: "mdi:weather-night"
+                show_state: false
+                name: Do Not Disturb
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: input_boolean.toggle
+                  service_data:
+                    entity_id: input_boolean.dnd_office
+                type: "custom:button-card"
+          - type: horizontal-stack
+            cards:
+              - entity: binary_sensor.presence_hobby_room
+                name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
+                label: "[[[return entity.attributes.reason]]]"
+                show_label: true
+                size: 10%
+                styles:
+                  card:
+                    - font-size: 12px
+                  label:
+                    - color: '[[[ if (states["sun.sun"].state == "above_horizon") return "#666"; else return "#ccc" ]]]'
+                    - font-size: 10px
+                tap_action:
+                  action: call-service
+                  service: '[[[ if (states["input_boolean.presence_hobby_room_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
+                  service_data:
+                    entity_id: input_boolean.presence_hobby_room_assistant
+                hold_action:
+                  action: call-service
+                  service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
+                  service_data:
+                    entity_id: group.presence_hobby_room
+                type: "custom:button-card"
+          - entity: light.hobby_room
+            name: All Lights
+            theme: Backend-selected
+            type: light
+          - type: thermostat
+            entity: climate.hobby_room
+          - type: horizontal-stack
+            cards:
+              - type: "custom:xiaomi-vacuum-card"
+                entity: vacuum.roborock_s5
+                image: false
+                name: Robot Vacuum
+          - entities:
+              - entity: light.hobby_room
+            show_header_toggle: false
+            title: Lights
+            type: entities
+          - entities:
+              - entity: sensor.hobby_room_temperature
+                name: Temperature
+            type: "custom:mini-graph-card"
+  
   - path: master-bedroom
     title: Master Bedroom
     panel: false

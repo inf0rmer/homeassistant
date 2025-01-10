@@ -145,6 +145,12 @@ presence_office:
     - input_boolean.presence_office_assistant
     - input_boolean.presence_office_brunos_pc
 
+presence_hobby_room:
+  entities:
+    - input_boolean.presence_hobby_room_motion
+    - input_boolean.presence_hobby_room_switch
+    - input_boolean.presence_hobby_room_assistant
+
 presence_garden:
   entities:
     - input_boolean.presence_garden_motion
