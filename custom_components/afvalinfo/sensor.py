@@ -13,9 +13,10 @@ from babel.dates import format_date, format_datetime, format_time
 import re
 
 from .const.const import (
+    DOMAIN,
     MIN_TIME_BETWEEN_UPDATES,
     _LOGGER,
-    CONF_CITY,
+    CONF_ENABLED_SENSORS,
     CONF_DISTRICT,
     CONF_LOCATION,
     CONF_POSTCODE,
@@ -23,7 +24,6 @@ from .const.const import (
     CONF_STREET_NUMBER_SUFFIX,
     CONF_GET_WHOLE_YEAR,
     CONF_DATE_FORMAT,
-    CONF_TIMESPAN_IN_DAYS,
     CONF_NO_TRASH_TEXT,
     CONF_DIFTAR_CODE,
     CONF_LOCALE,
@@ -45,40 +45,34 @@ from .location.trashapi import TrashApiAfval
 from .sensortomorrow import AfvalInfoTomorrowSensor
 from .sensortoday import AfvalInfoTodaySensor
 
-from homeassistant.components.sensor import PLATFORM_SCHEMA
-import homeassistant.helpers.config_validation as cv
-from homeassistant.const import CONF_RESOURCES
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
-
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {
-        vol.Required(CONF_RESOURCES, default=[]): vol.All(cv.ensure_list),
-        vol.Optional(CONF_CITY, default=""): cv.string,
-        vol.Optional(CONF_LOCATION, default="sliedrecht"): cv.string,
-        vol.Required(CONF_POSTCODE, default="3361AB"): cv.string,
-        vol.Required(CONF_STREET_NUMBER, default="1"): cv.string,
-        vol.Optional(CONF_STREET_NUMBER_SUFFIX, default=""): cv.string,
-        vol.Optional(CONF_DISTRICT, default=""): cv.string,
-        vol.Optional(CONF_DATE_FORMAT, default="%d-%m-%Y"): cv.string,
-        vol.Optional(CONF_LOCALE, default="en"): cv.string,
-        vol.Optional(CONF_ID, default=""): cv.string,
-        vol.Optional(
-            CONF_TIMESPAN_IN_DAYS, default="365"
-        ): cv.string,  # Not used anymore 20230507, but gives errors in configs that still has the timespanindays set
-        vol.Optional(CONF_NO_TRASH_TEXT, default="none"): cv.string,
-        vol.Optional(CONF_DIFTAR_CODE, default=""): cv.string,
-        vol.Optional(CONF_GET_WHOLE_YEAR, default="false"): cv.string,
-    }
-)
+from homeassistant import config_entries
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers import entity_registry as er
 
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    _LOGGER.debug("Setup Afvalinfo sensor")
+async def async_format_date(hass, collection_date, half_babel_half_date, locale):
+    return await hass.async_add_executor_job(
+        format_date, collection_date, half_babel_half_date, locale
+    )
 
-    location = config.get(CONF_CITY).lower().strip()
-    if len(location) == 0:
-        location = config.get(CONF_LOCATION).lower().strip()
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config_entry: config_entries.ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    # Store the entities for this entry_id
+    if DOMAIN not in hass.data:
+        hass.data[DOMAIN] = {}
+    if config_entry.entry_id not in hass.data[DOMAIN]:
+        hass.data[DOMAIN][config_entry.entry_id] = {}
+
+    config = config_entry.data
+
+    location = config.get(CONF_LOCATION).lower().strip()
     postcode = config.get(CONF_POSTCODE).strip()
     street_number = config.get(CONF_STREET_NUMBER)
     street_number_suffix = config.get(CONF_STREET_NUMBER_SUFFIX)
@@ -90,74 +84,52 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     diftar_code = config.get(CONF_DIFTAR_CODE)
     get_whole_year = config.get(CONF_GET_WHOLE_YEAR)
 
-    try:
-        resources = config[CONF_RESOURCES].copy()
+    resources = config[CONF_ENABLED_SENSORS].copy()
 
-        # filter the types from the dict if it's a dictionary
-        if isinstance(resources[0], dict):
-            resourcesMinusTodayAndTomorrow = [obj["type"] for obj in resources]
-        else:
-            resourcesMinusTodayAndTomorrow = resources
+    # filter the types from the dict if it's a dictionary
+    if isinstance(resources[0], dict):
+        resourcesMinusTodayAndTomorrow = [obj["type"] for obj in resources]
+    else:
+        resourcesMinusTodayAndTomorrow = resources
 
-        if "trash_type_today" in resourcesMinusTodayAndTomorrow:
-            resourcesMinusTodayAndTomorrow.remove("trash_type_today")
-        if "trash_type_tomorrow" in resourcesMinusTodayAndTomorrow:
-            resourcesMinusTodayAndTomorrow.remove("trash_type_tomorrow")
+    if "trash_type_today" in resourcesMinusTodayAndTomorrow:
+        resourcesMinusTodayAndTomorrow.remove("trash_type_today")
 
-        # Check if resources contain cleanprofsgft or cleanprofsrestafval
-        if (
-            "cleanprofsgft" in resourcesMinusTodayAndTomorrow
-            or "cleanprofsrestafval" in resourcesMinusTodayAndTomorrow
-        ):
-            get_cleanprofs_data = True
-        else:
-            get_cleanprofs_data = False
+    if "trash_type_tomorrow" in resourcesMinusTodayAndTomorrow:
+        resourcesMinusTodayAndTomorrow.remove("trash_type_tomorrow")
 
-        data = AfvalinfoData(
-            location,
-            postcode,
-            street_number,
-            street_number_suffix,
-            district,
-            diftar_code,
-            get_whole_year,
-            resourcesMinusTodayAndTomorrow,
-            get_cleanprofs_data,
-        )
+    if (
+        "cleanprofsgft" in resourcesMinusTodayAndTomorrow
+        or "cleanprofsrestafval" in resourcesMinusTodayAndTomorrow
+    ):
+        get_cleanprofs_data = True
+    else:
+        get_cleanprofs_data = False
 
-        # Initial trigger for updating data
-        await data.async_update()
+    data = AfvalinfoData(
+        location,
+        postcode,
+        street_number,
+        street_number_suffix,
+        district,
+        diftar_code,
+        get_whole_year,
+        resourcesMinusTodayAndTomorrow,
+        get_cleanprofs_data,
+    )
 
-    except urllib.error.HTTPError as error:
-        _LOGGER.error(error.reason)
-        return False
+    await data.async_update()
 
     entities = []
+    entity_registry = er.async_get(hass)
 
-    for resource in config[CONF_RESOURCES]:
-        # old way, before 20220204
-        if type(resource) == str:
-            sensor_type = resource.lower()
-            sensor_friendly_name = sensor_type
-        # new way
-        else:
-            sensor_type = resource["type"].lower()
-            if "friendly_name" in resource.keys():
-                sensor_friendly_name = resource["friendly_name"]
-            else:
-                # If no friendly name is provided, use the sensor_type as friendly name
-                sensor_friendly_name = sensor_type
-
-        # if sensor_type not in SENSOR_TYPES:
-        if (
-            sensor_type.title().lower() != "trash_type_today"
-            and sensor_type.title().lower() != "trash_type_tomorrow"
-        ):
+    for resource in config[CONF_ENABLED_SENSORS]:
+        sensor_type = resource
+        if resource != "trash_type_today" and resource != "trash_type_tomorrow":
             entities.append(
                 AfvalinfoSensor(
                     data,
                     sensor_type,
-                    sensor_friendly_name,
                     date_format,
                     locale,
                     id_name,
@@ -166,29 +138,55 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             )
 
         # Add sensor -trash_type_today
-        if sensor_type.title().lower() == "trash_type_today":
+        if resource == "trash_type_today":
             today = AfvalInfoTodaySensor(
+                hass,
                 data,
                 sensor_type,
-                sensor_friendly_name,
                 entities,
                 id_name,
                 no_trash_text,
             )
             entities.append(today)
         # Add sensor -trash_type_tomorrow
-        if sensor_type.title().lower() == "trash_type_tomorrow":
+        if resource == "trash_type_tomorrow":
             tomorrow = AfvalInfoTomorrowSensor(
+                hass,
                 data,
                 sensor_type,
-                sensor_friendly_name,
                 entities,
                 id_name,
                 no_trash_text,
             )
             entities.append(tomorrow)
 
+    # Create a list of entities to remove
+    entities_to_remove = []
+    for entity_id, entity in entity_registry.entities.items():
+        if entity.config_entry_id == config_entry.entry_id:
+            # Extract sensor type from entity_id
+            sensor_type = (
+                entity.unique_id.replace(SENSOR_PREFIX, "")
+                .replace(f"{id_name} ", "")
+                .strip()
+            )
+            if sensor_type not in config[CONF_ENABLED_SENSORS]:
+                _LOGGER.debug(
+                    f"Marking entity {entity_id} for removal as it's no longer enabled"
+                )
+                entities_to_remove.append(entity_id)
+
+    # Remove the entities in a separate loop
+    for entity_id in entities_to_remove:
+        _LOGGER.debug(f"Removing entity {entity_id}")
+        entity_registry.async_remove(entity_id)
+
     async_add_entities(entities)
+
+    # Store the list of enabled sensors for future reference
+    hass.data[DOMAIN][config_entry.entry_id]["enabled_sensors"] = config[
+        CONF_ENABLED_SENSORS
+    ]
 
 
 class AfvalinfoData(object):
@@ -233,11 +231,12 @@ class AfvalinfoData(object):
 
 
 class AfvalinfoSensor(Entity):
+    _attr_has_entity_name = True
+
     def __init__(
         self,
         data,
         sensor_type,
-        sensor_friendly_name,
         date_format,
         locale,
         id_name,
@@ -245,25 +244,24 @@ class AfvalinfoSensor(Entity):
     ):
         self.data = data
         self.type = sensor_type
-        self.friendly_name = sensor_friendly_name
+        self.friendly_name = sensor_type
+
         self.date_format = date_format
         self.locale = locale
-        self._name = sensor_friendly_name
+
         self._get_whole_year = get_whole_year
         self.entity_id = "sensor." + (
-            (
-                SENSOR_PREFIX
-                + (id_name + " " if len(id_name) > 0 else "")
-                + sensor_friendly_name
-            )
+            (SENSOR_PREFIX + (id_name + " " if len(id_name) > 0 else "") + sensor_type)
             .lower()
             .replace(" ", "_")
         )
         self._attr_unique_id = (
-            SENSOR_PREFIX
-            + (id_name + " " if len(id_name) > 0 else "")
-            + sensor_friendly_name
+            SENSOR_PREFIX + (id_name + " " if len(id_name) > 0 else "") + sensor_type
         )
+
+        self._attr_translation_key = "afvalinfo_" + sensor_type
+        _LOGGER.debug("Setting translation key to " + self._attr_translation_key)
+
         self._icon = SENSOR_TYPES[sensor_type][1]
         self._error = False
         self._state = None
@@ -274,10 +272,6 @@ class AfvalinfoSensor(Entity):
         self._last_collection_date = None
         self._total_collections_this_year = None
         self._whole_year_dates = None
-
-    @property
-    def name(self):
-        return self._name
 
     @property
     def icon(self):
@@ -312,7 +306,7 @@ class AfvalinfoSensor(Entity):
         self._error = False
 
         # Loop through all the dates to put the dates in the whole_year_dates attribute
-        if self._get_whole_year == "True":
+        if self._get_whole_year == True:
             whole_year_dates = []
             if waste_array:
                 for waste_data in waste_array:
@@ -400,10 +394,11 @@ class AfvalinfoSensor(Entity):
                                     r"(\d+)", r"'\1'", half_babel_half_date
                                 )
                                 # transform the EEE, EEEE etc... to a real locale date, with babel
-                                locale_date = format_date(
+                                locale_date = await async_format_date(
+                                    self.hass,
                                     collection_date,
                                     half_babel_half_date,
-                                    locale=self.locale,
+                                    self.locale,
                                 )
 
                                 self._state = locale_date
