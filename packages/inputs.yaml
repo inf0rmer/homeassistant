@@ -19,6 +19,8 @@ input_boolean:
     name: Do Not Disturb Closet
   dnd_office:
     name: Do Not Disturb Office
+  dnd_hobby_room:
+    name: Do Not Disturb Hobby Room
   dnd_garden:
     name: Do Not Disturb Garden
 
@@ -54,6 +56,9 @@ input_boolean:
   presence_office_switch:
   presence_office_assistant:
   presence_office_brunos_pc:
+  presence_hobby_room_motion:
+  presence_hobby_room_switch:
+  presence_hobby_room_assistant:
 
   presence_bruno:
     name: Bruno

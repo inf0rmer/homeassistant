@@ -133,6 +133,17 @@ binary_sensor:
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}
+      presence_hobby_room:
+        friendly_name: Presence Hobby Room
+        device_class: occupancy
+        value_template: >-
+          {{ is_state('input_boolean.presence_hobby_room_motion', 'on') or is_state('input_boolean.presence_hobby_room_switch', 'on') or is_state('input_boolean.presence_hobby_room_assistant', 'on') }}
+        attribute_templates:
+          reason: >
+            {% for entity in states.group.presence_hobby_room.attributes.entity_id if is_state(entity, 'on') %}
+            {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+            {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+            {%- endfor %}
       presence_garden:
         friendly_name: Presence Garden
         device_class: occupancy

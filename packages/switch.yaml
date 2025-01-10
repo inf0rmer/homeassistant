@@ -98,6 +98,5 @@ switch:
       - light.office_desk_lightstrip
       - light.office_display_cabinet_light
       - light.office_accent
-      - light.office_accent_2
       - light.office_shelf_accent
       - light.office_shelf_lightstrip
