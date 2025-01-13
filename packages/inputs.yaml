@@ -11,12 +11,8 @@ input_boolean:
     name: Do Not Disturb Kitchen
   dnd_hallway:
     name: Do Not Disturb Hallway
-  dnd_laundry_room:
-    name: Do Not Disturb Laundry Room
   dnd_bathroom_1st_floor:
     name: Do Not Disturb Bathroom
-  dnd_closet:
-    name: Do Not Disturb Closet
   dnd_office:
     name: Do Not Disturb Office
   dnd_hobby_room:
@@ -42,16 +38,14 @@ input_boolean:
   presence_hallway_ground_floor_assistant:
   presence_hallway_1st_floor_motion:
   presence_hallway_1st_floor_assistant:
+  presence_hallway_1st_floor_stairs_motion:
   presence_hallway_2nd_floor_motion:
   presence_hallway_2nd_floor_assistant:
-  presence_laundry_room_light:
-  presence_laundry_room_assistant:
+  presence_hallway_2st_floor_stairs_motion:
   presence_garden_motion:
   presence_garden_assistant:
   presence_bathroom_1st_floor_switch:
   presence_bathroom_1st_floor_assistant:
-  presence_closet_motion:
-  presence_closet_assistant:
   presence_office_motion:
   presence_office_switch:
   presence_office_assistant:
