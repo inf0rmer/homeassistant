@@ -52,12 +52,12 @@
       from: "off"
       platform: state
       to: "on"
-    - device_ieee: 54:ef:44:10:00:64:6f:94
+    - device_id: 1b8fef6badc68279b057f4abe9a5f2f8
       domain: zha
       platform: device
       type: Enter
       subtype: sensor
-    - device_ieee: 54:ef:44:10:00:64:6f:94
+    - device_id: 1b8fef6badc68279b057f4abe9a5f2f8
       domain: zha
       platform: device
       type: Approach
