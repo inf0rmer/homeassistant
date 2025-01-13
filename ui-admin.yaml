@@ -51,3 +51,34 @@ views:
           - attr: quirk_class
             name: Quirk
         sort_by: available
+  
+  - path: lights
+    title: Lights
+    cards:
+      - type: "custom:auto-entities"
+        card:
+          title: Lights ON
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: light
+              state: "on"
+      - type: "custom:auto-entities"
+        card:
+          title: Lights OFF
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: light
+              state: "off"
+      - type: "custom:auto-entities"
+        card:
+          title: Lights UNAVAILABLE
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: light
+              state: unavailable

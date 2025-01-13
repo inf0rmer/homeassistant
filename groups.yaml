@@ -114,10 +114,18 @@ presence_hallway_1st_floor:
     - input_boolean.presence_hallway_1st_floor_motion
     - input_boolean.presence_hallway_1st_floor_assistant
 
+presence_hallway_1st_floor_stairs:
+  entities:
+    - input_boolean.presence_hallway_1st_floor_stairs_motion
+
 presence_hallway_2nd_floor:
   entities:
     - input_boolean.presence_hallway_2nd_floor_motion
     - input_boolean.presence_hallway_2nd_floor_assistant
+
+presence_hallway_2nd_floor_stairs:
+  entities:
+    - input_boolean.presence_hallway_2nd_floor_stairs_motion
 
 presence_hallway:
   entities:

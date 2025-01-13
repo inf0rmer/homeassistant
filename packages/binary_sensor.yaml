@@ -96,7 +96,7 @@ binary_sensor:
           {{ is_state('input_boolean.presence_hallway_1st_floor_stairs_motion', 'on') or is_state('input_boolean.presence_hallway_1st_floor_stairs_assistant', 'on') }}
         attribute_templates:
           reason: >
-            {% for entity in states.group.presence_hallway_1st_floor.attributes.entity_id if is_state(entity, 'on') %}
+            {% for entity in states.group.presence_hallway_1st_floor_stairs.attributes.entity_id if is_state(entity, 'on') %}
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}
@@ -118,7 +118,7 @@ binary_sensor:
           {{ is_state('input_boolean.presence_hallway_2nd_floor_stairs_motion', 'on') or is_state('input_boolean.presence_hallway_2nd_floor_stairs_assistant', 'on') }}
         attribute_templates:
           reason: >
-            {% for entity in states.group.presence_hallway_1st_floor.attributes.entity_id if is_state(entity, 'on') %}
+            {% for entity in states.group.presence_hallway_2nd_floor_stairs.attributes.entity_id if is_state(entity, 'on') %}
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}

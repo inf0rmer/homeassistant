@@ -178,7 +178,7 @@
       state: "on"
   action:
     - target:
-        entity_id: input_boolean.presence_hallway_1st_floor_motion
+        entity_id: input_boolean.presence_hallway_1st_floor_stairs_motion
       service: input_boolean.turn_on
 
 - id: hallway_1st_floor_presence_off_motion
@@ -375,7 +375,7 @@
       state: "on"
   action:
     - target:
-        entity_id: input_boolean.presence_hallway_2nd_floor_motion
+        entity_id: input_boolean.presence_hallway_2nd_floor_stairs_motion
       service: input_boolean.turn_on
 
 - id: hallway_2nd_floor_presence_off_motion
