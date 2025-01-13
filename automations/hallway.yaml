@@ -362,7 +362,7 @@
         entity_id: light.staircase_2nd_floor
       service: light.turn_off
 
-- id: hallway_2nd_floor_presence_on_motion
+- id: hallway_2nd_floor_stairs_presence_on_motion
   alias: "[Hallway 2nd Floor Stairs] Presence On (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_2nd_floor_stairs_sensor_motion
@@ -378,7 +378,7 @@
         entity_id: input_boolean.presence_hallway_2nd_floor_stairs_motion
       service: input_boolean.turn_on
 
-- id: hallway_2nd_floor_presence_off_motion
+- id: hallway_2nd_floor_stairs_presence_off_motion
   alias: "[Hallway 2nd Floor Stairs] Presence Off (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_2nd_floor_stairs_sensor_motion
