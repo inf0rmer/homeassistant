@@ -165,7 +165,7 @@
         entity_id: light.staircase_1st_floor
       service: light.turn_off
 
-- id: hallway_1st_floor_presence_on_motion
+- id: hallway_1st_floor_stairs_presence_on_motion
   alias: "[Hallway 1st Floor Stairs] Presence On (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
@@ -181,7 +181,7 @@
         entity_id: input_boolean.presence_hallway_1st_floor_stairs_motion
       service: input_boolean.turn_on
 
-- id: hallway_1st_floor_presence_off_motion
+- id: hallway_1st_floor_stairs_presence_off_motion
   alias: "[Hallway 1st Floor Stairs] Presence Off (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_1st_floor_stairs_sensor_motion
@@ -247,7 +247,7 @@
       service: light.turn_off
 
 - id: hallway_1st_floor_presence_on_motion
-  alias: "[Hallway 1st Floor] Presence On Ceiling (Motion)"
+  alias: "[Hallway 1st Floor] Presence On (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_1st_floor_sensor_motion
       from: "off"
@@ -263,7 +263,7 @@
       service: input_boolean.turn_on
 
 - id: hallway_1st_floor_presence_off_motion
-  alias: "[Hallway 1st Floor] Presence Off Ceiling (Motion)"
+  alias: "[Hallway 1st Floor] Presence Off (Motion)"
   trigger:
     - entity_id: binary_sensor.hallway_1st_floor_sensor_motion
       from: "on"
