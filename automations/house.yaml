@@ -179,7 +179,14 @@
       to: "off"
   action:
     - target:
-        entity_id: climate.house
+        area_id:
+          - dining_room
+          - living_room
+          - master_bedroom
+          - emmas_bedroom
+          - office
+          - hobby_room
+          - hallway
       service: climate.set_preset_mode
       data:
         preset_mode: away
@@ -193,7 +200,14 @@
       to: "on"
   action:
     - target:
-        entity_id: climate.house
+        area_id:
+          - dining_room
+          - living_room
+          - master_bedroom
+          - emmas_bedroom
+          - office
+          - hobby_room
+          - hallway
       service: climate.set_preset_mode
       data:
         preset_mode: home
