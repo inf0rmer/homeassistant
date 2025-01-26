@@ -7,6 +7,8 @@ input_boolean:
     name: Do Not Disturb Master Bedroom
   dnd_emmas_bedroom:
     name: Do Not Disturb Emma's Bedroom
+  dnd_guest_room:
+    name: Do Not Disturb Guest Bedroom
   dnd_kitchen:
     name: Do Not Disturb Kitchen
   dnd_hallway:
@@ -32,6 +34,10 @@ input_boolean:
   presence_emmas_bedroom_switch:
   presence_emmas_bedroom_sleeping:
   presence_emmas_bedroom_assistant:
+  presence_guest_room_motion:
+  presence_guest_room_switch:
+  presence_guest_room_sleeping:
+  presence_guest_room_assistant:
   presence_kitchen_motion:
   presence_kitchen_assistant:
   presence_hallway_ground_floor_motion:

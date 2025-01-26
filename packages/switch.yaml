@@ -60,7 +60,6 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.master_bedroom_ceiling
-      - light.master_bedroom_closet_lightstrip
 
   - platform: circadian_lighting
     name: emmas_bedroom
@@ -73,16 +72,18 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.emmas_bedroom
-
+  
   - platform: circadian_lighting
-    name: closet
+    name: guest_room
     min_brightness: 35
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
     sleep_state: "on"
+    disable_entity: input_boolean.dnd_guest_room
+    disable_state: "on"
     lights_ct:
-      - light.closet
+      - light.guest_room_ceiling
 
   - platform: circadian_lighting
     name: office

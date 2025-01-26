@@ -18,6 +18,12 @@ light:
         turn_on:
         turn_off:
         set_level:
+      
+      guest_room_assistant:
+        friendly_name: "Guest Bedroom"
+        turn_on:
+        turn_off:
+        set_level:
 
       kitchen_assistant:
         friendly_name: "Kitchen"
@@ -89,6 +95,11 @@ light:
     entities:
       - light.emmas_bedroom_ceiling
       - light.emmas_closet_light
+  
+  - platform: group
+    name: Guest Bedroom
+    entities:
+      - light.guest_room_ceiling
 
   - platform: group
     name: Kitchen

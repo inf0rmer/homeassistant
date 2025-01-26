@@ -147,6 +147,7 @@ views:
                      - climate.library
                      - climate.office
                      - climate.hobby_room
+                     - climate.guest_room
               - type: horizontal-stack
                 cards:
                   - title: Energy Usage
@@ -672,6 +673,72 @@ views:
               - entity: sensor.emmas_bedroom_temperature
                 name: Temperature
               - entity: sensor.emmas_bedroom_sensor_light_level
+                name: Light Level
+            type: "custom:mini-graph-card"
+
+  - path: guest-bedroom
+    title: Guest Bedroom
+    panel: false
+    cards:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: horizontal-stack
+            cards:
+              - entity: input_boolean.dnd_guest_room
+                icon: "mdi:weather-night"
+                show_state: false
+                name: Do Not Disturb
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: input_boolean.toggle
+                  service_data:
+                    entity_id: input_boolean.dnd_guest_room
+                type: "custom:button-card"
+          - type: horizontal-stack
+            cards:
+              - entity: binary_sensor.presence_guest_room
+                name: '[[[ if (entity.state == "on") return "Occupied"; else return "Free" ]]]'
+                label: "[[[return entity.attributes.reason]]]"
+                show_label: true
+                size: 10%
+                styles:
+                  card:
+                    - font-size: 12px
+                  label:
+                    - color: '[[[ if (states["sun.sun"].state == "above_horizon") return "#666"; else return "#ccc" ]]]'
+                    - font-size: 10px
+                tap_action:
+                  action: call-service
+                  service: '[[[ if (states["input_boolean.presence_guest_room_assistant"].state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
+                  service_data:
+                    entity_id: input_boolean.presence_guest_room_assistant
+                hold_action:
+                  action: call-service
+                  service: '[[[ if (entity.state == "on") return "homeassistant.turn_off"; else return "homeassistant.turn_on" ]]]'
+                  service_data:
+                    entity_id: group.presence_guest_room
+                type: "custom:button-card"
+          - entity: light.guest_room
+            name: All Lights
+            theme: Backend-selected
+            type: light
+          - type: thermostat
+            entity: climate.guest_room
+          - entities:
+              - entity: light.guest_room_ceiling
+            show_header_toggle: false
+            title: Lights
+            type: entities
+          - entities:
+              - entity: sensor.guest_room_temperature
+                name: Temperature
+              - entity: sensor.guest_room_sensor_light_level
                 name: Light Level
             type: "custom:mini-graph-card"
 
