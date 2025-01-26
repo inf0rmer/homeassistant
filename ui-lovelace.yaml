@@ -677,7 +677,7 @@ views:
             type: "custom:mini-graph-card"
 
   - path: guest-bedroom
-    title: Guest Bedroom
+    title: Guest Room
     panel: false
     cards:
       - type: grid

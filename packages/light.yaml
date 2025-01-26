@@ -20,7 +20,7 @@ light:
         set_level:
       
       guest_room_assistant:
-        friendly_name: "Guest Bedroom"
+        friendly_name: "Guest Room"
         turn_on:
         turn_off:
         set_level:
@@ -97,7 +97,7 @@ light:
       - light.emmas_closet_light
   
   - platform: group
-    name: Guest Bedroom
+    name: Guest Room
     entities:
       - light.guest_room_ceiling
 

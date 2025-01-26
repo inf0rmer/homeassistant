@@ -8,7 +8,7 @@ input_boolean:
   dnd_emmas_bedroom:
     name: Do Not Disturb Emma's Bedroom
   dnd_guest_room:
-    name: Do Not Disturb Guest Bedroom
+    name: Do Not Disturb Guest Room
   dnd_kitchen:
     name: Do Not Disturb Kitchen
   dnd_hallway:
