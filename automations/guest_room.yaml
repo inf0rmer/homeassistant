@@ -9,9 +9,7 @@
     - target:
         area_id:
           - guest_room
-      service: climate.set_preset_mode
-      data:
-        preset_mode: home
+      service: climate.turn_on
 
 - id: guest_room_thermostat_away
   alias: "[Guest Room] Set Thermostat Away"
@@ -24,6 +22,4 @@
     - target:
         area_id:
           - guest_room
-      service: climate.set_preset_mode
-      data:
-        preset_mode: away
+        service: climate.turn_off

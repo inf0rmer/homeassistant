@@ -351,10 +351,7 @@
     - target:
         area_id:
           - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
-      service: climate.set_preset_mode
-      data:
-        preset_mode: home
-
+      service: climate.turn_on
 - id: office_thermostat_off
   alias: "[Office] Thermostat Off"
   trigger:
@@ -368,6 +365,4 @@
     - target:
         area_id:
           - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
-      service: climate.set_preset_mode
-      data:
-        preset_mode: away
+      service: climate.turn_off

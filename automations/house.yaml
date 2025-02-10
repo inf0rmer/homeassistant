@@ -205,8 +205,11 @@
           - dining_room
           - 38345693e76b4052805eb620aed23966 #living room
           - 16fad0ed239244bcadba495e0c8ad25f #master bedroom
-          - emmas_bedroom
+          - 591886a53e1c4482a4853b13e76bf275
+          - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
+          - hobby_room
           - hallway
+          - guest_room
       service: climate.set_preset_mode
       data:
         preset_mode: home
