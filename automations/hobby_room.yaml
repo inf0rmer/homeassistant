@@ -163,3 +163,37 @@
     - target:
         entity_id: input_boolean.dnd_hobby_room
       service: input_boolean.turn_off
+
+- id: hobby_room_thermostat_on
+  alias: "[Hobby Room] Thermostat On"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_hobby_room
+      from: "off"
+      to: "on"
+      for:
+        minutes: 5
+  action:
+    - target:
+        area_id:
+          - hobby_room
+      service: climate.set_preset_mode
+      data:
+        preset_mode: home
+
+- id: hobby_room_thermostat_off
+  alias: "[Hobby Room] Thermostat Off"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_hobby_room
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    - target:
+        area_id:
+          - hobby_room
+      service: climate.set_preset_mode
+      data:
+        preset_mode: away

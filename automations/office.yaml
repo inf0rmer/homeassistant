@@ -337,3 +337,37 @@
   action:
     - entity_id: climate.office
       service: climate.turn_off
+
+- id: office_thermostat_on
+  alias: "[Office] Thermostat On"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_office
+      from: "off"
+      to: "on"
+      for:
+        minutes: 5
+  action:
+    - target:
+        area_id:
+          - office
+      service: climate.set_preset_mode
+      data:
+        preset_mode: home
+
+- id: office_thermostat_off
+  alias: "[Office] Thermostat Off"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_office
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    - target:
+        area_id:
+          - office
+      service: climate.set_preset_mode
+      data:
+        preset_mode: away

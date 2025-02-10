@@ -1,0 +1,29 @@
+- id: guest_room_thermostat_home
+  alias: "[Guest Room] Set Thermostat Home"
+  trigger:
+    - entity_id: input_boolean.presence_someone
+      from: "off"
+      platform: state
+      to: "on"
+  action:
+    - target:
+        area_id:
+          - guest_room
+      service: climate.set_preset_mode
+      data:
+        preset_mode: home
+
+- id: guest_room_thermostat_away
+  alias: "[Guest Room] Set Thermostat Away"
+  trigger:
+    - entity_id: input_boolean.presence_someone
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        area_id:
+          - guest_room
+      service: climate.set_preset_mode
+      data:
+        preset_mode: away

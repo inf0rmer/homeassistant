@@ -187,6 +187,7 @@
           - office
           - hobby_room
           - hallway
+          - guest_room
       service: climate.set_preset_mode
       data:
         preset_mode: away
@@ -205,10 +206,7 @@
           - living_room
           - master_bedroom
           - emmas_bedroom
-          - office
-          - hobby_room
           - hallway
-          - guest_room
       service: climate.set_preset_mode
       data:
         preset_mode: home
