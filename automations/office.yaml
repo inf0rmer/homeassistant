@@ -350,7 +350,7 @@
   action:
     - target:
         area_id:
-          - office
+          - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
       service: climate.set_preset_mode
       data:
         preset_mode: home
@@ -367,7 +367,7 @@
   action:
     - target:
         area_id:
-          - office
+          - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
       service: climate.set_preset_mode
       data:
         preset_mode: away
