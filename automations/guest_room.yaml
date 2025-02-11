@@ -1,5 +1,5 @@
-- id: guest_room_thermostat_home
-  alias: "[Guest Room] Set Thermostat Home"
+- id: guest_room_thermostat_on
+  alias: "[Guest Room] Set Thermostat On"
   trigger:
     - entity_id: input_boolean.presence_someone
       from: "off"
@@ -11,8 +11,8 @@
           - guest_room
       service: climate.turn_on
 
-- id: guest_room_thermostat_away
-  alias: "[Guest Room] Set Thermostat Away"
+- id: guest_room_thermostat_off
+  alias: "[Guest Room] Set Thermostat Off"
   trigger:
     - entity_id: input_boolean.presence_someone
       from: "on"
@@ -22,4 +22,4 @@
     - target:
         area_id:
           - guest_room
-        service: climate.turn_off
+      service: climate.turn_off
