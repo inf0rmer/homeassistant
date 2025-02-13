@@ -352,6 +352,13 @@
         area_id:
           - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
       service: climate.turn_on
+    - target:
+        area_id:
+            - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: auto
+
 - id: office_thermostat_off
   alias: "[Office] Thermostat Off"
   trigger:

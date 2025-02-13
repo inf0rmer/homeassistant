@@ -178,6 +178,12 @@
         area_id:
           - hobby_room
       service: climate.turn_on
+    - target:
+        area_id:
+          - hobby_room
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: auto
 
 - id: hobby_room_thermostat_off
   alias: "[Hobby Room] Thermostat Off"

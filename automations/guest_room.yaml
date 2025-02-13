@@ -10,6 +10,12 @@
         area_id:
           - guest_room
       service: climate.turn_on
+    - target:
+        area_id:
+          - guest_room
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: auto
 
 - id: guest_room_thermostat_off
   alias: "[Guest Room] Set Thermostat Off"
