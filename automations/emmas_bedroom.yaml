@@ -282,7 +282,11 @@
       event_type: zha_event
       platform: event
   action:
-    - target:
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_emmas_bedroom', 'brightness') | int }}"
+        transition: 3
+      target:
         entity_id: light.emmas_closet_light
       service: light.turn_on
 
