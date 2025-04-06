@@ -272,3 +272,29 @@
     - target:
         entity_id: input_boolean.dnd_emmas_bedroom
       service: input_boolean.turn_on
+
+- id: emmas_bedroom_turn_on_closet_light
+  alias: "[Emma's Bedroom] Turn On Closet Light"
+  trigger:
+    - event_data:
+        command: on
+        device_ieee: 6c:fd:22:ff:fe:e7:17:d2
+      event_type: zha_event
+      platform: event
+  action:
+    - target:
+        entity_id: light.emmas_closet_light
+      service: light.turn_on
+
+- id: emmas_bedroom_turn_off_closet_light
+  alias: "[Emma's Bedroom] Turn Off Closet Light"
+  trigger:
+    - event_data:
+        command: off
+        device_ieee: 6c:fd:22:ff:fe:e7:17:d2
+      event_type: zha_event
+      platform: event
+  action:
+    - target:
+        entity_id: light.emmas_closet_light
+      service: light.turn_off
