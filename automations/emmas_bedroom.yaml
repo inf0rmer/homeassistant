@@ -277,7 +277,7 @@
   alias: "[Emma's Bedroom] Turn On Closet Light"
   trigger:
     - event_data:
-        command: on
+        command: "on"
         device_ieee: 6c:fd:22:ff:fe:e7:17:d2
       event_type: zha_event
       platform: event
@@ -290,7 +290,7 @@
   alias: "[Emma's Bedroom] Turn Off Closet Light"
   trigger:
     - event_data:
-        command: off
+        command: "off"
         device_ieee: 6c:fd:22:ff:fe:e7:17:d2
       event_type: zha_event
       platform: event
