@@ -416,6 +416,8 @@ views:
             type: light
           - type: thermostat
             entity: climate.office
+          - type: thermostat
+            entity: climate.office_ac
           - type: horizontal-stack
             cards:
               - type: "custom:xiaomi-vacuum-card"
