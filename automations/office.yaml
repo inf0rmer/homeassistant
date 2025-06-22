@@ -349,12 +349,10 @@
         minutes: 5
   action:
     - target:
-        area_id:
-          - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
+        entity_id: climate.office
       service: climate.turn_on
     - target:
-        area_id:
-            - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
+        entity_id: climate.office
       service: climate.set_hvac_mode
       data:
         hvac_mode: auto
@@ -370,6 +368,5 @@
         minutes: 5
   action:
     - target:
-        area_id:
-          - 3caa6a1402e8e00e3d2b1295a12c9d47 #office
+        entity_id: climate.office
       service: climate.turn_off
