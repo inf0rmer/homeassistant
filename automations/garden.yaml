@@ -4,7 +4,7 @@
 - id: garden_lounge_presence_on_motion
   alias: "[Garden Lounge] Presence On (Motion)"
   trigger:
-    - entity_id: binary_sensor.garden_lounge_sensor_motion
+    - entity_id: binary_sensor.garden_sensor_lounge_motion
       from: "off"
       platform: state
       to: "on"
@@ -20,7 +20,7 @@
 - id: garden_lounge_presence_off_motion
   alias: "[Garden Lounge] Presence Off (Motion)"
   trigger:
-    - entity_id: binary_sensor.garden_lounge_sensor_motion
+    - entity_id: binary_sensor.garden_sensor_lounge_motion
       from: "on"
       platform: state
       to: "off"
@@ -80,7 +80,7 @@
 - id: garden_barbecue_presence_on_motion
   alias: "[Garden Barbecue] Presence On (Motion)"
   trigger:
-    - entity_id: binary_sensor.garden_barbecue_sensor_motion
+    - entity_id: binary_sensor.garden_sensor_barbecue_motion
       from: "off"
       platform: state
       to: "on"
@@ -96,7 +96,7 @@
 - id: garden_barbecue_presence_off_motion
   alias: "[Garden Barbecue] Presence Off (Motion)"
   trigger:
-    - entity_id: binary_sensor.garden_barbecue_sensor_motion
+    - entity_id: binary_sensor.garden_sensor_barbecue_motion
       from: "on"
       platform: state
       to: "off"
