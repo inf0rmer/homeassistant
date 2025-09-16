@@ -883,9 +883,9 @@ views:
             theme: Backend-selected
             type: light
           - entities:
-              - entity: group.garden_lounge
-              - entity: group.garden_barbecue
-              - entity: group.garden_flower_bed
+              - entity: light.garden_lounge
+              - entity: light.garden_barbecue
+              - entity: light.garden_flower_bed
             show_header_toggle: false
             title: Lights
             type: entities
