@@ -181,6 +181,10 @@ views:
                       - light.hallway_1st_floor
                       - light.hallway_2nd_floor
                       - light.office
+                      - light.guest_room
+                      - light.hobby_room
+                      - light.front_door_lamp
+                      - light.garden
                     title: Lights
                     type: entities
           - type: vertical-stack
