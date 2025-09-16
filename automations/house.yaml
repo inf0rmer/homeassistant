@@ -319,3 +319,37 @@
         title: Trash Today
         message: Trash collection today for {{ states("sensor.afvalinfo_afval_thuis_trash_today") }}
 
+- id: house_doorbell_on_motion
+  alias: "[House] Doorbell Motion On"
+  trigger:
+    - entity_id: binary_sensor.doorbell_motion
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+  action:
+    - target:
+        entity_id: switch.circadian_lighting_hallway
+      service: switch.turn_on
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_hallway', 'brightness') | int }}"
+        transition: 3
+      target:
+        entity_id: light.front_door_lamp
+      service: light.turn_on
+
+- id: house_doorbell_off_motion
+  alias: "[House] Doorbell Motion Off"
+  trigger:
+    - entity_id: binary_sensor.doorbell_motion
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: light.front_door_lamp
+      service: light.turn_off
