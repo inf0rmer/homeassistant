@@ -59,7 +59,7 @@
         brightness_pct: "{{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}"
         transition: 3
       target:
-        entity_id: light.garden_flower_beds
+        entity_id: light.garden_flower_bed
       service: light.turn_on
 
 - id: garden_lounge_lights_off
@@ -74,7 +74,7 @@
         entity_id: light.garden_lounge
       service: light.turn_off
     - target:
-        entity_id: light.garden_flower_beds
+        entity_id: light.garden_flower_bed
       service: light.turn_off
 
 - id: garden_barbecue_presence_on_motion
