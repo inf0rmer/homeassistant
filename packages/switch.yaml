@@ -113,3 +113,15 @@ switch:
     disable_state: "on"
     lights_ct:
       - light.hobby_room
+  
+  - platform: circadian_lighting
+    name: garden
+    min_brightness: 35
+    sleep_entity: group.sleeping_bedrooms
+    sleep_brightness: 15
+    sleep_colortemp: 2000
+    sleep_state: "on"
+    disable_entity: input_boolean.dnd_garden
+    disable_state: "on"
+    lights_ct:
+      - light.garden

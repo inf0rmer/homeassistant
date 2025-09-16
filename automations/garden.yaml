@@ -47,10 +47,18 @@
       entity_id: sun.sun
       state: below_horizon
   action:
-    - target:
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}"
+        transition: 3
+      target:
         entity_id: light.garden_lounge
       service: light.turn_on
-    - target:
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}"
+        transition: 3
+      target:
         entity_id: light.garden_flower_beds
       service: light.turn_on
 
@@ -104,7 +112,7 @@
       service: input_boolean.turn_off
 
 - id: garden_barbecue_lights_on
-  alias: "[Garden Lounge] Lights On"
+  alias: "[Garden Barbecue] Lights On"
   trigger:
     - entity_id: binary_sensor.presence_garden_barbecue
       from: "off"
@@ -115,15 +123,23 @@
       entity_id: sun.sun
       state: below_horizon
   action:
-    - target:
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}"
+        transition: 3
+      target:
         entity_id: light.garden_barbecue
       service: light.turn_on
-    - target:
+    - data_template:
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}"
+        transition: 3
+      target:
         entity_id: light.garden_flower_bed
       service: light.turn_on
 
 - id: garden_barbecue_lights_off
-  alias: "[Garden Lounge] Lights Off"
+  alias: "[Garden Barbecue] Lights Off"
   trigger:
     - entity_id: binary_sensor.presence_garden_barbecue
       from: "on"
