@@ -1,10 +1,10 @@
 ##########
 # Garden #
 ##########
-- id: garden_presence_on_motion
-  alias: "[Garden] Presence On (Motion)"
+- id: garden_lounge_presence_on_motion
+  alias: "[Garden Lounge] Presence On (Motion)"
   trigger:
-    - entity_id: binary_sensor.garden_sensor_motion
+    - entity_id: binary_sensor.garden_lounge_sensor_motion
       from: "off"
       platform: state
       to: "on"
@@ -14,13 +14,13 @@
       state: "on"
   action:
     - target:
-        entity_id: input_boolean.presence_garden_motion
+        entity_id: input_boolean.presence_garden_lounge_motion
       service: input_boolean.turn_on
 
-- id: garden_presence_off_motion
-  alias: "[Garden] Presence Off (Motion)"
+- id: garden_lounge_presence_off_motion
+  alias: "[Garden Lounge] Presence Off (Motion)"
   trigger:
-    - entity_id: binary_sensor.garden_sensor_motion
+    - entity_id: binary_sensor.garden_lounge_sensor_motion
       from: "on"
       platform: state
       to: "off"
@@ -32,48 +32,13 @@
       state: "off"
   action:
     - data:
-        entity_id: input_boolean.presence_garden_motion
+        entity_id: input_boolean.presence_garden_lounge_motion
       service: input_boolean.turn_off
 
-- id: garden_presence_on_assistant
-  alias: "[Garden] Presence On (Assistant)"
+- id: garden_lounge_lights_on
+  alias: "[Garden Lounge] Lights On"
   trigger:
-    - entity_id: light.garden_assistant
-      from: "off"
-      platform: state
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.someone_home
-      state: "on"
-  action:
-    - target:
-        entity_id: input_boolean.presence_garden_assistant
-      service: input_boolean.turn_on
-
-- id: garden_presence_off_assistant
-  alias: "[Garden] Presence Off (Assistant)"
-  trigger:
-    - entity_id: light.garden_assistant
-      from: "on"
-      platform: state
-      to: "off"
-    - entity_id: input_boolean.presence_garden_assistant
-      from: "on"
-      platform: state
-      to: "off"
-  action:
-    - target:
-        entity_id: input_boolean.presence_garden_assistant
-      service: input_boolean.turn_off
-    - target:
-        entity_id: light.garden_assistant
-      service: light.turn_off
-
-- id: garden_lights_on
-  alias: "[Garden] Lights On"
-  trigger:
-    - entity_id: binary_sensor.presence_garden
+    - entity_id: binary_sensor.presence_garden_lounge
       from: "off"
       platform: state
       to: "on"
@@ -83,17 +48,91 @@
       state: below_horizon
   action:
     - target:
-        entity_id: light.garden
+        entity_id: light.garden_lounge
+      service: light.turn_on
+    - target:
+        entity_id: light.garden_flower_beds
       service: light.turn_on
 
-- id: garden_lights_off
-  alias: "[Garden] Lights Off"
+- id: garden_lounge_lights_off
+  alias: "[Garden Lounge] Lights Off"
   trigger:
-    - entity_id: binary_sensor.presence_garden
+    - entity_id: binary_sensor.presence_garden_lounge
       from: "on"
       platform: state
       to: "off"
   action:
     - target:
-        entity_id: light.garden
+        entity_id: light.garden_lounge
+      service: light.turn_off
+    - target:
+        entity_id: light.garden_flower_beds
+      service: light.turn_off
+
+- id: garden_barbecue_presence_on_motion
+  alias: "[Garden Barbecue] Presence On (Motion)"
+  trigger:
+    - entity_id: binary_sensor.garden_barbecue_sensor_motion
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - target:
+        entity_id: input_boolean.presence_garden_barbecue_motion
+      service: input_boolean.turn_on
+
+- id: garden_barbecue_presence_off_motion
+  alias: "[Garden Barbecue] Presence Off (Motion)"
+  trigger:
+    - entity_id: binary_sensor.garden_barbecue_sensor_motion
+      from: "on"
+      platform: state
+      to: "off"
+      for:
+        minutes: 3
+  condition:
+    - condition: state
+      entity_id: input_boolean.dnd_garden
+      state: "off"
+  action:
+    - data:
+        entity_id: input_boolean.presence_garden_barbecue_motion
+      service: input_boolean.turn_off
+
+- id: garden_barbecue_lights_on
+  alias: "[Garden Lounge] Lights On"
+  trigger:
+    - entity_id: binary_sensor.presence_garden_barbecue
+      from: "off"
+      platform: state
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+  action:
+    - target:
+        entity_id: light.garden_barbecue
+      service: light.turn_on
+    - target:
+        entity_id: light.garden_flower_bed
+      service: light.turn_on
+
+- id: garden_barbecue_lights_off
+  alias: "[Garden Lounge] Lights Off"
+  trigger:
+    - entity_id: binary_sensor.presence_garden_barbecue
+      from: "on"
+      platform: state
+      to: "off"
+  action:
+    - target:
+        entity_id: light.garden_barbecue
+      service: light.turn_off
+    - target:
+        entity_id: light.garden_flower_bed
       service: light.turn_off

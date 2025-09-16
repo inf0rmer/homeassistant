@@ -166,14 +166,25 @@ binary_sensor:
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}
-      presence_garden:
-        friendly_name: Presence Garden
+      presence_garden_barbecue:
+        friendly_name: Presence Garden Barbecue
         device_class: occupancy
         value_template: >-
-          {{ is_state('input_boolean.presence_garden_motion', 'on') or is_state('input_boolean.presence_garden_assistant', 'on') }}
+          {{ is_state('input_boolean.presence_garden_barbecue_motion', 'on') }}
         attribute_templates:
           reason: >
-            {% for entity in states.group.presence_garden.attributes.entity_id if is_state(entity, 'on') %}
+            {% for entity in states.group.presence_garden_barbecue.attributes.entity_id if is_state(entity, 'on') %}
+            {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+            {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+            {%- endfor %}
+      presence_garden_lounge:
+        friendly_name: Presence Garden Lounge
+        device_class: occupancy
+        value_template: >-
+          {{ is_state('input_boolean.presence_garden_lounge_motion', 'on') }}
+        attribute_templates:
+          reason: >
+            {% for entity in states.group.presence_garden_lounge.attributes.entity_id if is_state(entity, 'on') %}
             {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
             {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
             {%- endfor %}

@@ -12,8 +12,8 @@ all_motion_sensors:
     - binary_sensor.hallway_ground_floor_sensor_motion
     - binary_sensor.hallway_1st_floor_sensor_motion
     - binary_sensor.hallway_2nd_floor_sensor_motion
-    - binary_sensor.garden_sensor_motion
-
+    - binary_sensor.garden_lounge_sensor_motion
+    - binary_sensor.garden_barbecue_sensor_motion
 all_occupancy_sensors:
   name: All Occupancy Sensors
   entities:
@@ -24,7 +24,8 @@ all_occupancy_sensors:
     - binary_sensor.presence_hallway_ground_floor
     - binary_sensor.presence_hallway_1st_floor
     - binary_sensor.presence_hallway_2nd_floor
-    - binary_sensor.presence_garden
+    - binary_sensor.presence_garden_lounge
+    - binary_sensor.presence_garden_barbecue
 
 light_kitchen_ceiling:
   name: Light Kitchen Ceiling
@@ -161,8 +162,8 @@ presence_hobby_room:
 
 presence_garden:
   entities:
-    - input_boolean.presence_garden_motion
-    - input_boolean.presence_garden_assistant
+    - input_boolean.presence_garden_lounge_motion
+    - input_boolean.presence_garden_barbecue_motion
 
 presence_bedrooms:
   all: true
