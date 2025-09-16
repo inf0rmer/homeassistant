@@ -135,6 +135,22 @@ light:
       - light.hobby_room_ceiling_3      
   
   - platform: group
+    name: Garden
+    entities:
+      - light.garden_lounge_right_1
+      - light.garden_lounge_right_2
+      - light.garden_lounge_right_3
+      - light.garden_lounge_left_1
+      - light.garden_lounge_left_2
+      - light.garden_lounge_left_3
+      - light.garden_barbecue_1
+      - light.garden_barbecue_2
+      - light.garden_barbecue_3
+      - light.garden_flower_bed_1
+      - light.garden_flower_bed_2
+      - light.garden_flower_bed_3
+  
+  - platform: group
     name: Garden Lounge
     entities:
       - light.garden_lounge_right_1

@@ -854,3 +854,38 @@ views:
                 name: Light Level
             type: "custom:mini-graph-card"
 
+  - path: garden
+    title: Garden
+    panel: false
+    cards:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: horizontal-stack
+            cards:
+              - entity: input_boolean.dnd_garden
+                icon: "mdi:weather-night"
+                show_state: false
+                name: Do Not Disturb
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: input_boolean.toggle
+                  service_data:
+                    entity_id: input_boolean.dnd_garden
+                type: "custom:button-card"
+          - entity: light.garden
+            name: All Lights
+            theme: Backend-selected
+            type: light
+          - entities:
+              - entity: group.garden_lounge
+              - entity: group.garden_barbecue
+              - entity: group.garden_flower_bed
+            show_header_toggle: false
+            title: Lights
+            type: entities
