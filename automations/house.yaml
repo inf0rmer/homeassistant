@@ -353,3 +353,31 @@
     - target:
         entity_id: light.front_door_lamp
       service: light.turn_off
+
+- id: house_enyaq_low_battery_warning
+  alias: "[House] Enyaq Low Battery Warning"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.skoda_enyaq_battery_percentage
+      below: 30
+  condition:
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - service: notify.mobile_app_bruno_s_iphone
+      data:
+        title: "Enyaq Low Battery"
+        message: "The Škoda Enyaq battery is at {{ states('sensor.skoda_enyaq_battery_percentage') }}%. Consider charging soon."
+        data:
+          push:
+            badge: 1
+            sound: default
+    - service: notify.mobile_app_sarah_abrantes_iphone
+      data:
+        title: "Enyaq Low Battery"
+        message: "The Škoda Enyaq battery is at {{ states('sensor.skoda_enyaq_battery_percentage') }}%. Consider charging soon."
+        data:
+          push:
+            badge: 1
+            sound: default
