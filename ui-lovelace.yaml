@@ -422,12 +422,19 @@ views:
             entity: climate.office
           - type: thermostat
             entity: climate.office_ac
-          - type: horizontal-stack
-            cards:
-              - type: "custom:xiaomi-vacuum-card"
-                entity: vacuum.roborock_s5
-                image: false
-                name: Robot Vacuum
+          - type: glance
+            title: Legrand Keor UPS
+            entities:
+              - entity: sensor.legrand_keor_status
+                name: Status
+              - entity: sensor.legrand_keor_battery_charge
+                name: Battery
+              - entity: sensor.legrand_keor_load
+                name: Load
+              - entity: sensor.legrand_keor_input_voltage
+                name: Input V
+              - entity: sensor.legrand_keor_output_voltage
+                name: Output V
           - entities:
               - entity: light.office_ceiling_table
               - entity: light.office_accent
