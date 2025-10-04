@@ -360,10 +360,6 @@
     - platform: numeric_state
       entity_id: sensor.skoda_enyaq_battery_percentage
       below: 30
-  condition:
-    - condition: state
-      entity_id: binary_sensor.someone_home
-      state: "on"
   action:
     - service: notify.mobile_app_bruno_s_iphone
       data:
@@ -381,3 +377,102 @@
           push:
             badge: 1
             sound: default
+
+- id: house_enyaq_charging_complete
+  alias: "[House] Enyaq Charging Complete"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.skoda_enyaq_charging
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.skoda_enyaq_battery_percentage
+      above: 70
+  action:
+    - service: notify.mobile_app_bruno_s_iphone
+      data:
+        title: "Enyaq Charging Complete"
+        message: "The Škoda Enyaq has finished charging at {{ states('sensor.skoda_enyaq_battery_percentage') }}%. You can unplug the charger."
+        data:
+          push:
+            badge: 1
+            sound: default
+    - service: notify.mobile_app_sarah_abrantes_iphone
+      data:
+        title: "Enyaq Charging Complete"
+        message: "The Škoda Enyaq has finished charging at {{ states('sensor.skoda_enyaq_battery_percentage') }}%. You can unplug the charger."
+        data:
+          push:
+            badge: 1
+            sound: default
+
+- id: house_enyaq_forgotten_charging
+  alias: "[House] Enyaq Forgotten Charging Reminder"
+  trigger:
+    - platform: state
+      entity_id: device_tracker.skoda_enyaq_position
+      to: "home"
+      for:
+        hours: 3
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.skoda_enyaq_battery_percentage
+      below: 40
+    - condition: state
+      entity_id: binary_sensor.skoda_enyaq_charging
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
+  action:
+    - service: notify.mobile_app_bruno_s_iphone
+      data:
+        title: "Forgot to Charge Enyaq?"
+        message: "The Enyaq has been home for 3 hours with {{ states('sensor.skoda_enyaq_battery_percentage') }}% battery. Don't forget to plug it in!"
+        data:
+          push:
+            badge: 1
+            sound: default
+    - service: notify.mobile_app_sarah_abrantes_iphone
+      data:
+        title: "Forgot to Charge Enyaq?"
+        message: "The Enyaq has been home for 3 hours with {{ states('sensor.skoda_enyaq_battery_percentage') }}% battery. Don't forget to plug it in!"
+        data:
+          push:
+            badge: 1
+            sound: default
+
+- id: house_enyaq_unlocked_security_alert
+  alias: "[House] Enyaq Unlocked Security Alert"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.skoda_enyaq_vehicle_locked
+      to: "off"
+      for:
+        minutes: 30
+  condition:
+    - condition: state
+      entity_id: device_tracker.skoda_enyaq_position
+      state: "home"
+  action:
+    - service: notify.mobile_app_bruno_s_iphone
+      data:
+        title: "Enyaq Security Alert"
+        message: "The Škoda Enyaq has been unlocked for 30 minutes at home. Consider locking it for security."
+        data:
+          push:
+            badge: 1
+            sound: default
+            category: "SECURITY_ALERT"
+    - service: notify.mobile_app_sarah_abrantes_iphone
+      data:
+        title: "Enyaq Security Alert"
+        message: "The Škoda Enyaq has been unlocked for 30 minutes at home. Consider locking it for security."
+        data:
+          push:
+            badge: 1
+            sound: default
+            category: "SECURITY_ALERT"
