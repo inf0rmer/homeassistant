@@ -7,6 +7,7 @@ preload_cards:
   - hui-entity-filter-card
   - alarm-panel
   - hui-alarm-panel-card
+  - ultra-vehicle-card
 views:
   - path: default_view
     title: House
@@ -154,6 +155,21 @@ views:
                     type: energy-usage-graph
                   - title: Gas Usage
                     type: energy-gas-graph
+              - type: horizontal-stack
+                cards:
+                  - type: glance
+                    title: Škoda Enyaq
+                    entities:
+                      - entity: sensor.skoda_enyaq_battery_percentage
+                        name: Battery
+                      - entity: sensor.skoda_enyaq_range
+                        name: Range
+                      - entity: binary_sensor.skoda_enyaq_vehicle_locked
+                        name: Locked
+                      - entity: binary_sensor.skoda_enyaq_doors_open
+                        name: Doors
+                      - entity: sensor.skoda_enyaq_outside_temperature
+                        name: Outside
               - type: horizontal-stack
                 cards:
                   - entities: 

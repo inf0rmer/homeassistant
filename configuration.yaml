@@ -64,6 +64,8 @@ lovelace:
       type: module
     - url: /hacsfiles/lovelace-card-preloader/lovelace-card-preloader.js
       type: module
+    - url: /hacsfiles/Ultra-Vehicle-Card/ultra-vehicle-card.js
+      type: module
   # Add more dashboards
   dashboards:
     lovelace-admin:
