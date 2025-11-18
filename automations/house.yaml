@@ -346,6 +346,8 @@
   alias: "[House] Doorbell Motion Off"
   trigger:
     - entity_id: binary_sensor.doorbell_motion
+      for:
+        minutes: 3
       from: "on"
       platform: state
       to: "off"
