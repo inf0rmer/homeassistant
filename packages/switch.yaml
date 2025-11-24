@@ -107,6 +107,8 @@ switch:
       - light.office_accent
       - light.office_shelf_accent
       - light.office_shelf_lightstrip
+      - light.office_key_light_left
+      - light.office_key_light_right
 
   - platform: circadian_lighting
     name: hobby_room
