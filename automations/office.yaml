@@ -45,7 +45,7 @@
         entity_id: light.office
       service: light.turn_off
 
-- id: office_presence_on_motion
+- id: office_presence_on_motion_2
   alias: "[Office] Presence On (Motion)"
   trigger:
     - entity_id: binary_sensor.office_sensor_motion

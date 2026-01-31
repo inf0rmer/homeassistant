@@ -454,6 +454,7 @@ views:
           - entities:
               - entity: light.office_ceiling_table
               - entity: light.office_accent
+              - entity: light.office_accent_shelf
               - entity: light.office_display_cabinet_light
               - entity: light.office_desk_lightstrip
               - entity: light.office_key_light_left
