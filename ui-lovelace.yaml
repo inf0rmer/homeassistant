@@ -457,10 +457,16 @@ views:
               - entity: light.office_shelf_accent
               - entity: light.office_display_cabinet_light
               - entity: light.office_desk_lightstrip
+            show_header_toggle: false
+            title: Lights
+            type: entities
+          - entities:
+              - entity: switch.on_air_sign
+              - entity: switch.desk_video_camera_switch
               - entity: light.office_key_light_left
               - entity: light.office_key_light_right
             show_header_toggle: false
-            title: Lights
+            title: Streaming
             type: entities
           - entities:
               - entity: sensor.office_temperature
