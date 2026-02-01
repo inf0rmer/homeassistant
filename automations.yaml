@@ -30,3 +30,25 @@
     entity_id: media_player.sync_box
     type: sync_off
   mode: single
+- id: '1757952526253'
+  alias: '[Laundry Room] Washer Cycle Finished'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.washer_job_state
+    to: none
+    from:
+  conditions: []
+  actions:
+  - action: notify.mobile_app_bruno_s_iphone
+    metadata: {}
+    data:
+      title: Washing Machine Cycle Finished
+      message: Time to dry the laundry
+  - action: notify.mobile_app_sarah_abrantes_iphone
+    metadata: {}
+    data:
+      title: Washing Machine Cycle Finished
+      message: Time to dry the laundry
+  mode: single
