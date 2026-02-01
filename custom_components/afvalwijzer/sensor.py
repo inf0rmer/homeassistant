@@ -1,42 +1,38 @@
-"""
-Sensor component Afvalwijzer
-Author: Bram van Dartel - xirixiz
-"""
+"""Afvalwijzer integration."""
 
-from homeassistant.helpers.event import async_track_time_interval
 from datetime import timedelta
-from homeassistant.components.sensor import PLATFORM_SCHEMA
+
 import voluptuous as vol
+
+from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.exceptions import ConfigEntryNotReady
 import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers.event import async_track_time_interval
 
 from .collector.main_collector import MainCollector
 from .const.const import (
     _LOGGER,
     CONF_COLLECTOR,
+    CONF_DATE_ISOFORMAT,
     CONF_DEFAULT_LABEL,
     CONF_EXCLUDE_LIST,
     CONF_EXCLUDE_PICKUP_TODAY,
-    CONF_DATE_ISOFORMAT,
     CONF_ID,
     CONF_POSTAL_CODE,
     CONF_STREET_NUMBER,
     CONF_SUFFIX,
-    CONF_USERNAME,
-    CONF_PASSWORD,
     SCAN_INTERVAL,
 )
 from .sensor_custom import CustomSensor
 from .sensor_provider import ProviderSensor
 
-# Define the platform schema for validation
+# YAML support (optional / legacy)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Optional(CONF_COLLECTOR, default="mijnafvalwijzer"): cv.string,
         vol.Required(CONF_POSTAL_CODE): cv.string,
         vol.Required(CONF_STREET_NUMBER): cv.string,
         vol.Optional(CONF_SUFFIX, default=""): cv.string,
-        vol.Optional(CONF_USERNAME, default=""): cv.string,
-        vol.Optional(CONF_PASSWORD, default=""): cv.string,
         vol.Optional(CONF_EXCLUDE_PICKUP_TODAY, default=True): cv.boolean,
         vol.Optional(CONF_DATE_ISOFORMAT, default=False): cv.boolean,
         vol.Optional(CONF_EXCLUDE_LIST, default=""): cv.string,
@@ -47,119 +43,142 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Set up sensors using the platform schema."""
-    if not discovery_info:
-        _LOGGER.error(
-            "No discovery information provided; sensors cannot be created.")
+    """Set up sensors via YAML or discovery (legacy)."""
+    cfg = discovery_info or config
+    if not cfg:
+        _LOGGER.error("Missing configuration; sensors cannot be created.")
         return
-
-    await _setup_sensors(hass, discovery_info, async_add_entities)
+    await _setup_sensors(hass, cfg, async_add_entities)
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    """Set up sensors from a config entry."""
-    await _setup_sensors(hass, entry.data, async_add_entities)
+    """Set up sensors from a config entry (config flow)."""
+    data = AfvalwijzerData(hass, entry.data)
+
+    # Initial fetch; if upstream not ready, ask HA to retry
+    ok, transient_error = await hass.async_add_executor_job(data.update)
+    if not ok and transient_error:
+        _LOGGER.warning("Afvalwijzer backend not ready yet; will retry setup.")
+        raise ConfigEntryNotReady from transient_error
+    if not ok:
+        _LOGGER.error(
+            "Afvalwijzer initial update failed; aborting setup for this entry."
+        )
+        return
+
+    await _setup_sensors(hass, entry.data, async_add_entities, data)
 
 
-async def _setup_sensors(hass, config, async_add_entities):
-    """Common setup logic for platform and config entry."""
-    provider = config.get(CONF_COLLECTOR)
-    postal_code = config.get(CONF_POSTAL_CODE)
-    street_number = config.get(CONF_STREET_NUMBER)
-    suffix = config.get(CONF_SUFFIX, "")
-    username = config.get(CONF_USERNAME, "")
-    password = config.get(CONF_PASSWORD, "")
-    exclude_pickup_today = config.get(CONF_EXCLUDE_PICKUP_TODAY, True)
-    date_isoformat = config.get(CONF_DATE_ISOFORMAT, False)
-    exclude_list = config.get(CONF_EXCLUDE_LIST, "")
-    default_label = config.get(CONF_DEFAULT_LABEL, "geen")
+async def _setup_sensors(hass, config, async_add_entities, data=None):
+    """General setup logic for platform and config entry."""
+    _LOGGER.debug(
+        "Setting up Afvalwijzer sensors for provider: %s.",
+        config.get(CONF_COLLECTOR),
+    )
 
-    _LOGGER.debug(f"Setting up Afvalwijzer sensors for provider: {provider}.")
+    if data is None:
+        data = AfvalwijzerData(hass, config)
+        ok, transient_error = await hass.async_add_executor_job(data.update)
+        if not ok and transient_error:
+            _LOGGER.warning(
+                "Afvalwijzer backend not ready during platform setup; skipping."
+            )
+            return
+        if not ok:
+            _LOGGER.error("Afvalwijzer failed to fetch initial data; skipping setup.")
+            return
 
-    # Initialize data handler
-    data = AfvalwijzerData(hass, config)
+    # Update cadence
+    update_interval = SCAN_INTERVAL if SCAN_INTERVAL else timedelta(hours=4)
 
-    # Perform an initial update at startup
-    await hass.async_add_executor_job(data.update)
-
-    # Schedule periodic updates every 4 hours
-    update_interval = timedelta(hours=4)
     def schedule_update(_):
-        """Safely schedule the update."""
+        """Schedule the update on the executor thread."""
         hass.loop.call_soon_threadsafe(hass.async_add_executor_job, data.update)
-    
+
     async_track_time_interval(hass, schedule_update, update_interval)
 
-
-    # Fetch waste types
+    # Build entities
     try:
         waste_types_provider = data.waste_data_with_today.keys()
         waste_types_custom = data.waste_data_custom.keys()
     except Exception as err:
-        _LOGGER.error(f"Failed to fetch waste types: {err}")
+        _LOGGER.error("Failed to fetch waste types: %s", err)
         return
 
-    # Create entities
     entities = [
-        ProviderSensor(hass, waste_type, data, config) for waste_type in waste_types_provider
-    ] + [
-        CustomSensor(hass, waste_type, data, config) for waste_type in waste_types_custom
-    ]
+        ProviderSensor(hass, wtype, data, config) for wtype in waste_types_provider
+    ] + [CustomSensor(hass, wtype, data, config) for wtype in waste_types_custom]
+
+    # Add notification sensor if provider supports it
+    if data.notification_data is not None:
+        entities.append(ProviderSensor(hass, "notifications", data, config))
+        _LOGGER.debug("Added notification sensor for provider")
 
     if not entities:
-        _LOGGER.error(
-            "No entities created; check configuration or collector output.")
+        _LOGGER.error("No entities created; check configuration or collector output.")
         return
 
-    _LOGGER.info(f"Adding {len(entities)} sensors for Afvalwijzer.")
+    _LOGGER.info("Adding %d sensors for Afvalwijzer.", len(entities))
     async_add_entities(entities, True)
 
 
 class AfvalwijzerData:
-    """Class to handle fetching and storing Afvalwijzer data."""
+    """Handles fetching and storing Afvalwijzer data."""
 
     def __init__(self, hass, config):
+        """Initialize Afvalwijzer data handler."""
         self.hass = hass
         self.config = config
         self.waste_data_with_today = None
         self.waste_data_without_today = None
         self.waste_data_custom = None
+        self.notification_data = None
 
     def update(self):
-        """Fetch the latest waste data."""
-        provider = self.config.get(CONF_COLLECTOR)
-        postal_code = self.config.get(CONF_POSTAL_CODE)
-        street_number = self.config.get(CONF_STREET_NUMBER)
-        suffix = self.config.get(CONF_SUFFIX)
-        username = self.config.get(CONF_USERNAME)
-        password = self.config.get(CONF_PASSWORD)
-        exclude_pickup_today = self.config.get(CONF_EXCLUDE_PICKUP_TODAY)
-        date_isoformat = self.config.get(CONF_DATE_ISOFORMAT)
-        default_label = self.config.get(CONF_DEFAULT_LABEL)
-        exclude_list = self.config.get(CONF_EXCLUDE_LIST)
+        """Fetch the latest waste data.
 
+        Returns:
+            (ok: bool, transient_error: Exception | None)
+
+        """
         try:
             collector = MainCollector(
-                provider,
-                postal_code,
-                street_number,
-                suffix,
-                username,
-                password,
-                exclude_pickup_today,
-                date_isoformat,
-                exclude_list,
-                default_label,
+                self.config.get(CONF_COLLECTOR),
+                self.config.get(CONF_POSTAL_CODE),
+                self.config.get(CONF_STREET_NUMBER),
+                self.config.get(CONF_SUFFIX),
+                self.config.get(CONF_EXCLUDE_PICKUP_TODAY),
+                self.config.get(CONF_DATE_ISOFORMAT),
+                self.config.get(CONF_EXCLUDE_LIST),
+                self.config.get(CONF_DEFAULT_LABEL),
             )
         except ValueError as err:
-            _LOGGER.error(f"Collector initialization failed: {err}")
-            return
+            _LOGGER.error("Collector initialization failed: %s", err)
+            return False, None
+        except Exception as err:
+            # Unexpected; may be transient
+            _LOGGER.warning("Collector init unexpected error: %s", err)
+            return False, err
 
         try:
             self.waste_data_with_today = collector.waste_data_with_today
             self.waste_data_without_today = collector.waste_data_without_today
             self.waste_data_custom = collector.waste_data_custom
+            self.notification_data = collector.notification_data
             _LOGGER.debug("Waste data updated successfully.")
+            return True, None
+        except TimeoutError as err:
+            _LOGGER.warning("Timeout fetching waste data: %s", err)
+            return False, err
+        except ConnectionError as err:
+            _LOGGER.warning("Connection error fetching waste data: %s", err)
+            return False, err
         except ValueError as err:
-            _LOGGER.error(f"Failed to fetch waste data: {err}")
-            self.waste_data_with_today = self.waste_data_without_today = self.waste_data_custom = default_label
+            _LOGGER.error("Failed to fetch waste data: %s", err)
+            self.waste_data_with_today = self.waste_data_without_today = (
+                self.waste_data_custom
+            ) = self.config.get(CONF_DEFAULT_LABEL)
+            return False, None
+        except Exception as err:
+            _LOGGER.warning("Unexpected error fetching waste data: %s", err)
+            return False, err

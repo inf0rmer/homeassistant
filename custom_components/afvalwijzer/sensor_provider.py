@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
-from homeassistant.components.sensor import SensorEntity, SensorDeviceClass
-from homeassistant.helpers.restore_state import RestoreEntity
-from datetime import datetime, date, timedelta
+"""Afvalwijzer integration."""
+
+from datetime import datetime, timedelta
 import hashlib
+
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
+from homeassistant.helpers.restore_state import RestoreEntity
+from homeassistant.util import dt as dt_util
 
 from .const.const import (
     _LOGGER,
@@ -11,15 +14,14 @@ from .const.const import (
     ATTR_IS_COLLECTION_DATE_TODAY,
     ATTR_IS_COLLECTION_DATE_TOMORROW,
     ATTR_LAST_UPDATE,
+    CONF_COLLECTOR,
+    CONF_DATE_ISOFORMAT,
     CONF_DEFAULT_LABEL,
     CONF_EXCLUDE_PICKUP_TODAY,
     CONF_ID,
     CONF_POSTAL_CODE,
     CONF_STREET_NUMBER,
     CONF_SUFFIX,
-    CONF_USERNAME,
-    CONF_PASSWORD,
-    CONF_DATE_ISOFORMAT,
     SENSOR_ICON,
     SENSOR_PREFIX,
 )
@@ -32,12 +34,11 @@ class ProviderSensor(RestoreEntity, SensorEntity):
         """Initialize the sensor."""
         self.hass = hass
         self.waste_type = waste_type
-        self.fetch_data = fetch_data  # This should be an instance of AfvalwijzerData
+        self.fetch_data = fetch_data
         self.config = config
         self._id_name = config.get(CONF_ID)
         self._default_label = config.get(CONF_DEFAULT_LABEL)
-        self._exclude_pickup_today = str(
-            config.get(CONF_EXCLUDE_PICKUP_TODAY)).lower()
+        self._exclude_pickup_today = str(config.get(CONF_EXCLUDE_PICKUP_TODAY)).lower()
         self._name = (
             SENSOR_PREFIX + (f"{self._id_name} " if self._id_name else "")
         ) + waste_type
@@ -46,13 +47,12 @@ class ProviderSensor(RestoreEntity, SensorEntity):
         self._is_collection_date_today = False
         self._is_collection_date_tomorrow = False
         self._is_collection_date_day_after_tomorrow = False
+        self._is_notification_sensor = waste_type == "notifications"
         self._date_isoformat = str(config.get(CONF_DATE_ISOFORMAT)).lower()
-        self._state = self._default_label
-        self._icon = SENSOR_ICON
+        self._state = self._default_label if not self._is_notification_sensor else 0
+        self._icon = "mdi:bell-outline" if self._is_notification_sensor else SENSOR_ICON
         self._unique_id = hashlib.sha1(
-            f"{waste_type}{config.get(CONF_ID)}{config.get(CONF_POSTAL_CODE)}{config.get(CONF_STREET_NUMBER)}{config.get(CONF_SUFFIX, '')}{config.get(CONF_USERNAME, '')}{config.get(CONF_PASSWORD, '')}".encode(
-                "utf-8"
-            )
+            f"{waste_type}{config.get(CONF_ID)}{config.get(CONF_COLLECTOR)}{config.get(CONF_POSTAL_CODE)}{config.get(CONF_STREET_NUMBER)}{config.get(CONF_SUFFIX, '')}".encode()
         ).hexdigest()
         self._device_class = None
 
@@ -84,6 +84,15 @@ class ProviderSensor(RestoreEntity, SensorEntity):
     @property
     def state_attributes(self):
         """Return the attributes of the sensor."""
+        # Special attributes for notification sensor
+        if self._is_notification_sensor:
+            notifications = self.fetch_data.notification_data or []
+            return {
+                ATTR_LAST_UPDATE: self._last_update,
+                "notifications": notifications,
+                "count": len(notifications),
+            }
+
         return {
             ATTR_LAST_UPDATE: self._last_update,
             ATTR_DAYS_UNTIL_COLLECTION_DATE: self._days_until_collection_date,
@@ -107,6 +116,11 @@ class ProviderSensor(RestoreEntity, SensorEntity):
                 else self.fetch_data.waste_data_without_today
             )
 
+            # handling for notification sensor
+            if self._is_notification_sensor:
+                self._update_notification_sensor()
+                return
+
             if not waste_data_provider or self.waste_type not in waste_data_provider:
                 raise ValueError(f"No data for waste type: {self.waste_type}")
 
@@ -118,7 +132,7 @@ class ProviderSensor(RestoreEntity, SensorEntity):
                 self._update_attributes_non_date(collection_date)
 
             # Update last_update timestamp
-            self._last_update = datetime.now().isoformat()
+            self._last_update = dt_util.now().isoformat()
 
         except Exception as err:
             _LOGGER.error(f"Error updating sensor {self.name}: {err}")
@@ -127,11 +141,12 @@ class ProviderSensor(RestoreEntity, SensorEntity):
     def _update_attributes_date(self, collection_date):
         """Update attributes for a datetime value."""
         collection_date_object = (
-            collection_date.isoformat() if self._date_isoformat in (
-                "true", "yes") else collection_date.date()
+            collection_date.isoformat()
+            if self._date_isoformat in ("true", "yes")
+            else collection_date.date()
         )
         collection_date_delta = collection_date.date()
-        delta = collection_date_delta - date.today()
+        delta = collection_date_delta - dt_util.now().date()
 
         self._days_until_collection_date = delta.days
         self._update_collection_date_flags(collection_date_delta)
@@ -146,12 +161,25 @@ class ProviderSensor(RestoreEntity, SensorEntity):
 
     def _update_collection_date_flags(self, collection_date_delta):
         """Update flags for collection date."""
-        today = date.today()
+        today = dt_util.now().date()
         self._is_collection_date_today = collection_date_delta == today
-        self._is_collection_date_tomorrow = collection_date_delta == today + \
-            timedelta(days=1)
-        self._is_collection_date_day_after_tomorrow = collection_date_delta == today + \
-            timedelta(days=2)
+        self._is_collection_date_tomorrow = collection_date_delta == today + timedelta(
+            days=1
+        )
+        self._is_collection_date_day_after_tomorrow = (
+            collection_date_delta == today + timedelta(days=2)
+        )
+
+    def _update_notification_sensor(self):
+        """Update notification sensor state and attributes."""
+        notifications = self.fetch_data.notification_data or []
+        self._state = len(notifications)
+
+        # Update icon based on notification count
+        self._icon = "mdi:bell-alert" if len(notifications) > 0 else "mdi:bell-outline"
+
+        self._last_update = dt_util.now().isoformat()
+        _LOGGER.debug(f"Notification sensor updated: {self._state} notification(s)")
 
     def _handle_value_error(self):
         """Handle errors in fetching data."""
@@ -161,4 +189,4 @@ class ProviderSensor(RestoreEntity, SensorEntity):
         self._is_collection_date_day_after_tomorrow = None
         self._days_until_collection_date = None
         self._device_class = None
-        self._last_update = datetime.now().isoformat()
+        self._last_update = dt_util.now().isoformat()

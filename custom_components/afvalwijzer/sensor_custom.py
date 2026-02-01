@@ -1,19 +1,23 @@
-from homeassistant.helpers.restore_state import RestoreEntity
-from homeassistant.components.sensor import SensorEntity, SensorDeviceClass
+"""Afvalwijzer integration."""
 
-from datetime import datetime, date
+from datetime import datetime
 import hashlib
+
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
+from homeassistant.helpers.restore_state import RestoreEntity
+from homeassistant.util import dt as dt_util
 
 from .const.const import (
     _LOGGER,
-    ATTR_LAST_UPDATE,
     ATTR_DAYS_UNTIL_COLLECTION_DATE,
+    ATTR_LAST_UPDATE,
+    CONF_COLLECTOR,
+    CONF_DATE_ISOFORMAT,
     CONF_DEFAULT_LABEL,
     CONF_ID,
     CONF_POSTAL_CODE,
     CONF_STREET_NUMBER,
     CONF_SUFFIX,
-    CONF_DATE_ISOFORMAT,
     SENSOR_ICON,
     SENSOR_PREFIX,
 )
@@ -26,7 +30,7 @@ class CustomSensor(RestoreEntity, SensorEntity):
         """Initialize the sensor."""
         self.hass = hass
         self.waste_type = waste_type
-        self.fetch_data = fetch_data  # Should be an instance of AfvalwijzerData
+        self.fetch_data = fetch_data
         self.config = config
         self._id_name = config.get(CONF_ID)
         self._default_label = config.get(CONF_DEFAULT_LABEL)
@@ -39,9 +43,7 @@ class CustomSensor(RestoreEntity, SensorEntity):
         self._state = self._default_label
         self._icon = SENSOR_ICON
         self._unique_id = hashlib.sha1(
-            f"{waste_type}{config.get(CONF_ID)}{config.get(CONF_POSTAL_CODE)}{config.get(CONF_STREET_NUMBER)}{config.get(CONF_SUFFIX, '')}".encode(
-                "utf-8"
-            )
+            f"{waste_type}{config.get(CONF_ID)}{config.get(CONF_COLLECTOR)}{config.get(CONF_POSTAL_CODE)}{config.get(CONF_STREET_NUMBER)}{config.get(CONF_SUFFIX, '')}".encode()
         ).hexdigest()
         self._device_class = None
 
@@ -104,7 +106,7 @@ class CustomSensor(RestoreEntity, SensorEntity):
                 self._update_attributes_non_date(collection_date)
 
             # Update last_update timestamp
-            self._last_update = datetime.now().isoformat()
+            self._last_update = dt_util.now().isoformat()
 
         except Exception as err:
             _LOGGER.error(f"Error updating custom sensor {self.name}: {err}")
@@ -113,11 +115,12 @@ class CustomSensor(RestoreEntity, SensorEntity):
     def _update_attributes_date(self, collection_date):
         """Update attributes for a datetime value."""
         collection_date_object = (
-            collection_date.isoformat() if self._date_isoformat in (
-                "true", "yes") else collection_date.date()
+            collection_date.isoformat()
+            if self._date_isoformat in ("true", "yes")
+            else collection_date.date()
         )
         collection_date_delta = collection_date.date()
-        delta = collection_date_delta - date.today()
+        delta = collection_date_delta - dt_util.now().date()
 
         self._days_until_collection_date = delta.days
         self._device_class = SensorDeviceClass.TIMESTAMP
@@ -134,4 +137,4 @@ class CustomSensor(RestoreEntity, SensorEntity):
         self._state = self._default_label
         self._days_until_collection_date = None
         self._device_class = None
-        self._last_update = datetime.now().isoformat()
+        self._last_update = dt_util.now().isoformat()
