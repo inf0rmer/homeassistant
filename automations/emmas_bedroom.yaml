@@ -35,9 +35,7 @@
       platform: state
       to: "off"
   action:
-    - target:
-        entity_id: switch.circadian_lighting_emmas_bedroom
-      service: switch.turn_off
+
     - data:
         transition: 2
       target:
@@ -182,9 +180,6 @@
     - target:
         entity_id: input_boolean.presence_emmas_bedroom_assistant
       service: input_boolean.turn_off
-    - target:
-        entity_id: switch.circadian_lighting_emmas_bedroom
-      service: switch.turn_off
     - target:
         entity_id: light.emmas_bedroom
       service: light.turn_off
