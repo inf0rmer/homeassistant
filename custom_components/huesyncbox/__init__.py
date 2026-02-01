@@ -1,235 +1,157 @@
 """The Philips Hue Play HDMI Sync Box integration."""
+
 import asyncio
-import textwrap
+from dataclasses import dataclass
 
-import voluptuous as vol
-from homeassistant.components.light import ATTR_BRIGHTNESS, ATTR_BRIGHTNESS_STEP
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers.config_validation import make_entity_service_schema
-from homeassistant.helpers.service import async_extract_entity_ids
-
-from .const import (
-    ATTR_ENTERTAINMENT_AREA,
-    ATTR_INPUT,
-    ATTR_INPUT_NEXT,
-    ATTR_INPUT_PREV,
-    ATTR_INTENSITY,
-    ATTR_INTENSITY_NEXT,
-    ATTR_INTENSITY_PREV,
-    ATTR_MODE,
-    ATTR_MODE_NEXT,
-    ATTR_MODE_PREV,
-    ATTR_SYNC,
-    ATTR_SYNC_TOGGLE,
-    DOMAIN,
-    INPUTS,
-    INTENSITIES,
-    LOGGER,
-    MODES,
-    SERVICE_SET_BRIGHTNESS,
-    SERVICE_SET_ENTERTAINMENT_AREA,
-    SERVICE_SET_INTENSITY,
-    SERVICE_SET_MODE,
-    SERVICE_SET_SYNC_STATE,
+from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from homeassistant.helpers import (
+    config_validation as cv,
+    entity_registry as er,
+    issue_registry as ir,
 )
-from .huesyncbox import PhilipsHuePlayHdmiSyncBox, async_remove_entry_from_huesyncbox
-from .helpers import log_config_entry, redacted
+from homeassistant.helpers.typing import ConfigType
 
-CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema({})}, extra=vol.ALLOW_EXTRA)
+import aiohuesyncbox
 
-PLATFORMS = ["media_player"]
-
-HUESYNCBOX_SET_STATE_SCHEMA = make_entity_service_schema(
-    {
-        vol.Optional(ATTR_SYNC): cv.boolean,
-        vol.Optional(ATTR_SYNC_TOGGLE): cv.boolean,
-        vol.Optional(ATTR_BRIGHTNESS): cv.small_float,
-        vol.Optional(ATTR_BRIGHTNESS_STEP): vol.All(
-            vol.Coerce(float), vol.Range(min=-1, max=1)
-        ),
-        vol.Optional(ATTR_MODE): vol.In(MODES),
-        vol.Optional(ATTR_MODE_NEXT): cv.boolean,
-        vol.Optional(ATTR_MODE_PREV): cv.boolean,
-        vol.Optional(ATTR_INTENSITY): vol.In(INTENSITIES),
-        vol.Optional(ATTR_INTENSITY_NEXT): cv.boolean,
-        vol.Optional(ATTR_INTENSITY_PREV): cv.boolean,
-        vol.Optional(ATTR_INPUT): vol.In(INPUTS),
-        vol.Optional(ATTR_INPUT_NEXT): cv.boolean,
-        vol.Optional(ATTR_INPUT_PREV): cv.boolean,
-        vol.Optional(ATTR_ENTERTAINMENT_AREA): cv.string,
-    }
-)
-
-HUESYNCBOX_SET_BRIGHTNESS_SCHEMA = make_entity_service_schema(
-    {vol.Required(ATTR_BRIGHTNESS): cv.small_float}
-)
-
-HUESYNCBOX_SET_MODE_SCHEMA = make_entity_service_schema(
-    {vol.Required(ATTR_MODE): vol.In(MODES)}
-)
-
-HUESYNCBOX_SET_INTENSITY_SCHEMA = make_entity_service_schema(
-    {
-        vol.Required(ATTR_INTENSITY): vol.In(INTENSITIES),
-        vol.Optional(ATTR_MODE): vol.In(MODES),
-    }
-)
-
-HUESYNCBOX_SET_ENTERTAINMENT_AREA_SCHEMA = make_entity_service_schema(
-    {vol.Required(ATTR_ENTERTAINMENT_AREA): cv.string}
-)
-
-services_registered = False
+from .const import DOMAIN, LOGGER
+from .coordinator import HueSyncBoxCoordinator
+from .helpers import update_config_entry_title, update_device_registry
+from .services import async_register_services
 
 
-async def async_setup(hass: HomeAssistant, config: dict):
-    """
-    Set up the Philips Hue Play HDMI Sync Box integration.
-    Only supporting zeroconf, so nothing to do here.
-    """
-    hass.data[DOMAIN] = {}
+@dataclass
+class HueSyncBoxRuntimeData:
+    coordinator: HueSyncBoxCoordinator
 
+
+type HueSyncBoxConfigEntry = ConfigEntry[HueSyncBoxRuntimeData]
+
+
+PLATFORMS: list[Platform] = [
+    Platform.NUMBER,
+    Platform.SELECT,
+    Platform.SENSOR,
+    Platform.SWITCH,
+]
+
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
+
+
+async def async_setup(hass: HomeAssistant, _config: ConfigType) -> bool:
+    """Set up the Philips Hue Play HDMI Sync Box integration."""
+    await async_register_services(hass)
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Set up a config entry for Philips Hue Play HDMI Sync Box."""
-
-    LOGGER.debug(
-        "%s async_setup_entry\nconfigentry:\n%s\nhass.data\n%s"
-        % (
-            __name__,
-            textwrap.indent(log_config_entry(entry), "  "),
-            [redacted(v) for v in hass.data[DOMAIN].keys()],
-        )
+async def async_setup_entry(hass: HomeAssistant, entry: HueSyncBoxConfigEntry) -> bool:
+    """Set up Philips Hue Play HDMI Sync Box from a config entry."""
+    api = aiohuesyncbox.HueSyncBox(
+        entry.data["host"],
+        entry.data["unique_id"],
+        access_token=entry.data.get("access_token"),
+        port=entry.data["port"],
+        path=entry.data["path"],
     )
 
-    huesyncbox = PhilipsHuePlayHdmiSyncBox(hass, entry)
-    hass.data[DOMAIN][entry.data["unique_id"]] = huesyncbox
+    initialized = False
+    try:
+        await api.initialize()
+        initialized = True
+    except aiohuesyncbox.Unauthorized as err:
+        raise ConfigEntryAuthFailed(err) from err
+    except aiohuesyncbox.RequestError as err:
+        raise ConfigEntryNotReady(err) from err
+    finally:
+        if not initialized:
+            await api.close()
 
-    if not await huesyncbox.async_setup():
-        return False
+    await update_device_registry(hass, entry, api)
+    update_config_entry_title(hass, entry, api.device.name)
 
-    for platform in PLATFORMS:
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    coordinator = HueSyncBoxCoordinator(hass, api)
+    entry.runtime_data = HueSyncBoxRuntimeData(coordinator)
 
-    # Register services on first entry
-    global services_registered
-    if not services_registered:
-        await async_register_services(hass)
-        services_registered = True
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_unload_entry(hass: HomeAssistant, entry: HueSyncBoxConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
-    if unload_ok:
-        huesyncbox = hass.data[DOMAIN].pop(entry.data["unique_id"])
-        await huesyncbox.async_reset()
-
-    # Unregister services when last entry is unloaded
-    if len(hass.data[DOMAIN].items()) == 0:
-        await async_unregister_services(hass)
-        global services_registered
-        services_registered = False
+    if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
+        coordinator = entry.runtime_data.coordinator
+        await coordinator.api.close()
 
     return unload_ok
 
 
-async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+async def async_remove_entry(
+    _hass: HomeAssistant, entry: HueSyncBoxConfigEntry
+) -> None:
     # Best effort cleanup. User might not even have the device anymore or had it factory reset.
-    # Note that the entry already has been unloaded.
+    # Note that the entry already has been unloaded, so need to create API again
     try:
-        await async_remove_entry_from_huesyncbox(entry)
-    except Exception as e:
-        LOGGER.warning("Unregistering Philips Hue Play HDMI Sync Box failed: %s ", e)
+        async with asyncio.timeout(10):
+            async with aiohuesyncbox.HueSyncBox(
+                entry.data["host"],
+                entry.data["unique_id"],
+                access_token=entry.data.get("access_token"),
+                port=entry.data["port"],
+                path=entry.data["path"],
+            ) as api:
+                await api.unregister(entry.data["registration_id"])
+    except Exception as e:  # noqa: BLE001
+        LOGGER.info(
+            "Removing registration from Philips Hue Play HDMI Sync Box failed: %s ", e
+        )
 
 
-async def async_register_services(hass: HomeAssistant):
-    async def async_set_sync_state(call):
-        entity_ids = await async_extract_entity_ids(hass, call)
-        for _, entry in hass.data[DOMAIN].items():
-            if entry.entity and entry.entity.entity_id in entity_ids:
-                await entry.entity.async_set_sync_state(call.data)
+async def async_migrate_entry(
+    hass: HomeAssistant, config_entry: HueSyncBoxConfigEntry
+) -> bool:
+    """Migrate old entry."""
+    from_version = config_entry.version
+    LOGGER.debug("Migrating from version %s", from_version)
 
-    hass.services.async_register(
-        DOMAIN,
-        SERVICE_SET_SYNC_STATE,
-        async_set_sync_state,
-        schema=HUESYNCBOX_SET_STATE_SCHEMA,
+    if config_entry.version == 1:
+        migrate_v1_to_v2(hass, config_entry)
+    if config_entry.version == 2 and config_entry.minor_version == 1:  # noqa: PLR2004
+        migrate_v2_1_to_v2_2(hass, config_entry)
+
+    LOGGER.info(
+        "Migration of ConfigEntry from version %s to version %s successful",
+        from_version,
+        config_entry.version,
     )
 
-    async def async_set_sync_mode(call):
-        entity_ids = await async_extract_entity_ids(hass, call)
-        for _, entry in hass.data[DOMAIN].items():
-            if entry.entity and entry.entity.entity_id in entity_ids:
-                await entry.entity.async_set_sync_mode(call.data.get(ATTR_MODE))
+    return True
 
-    hass.services.async_register(
-        DOMAIN, SERVICE_SET_MODE, async_set_sync_mode, schema=HUESYNCBOX_SET_MODE_SCHEMA
+
+def migrate_v1_to_v2(hass: HomeAssistant, config_entry: HueSyncBoxConfigEntry) -> None:
+    # Mediaplayer entities are obsolete
+    # cleanup so the user does not have to
+    registry = er.async_get(hass)
+    entities = er.async_entries_for_config_entry(registry, config_entry.entry_id)
+
+    for entity in entities:
+        if entity.domain == Platform.MEDIA_PLAYER:
+            registry.async_remove(entity.entity_id)
+
+            # There used to be a repair created here
+            # Removed due to adding dependency on automation
+
+    hass.config_entries.async_update_entry(config_entry, version=2, minor_version=1)
+
+
+def migrate_v2_1_to_v2_2(
+    hass: HomeAssistant, config_entry: HueSyncBoxConfigEntry
+) -> None:
+    # Remove any pending repairs
+    ir.async_delete_issue(
+        hass, DOMAIN, f"automations_using_deleted_mediaplayer_{config_entry.entry_id}"
     )
 
-    async def async_set_intensity(call):
-        entity_ids = await async_extract_entity_ids(hass, call)
-        for _, entry in hass.data[DOMAIN].items():
-            if entry.entity and entry.entity.entity_id in entity_ids:
-                await entry.entity.async_set_intensity(
-                    call.data.get(ATTR_INTENSITY), call.data.get(ATTR_MODE, None)
-                )
-
-    hass.services.async_register(
-        DOMAIN,
-        SERVICE_SET_INTENSITY,
-        async_set_intensity,
-        schema=HUESYNCBOX_SET_INTENSITY_SCHEMA,
-    )
-
-    async def async_set_brightness(call):
-        entity_ids = await async_extract_entity_ids(hass, call)
-        for _, entry in hass.data[DOMAIN].items():
-            if entry.entity and entry.entity.entity_id in entity_ids:
-                await entry.entity.async_set_brightness(call.data.get(ATTR_BRIGHTNESS))
-
-    hass.services.async_register(
-        DOMAIN,
-        SERVICE_SET_BRIGHTNESS,
-        async_set_brightness,
-        schema=HUESYNCBOX_SET_BRIGHTNESS_SCHEMA,
-    )
-
-    async def async_set_entertainment_area(call):
-        entity_ids = await async_extract_entity_ids(hass, call)
-        for _, entry in hass.data[DOMAIN].items():
-            if entry.entity and entry.entity.entity_id in entity_ids:
-                await entry.entity.async_select_entertainment_area(
-                    call.data.get(ATTR_ENTERTAINMENT_AREA)
-                )
-
-    hass.services.async_register(
-        DOMAIN,
-        SERVICE_SET_ENTERTAINMENT_AREA,
-        async_set_entertainment_area,
-        schema=HUESYNCBOX_SET_ENTERTAINMENT_AREA_SCHEMA,
-    )
-
-
-async def async_unregister_services(hass):
-    hass.services.async_remove(DOMAIN, SERVICE_SET_SYNC_STATE)
-    hass.services.async_remove(DOMAIN, SERVICE_SET_BRIGHTNESS)
-    hass.services.async_remove(DOMAIN, SERVICE_SET_MODE)
-    hass.services.async_remove(DOMAIN, SERVICE_SET_INTENSITY)
-    hass.services.async_remove(DOMAIN, SERVICE_SET_ENTERTAINMENT_AREA)
+    hass.config_entries.async_update_entry(config_entry, version=2, minor_version=2)
