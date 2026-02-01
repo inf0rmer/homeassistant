@@ -1,7 +1,7 @@
 switch:
   - platform: circadian_lighting
     name: living_room
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -13,7 +13,7 @@ switch:
 
   - platform: circadian_lighting
     name: kitchen
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -25,7 +25,7 @@ switch:
 
   - platform: circadian_lighting
     name: bathroom_1st_floor
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -37,7 +37,7 @@ switch:
 
   - platform: circadian_lighting
     name: hallway
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -51,7 +51,7 @@ switch:
 
   - platform: circadian_lighting
     name: master_bedroom
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -63,7 +63,7 @@ switch:
 
   - platform: circadian_lighting
     name: emmas_bedroom
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -75,7 +75,7 @@ switch:
   
   - platform: circadian_lighting
     name: guest_room
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -87,7 +87,7 @@ switch:
 
   - platform: circadian_lighting
     name: office
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -110,7 +110,7 @@ switch:
 
   - platform: circadian_lighting
     name: hobby_room
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
@@ -122,7 +122,7 @@ switch:
   
   - platform: circadian_lighting
     name: garden
-    min_brightness: 35
+    min_brightness: 50
     sleep_entity: group.sleeping_bedrooms
     sleep_brightness: 15
     sleep_colortemp: 2000
