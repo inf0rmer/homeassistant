@@ -123,5 +123,3 @@ system_health:
 
 # hacs:
 #   token: !env_var GITHUB_TOKEN
-
-circadian_lighting:

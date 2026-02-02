@@ -18,13 +18,6 @@
       state: "off"
   action:
     - target:
-        entity_id: switch.circadian_lighting_hobby_room
-      service: switch.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_hobby_room', 'brightness') | int }}"
-        transition: 3
-      target:
         entity_id: light.hobby_room
       service: light.turn_on
 
@@ -37,11 +30,6 @@
       to: "off"
   action:
     - target:
-        entity_id: switch.circadian_lighting_hobby_room
-      service: switch.turn_off
-    - data:
-        transition: 2
-      target:
         entity_id: light.hobby_room
       service: light.turn_off
 

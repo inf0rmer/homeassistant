@@ -331,16 +331,9 @@
       entity_id: sun.sun
       state: below_horizon
   action:
-    - target:
-        entity_id: switch.circadian_lighting_hallway
-      service: switch.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_hallway', 'brightness') | int }}"
-        transition: 3
+    - service: light.turn_on
       target:
         entity_id: light.front_door_lamp
-      service: light.turn_on
 
 - id: house_doorbell_off_motion
   alias: "[House] Doorbell Motion Off"

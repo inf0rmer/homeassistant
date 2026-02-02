@@ -16,16 +16,9 @@
       entity_id: input_boolean.dnd_emmas_bedroom
       state: "off"
   action:
-    - target:
-        entity_id: switch.circadian_lighting_emmas_bedroom
-      service: switch.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_emmas_bedroom', 'brightness') | int }}"
-        transition: 3
+    - service: light.turn_on
       target:
         entity_id: light.emmas_bedroom
-      service: light.turn_on
 
 - id: emmas_bedroom_lights_off
   alias: "[Emma's Bedroom] Lights off"
@@ -152,15 +145,9 @@
     - target:
         entity_id: input_boolean.dnd_emmas_bedroom
       service: input_boolean.turn_off
-    - target:
-        entity_id: switch.circadian_lighting_emmas_bedroom
-      service: switch.turn_on
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_emmas_bedroom', 'brightness') | int }}"
+    - service: light.turn_on
       target:
         entity_id: light.emmas_bedroom
-      service: light.turn_on
 
 - id: emmas_bedroom_presence_off_manual_switch
   alias: "[Emma's Bedroom] Presence Off (Switch)"
@@ -277,13 +264,9 @@
       event_type: zha_event
       platform: event
   action:
-    - data_template:
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_emmas_bedroom', 'brightness') | int }}"
-        transition: 3
+    - service: light.turn_on
       target:
         entity_id: light.emmas_closet_light
-      service: light.turn_on
 
 - id: emmas_bedroom_turn_off_closet_light
   alias: "[Emma's Bedroom] Turn Off Closet Light"
