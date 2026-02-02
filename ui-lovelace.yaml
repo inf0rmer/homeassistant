@@ -457,6 +457,7 @@ views:
               - entity: light.office_shelf_accent
               - entity: light.office_display_cabinet_light
               - entity: light.office_desk_lightstrip
+              - entity: light.grafana_logo
             show_header_toggle: false
             title: Lights
             type: entities
