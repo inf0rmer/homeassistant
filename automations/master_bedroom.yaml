@@ -290,3 +290,28 @@
     - target:
         entity_id: input_boolean.dnd_master_bedroom
       service: input_boolean.turn_off
+
+- id: master_bedroom_remote_button_pressed
+  alias: "[Master Bedroom] Remote Button Pressed"
+  use_blueprint:
+    path: dustins/zha-philips-hue-v2-smart-dimmer-switch-and-remote-rwl022.yaml
+    input:
+      zha_device: 89e550353c030451eafd7ad2af366ae0
+      Power_Press:
+        - action: light.toggle
+          target:
+            entity_id: light.master_bedroom
+      Up_Press:
+        - action: light.turn_on
+          target:
+            entity_id: light.master_bedroom
+          data:
+            brightness_step_pct: 20
+            transition: 0.5
+      Down_Press:
+      - action: light.turn_on
+        target:
+          entity_id: light.master_bedroom
+        data:
+          brightness_step_pct: -20
+          transition: 0.5

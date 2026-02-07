@@ -280,3 +280,28 @@
     - target:
         entity_id: light.emmas_closet_light
       service: light.turn_off
+
+- id: emmas_bedroom_remote_button_pressed
+  alias: "[Emma's Bedroom] Remote Button Pressed"
+  use_blueprint:
+    path: dustins/zha-philips-hue-v2-smart-dimmer-switch-and-remote-rwl022.yaml
+    input:
+      zha_device: 7b4c5ccebfc478adc2756b89a00a506c
+      Power_Press:
+        - action: light.toggle
+          target:
+            entity_id: light.emmas_bedroom
+      Up_Press:
+        - action: light.turn_on
+          target:
+            entity_id: light.emmas_bedroom
+          data:
+            brightness_step_pct: 20
+            transition: 0.5
+      Down_Press:
+      - action: light.turn_on
+        target:
+          entity_id: light.emmas_bedroom
+        data:
+          brightness_step_pct: -20
+          transition: 0.5

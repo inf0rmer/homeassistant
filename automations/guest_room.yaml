@@ -29,3 +29,28 @@
         area_id:
           - guest_room
       service: climate.turn_off
+
+- id: guest_room_remote_button_pressed
+  alias: "[Guest Room] Remote Button Pressed"
+  use_blueprint:
+    path: dustins/zha-philips-hue-v2-smart-dimmer-switch-and-remote-rwl022.yaml
+    input:
+      zha_device: 3b7f2c1268e1cecd95df7ff4d34f0fbf
+      Power_Press:
+        - action: light.toggle
+          target:
+            entity_id: light.guest_room
+      Up_Press:
+        - action: light.turn_on
+          target:
+            entity_id: light.guest_room
+          data:
+            brightness_step_pct: 20
+            transition: 0.5
+      Down_Press:
+      - action: light.turn_on
+        target:
+          entity_id: light.guest_room
+        data:
+          brightness_step_pct: -20
+          transition: 0.5
