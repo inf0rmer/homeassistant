@@ -51,7 +51,7 @@ views:
           - attr: quirk_class
             name: Quirk
         sort_by: available
-  
+
   - path: lights
     title: Lights
     cards:

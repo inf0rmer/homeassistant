@@ -1,0 +1,39 @@
+---
+extends: default
+
+rules:
+  # HA configs can have very long lines, especially Lovelace UI definitions
+  line-length:
+    max: 500
+
+  # HA uses on/off as state values which yamllint treats as truthy
+  truthy:
+    allowed-values: ["true", "false", "yes", "no", "on", "off"]
+
+  # HA YAML files often omit the document start marker
+  document-start: disable
+
+  # Allow multiple spaces before colons for alignment (common in HA configs)
+  colons:
+    max-spaces-before: 0
+    max-spaces-after: -1
+
+  # Be lenient with comments spacing
+  comments:
+    min-spaces-from-content: 1
+
+  # Allow empty values (common in HA for default_config:, config:, etc.)
+  empty-values:
+    forbid-in-block-mappings: false
+    forbid-in-flow-mappings: false
+
+  # Indentation: HA commonly uses 2-space indent
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
+
+ignore: |
+  custom_components/
+  themes/
+  blueprints/
+  www/

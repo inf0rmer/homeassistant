@@ -30,7 +30,7 @@ light:
     entities:
       - light.emmas_bedroom_ceiling
       - light.emmas_closet_light
-  
+
   - platform: group
     name: Guest Room
     entities:
@@ -46,7 +46,7 @@ light:
     name: Hallway Ground Floor
     entities:
       - light.hallway_ground_floor_ceiling
-  
+
   - platform: group
     name: Hallway 1st Floor
     entities:
@@ -67,8 +67,8 @@ light:
     entities:
       - light.hobby_room_ceiling_1
       - light.hobby_room_ceiling_2
-      - light.hobby_room_ceiling_3      
-  
+      - light.hobby_room_ceiling_3
+
   - platform: group
     name: Garden
     entities:
@@ -84,7 +84,7 @@ light:
       - light.garden_flower_bed_1
       - light.garden_flower_bed_2
       - light.garden_flower_bed_3
-  
+
   - platform: group
     name: Garden Lounge
     entities:
