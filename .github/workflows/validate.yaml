@@ -1,0 +1,46 @@
+---
+name: Validate HA Config
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  yamllint:
+    name: YAML Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out configuration from GitHub
+        uses: actions/checkout@v4
+
+      - name: Run yamllint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint
+          file_or_dir: >-
+            configuration.yaml
+            automations/
+            packages/
+            scripts/
+            scenes.yaml
+            groups.yaml
+            customize.yaml
+            ui-lovelace.yaml
+            ui-admin.yaml
+
+  config-check:
+    name: HA Core Config Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out configuration from GitHub
+        uses: actions/checkout@v4
+
+      - name: Run Home Assistant configuration check
+        uses: frenck/action-home-assistant@v1
+        with:
+          path: "."
+          secrets: fake_secrets.yaml
+          version: stable
+          env_file: .env.ci
