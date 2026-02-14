@@ -45,24 +45,6 @@ sensor:
       - sensor.emmas_bedroom_sensor_light_level
       - sensor.office_sensor_light_level
 
-  - platform: template
-    sensors:
-      homelab_amps:
-        value_template: '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}'
-        unit_of_measurement: "A"
-      homelab_watts:
-        value_template: '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}'
-        unit_of_measurement: "W"
-      homelab_total_kw:
-        value_template: '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
-        unit_of_measurement: "kW"
-      homelab_volts:
-        value_template: '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}'
-        unit_of_measurement: "V"
-      homelab_today_kw:
-        value_template: '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}'
-        unit_of_measurement: "kW"
-
   - platform: min_max
     name: hallway_combined_sensor_light_level
     type: mean

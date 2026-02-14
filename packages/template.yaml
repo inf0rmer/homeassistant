@@ -6,3 +6,262 @@ template:
     - name: living_room_sensor_temperature
       unit_of_measurement: '°C'
       state: "{{ state_attr('climate.living_room', 'current_temperature') }}"
+    - name: homelab_amps
+      default_entity_id: sensor.homelab_amps
+      unit_of_measurement: "A"
+      state: '{{ states.switch.homelab.attributes["current_a"] | replace(" A", "") | float }}'
+    - name: homelab_watts
+      default_entity_id: sensor.homelab_watts
+      unit_of_measurement: "W"
+      state: '{{ states.switch.homelab.attributes["current_power_w"] | replace(" W", "") | float }}'
+    - name: homelab_total_kw
+      default_entity_id: sensor.homelab_total_kw
+      unit_of_measurement: "kW"
+      state: '{{ states.switch.homelab.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
+    - name: homelab_volts
+      default_entity_id: sensor.homelab_volts
+      unit_of_measurement: "V"
+      state: '{{ states.switch.homelab.attributes["voltage"] | replace(" V", "") | float }}'
+    - name: homelab_today_kw
+      default_entity_id: sensor.homelab_today_kw
+      unit_of_measurement: "kW"
+      state: '{{ states.switch.homelab.attributes["today_energy_kwh"] | replace(" kW", "") | float }}'
+  - binary_sensor:
+    - name: Presence Bruno
+      default_entity_id: binary_sensor.presence_bruno
+      device_class: presence
+      state: >-
+        {{ is_state('input_boolean.presence_bruno', 'on') }}
+    - name: Presence Sarah
+      default_entity_id: binary_sensor.presence_sarah
+      device_class: presence
+      state: >-
+        {{ is_state('input_boolean.presence_sarah', 'on') }}
+    - name: Presence Someone
+      default_entity_id: binary_sensor.presence_someone
+      device_class: presence
+      state: >-
+        {{ is_state('input_boolean.presence_someone', 'on') }}
+    - name: Someone is home
+      default_entity_id: binary_sensor.someone_home
+      device_class: presence
+      state: >-
+        {{ is_state('group.presence', 'on') }}
+    - name: Presence Living Room
+      default_entity_id: binary_sensor.presence_living_room
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_living_room_motion', 'on')  or is_state('input_boolean.presence_living_room_switch', 'on') or is_state('input_boolean.presence_living_room_tv', 'on') or is_state('input_boolean.presence_living_room_assistant', 'on')}}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_living_room.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Master Bedroom
+      default_entity_id: binary_sensor.presence_master_bedroom
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_master_bedroom_motion', 'on') or is_state('input_boolean.presence_master_bedroom_switch', 'on') or is_state('input_boolean.presence_master_bedroom_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_master_bedroom.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Emma's Bedroom
+      default_entity_id: binary_sensor.presence_emmas_bedroom
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_emmas_bedroom_motion', 'on') or is_state('input_boolean.presence_emmas_bedroom_switch', 'on') or is_state('input_boolean.presence_emmas_bedroom_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_emmas_bedroom.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Guest Room
+      default_entity_id: binary_sensor.presence_guest_room
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_guest_room_motion', 'on') or is_state('input_boolean.presence_guest_room_switch', 'on') or is_state('input_boolean.presence_guest_room_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_guest_room.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Kitchen
+      default_entity_id: binary_sensor.presence_kitchen
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_kitchen_motion', 'on') or is_state('input_boolean.presence_kitchen_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_kitchen.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Hallway Ground Floor
+      default_entity_id: binary_sensor.presence_hallway_ground_floor
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_hallway_ground_floor_motion', 'on') or is_state('input_boolean.presence_hallway_ground_floor_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_hallway_ground_floor.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Hallway 1st Floor
+      default_entity_id: binary_sensor.presence_hallway_1st_floor
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_hallway_1st_floor_motion', 'on') or is_state('input_boolean.presence_hallway_1st_floor_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_hallway_1st_floor.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Hallway 1st Floor Stairs
+      default_entity_id: binary_sensor.presence_hallway_1st_floor_stairs
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_hallway_1st_floor_stairs_motion', 'on') or is_state('input_boolean.presence_hallway_1st_floor_stairs_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_hallway_1st_floor_stairs.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Hallway 2nd Floor
+      default_entity_id: binary_sensor.presence_hallway_2nd_floor
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_hallway_2nd_floor_motion', 'on') or is_state('input_boolean.presence_hallway_2nd_floor_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_hallway_2nd_floor.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Hallway 2nd Floor Stairs
+      default_entity_id: binary_sensor.presence_hallway_2nd_floor_stairs
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_hallway_2nd_floor_stairs_motion', 'on') or is_state('input_boolean.presence_hallway_2nd_floor_stairs_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_hallway_2nd_floor_stairs.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Bathroom 1st Floor
+      default_entity_id: binary_sensor.presence_bathroom_1st_floor
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_bathroom_1st_floor_switch', 'on') or is_state('input_boolean.presence_bathroom_1st_floor_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_bathroom_1st_floor.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Office
+      default_entity_id: binary_sensor.presence_office
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_office_motion', 'on') or is_state('input_boolean.presence_office_switch', 'on') or is_state('input_boolean.presence_office_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_office.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Hobby Room
+      default_entity_id: binary_sensor.presence_hobby_room
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_hobby_room_motion', 'on') or is_state('input_boolean.presence_hobby_room_switch', 'on') or is_state('input_boolean.presence_hobby_room_assistant', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_hobby_room.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Garden Barbecue
+      default_entity_id: binary_sensor.presence_garden_barbecue
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_garden_barbecue_motion', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_garden_barbecue.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+    - name: Presence Garden Lounge
+      default_entity_id: binary_sensor.presence_garden_lounge
+      device_class: occupancy
+      state: >-
+        {{ is_state('input_boolean.presence_garden_lounge_motion', 'on') }}
+      attributes:
+        reason: >
+          {% for entity in states.group.presence_garden_lounge.attributes.entity_id if is_state(entity, 'on') %}
+          {%- if loop.first %}{% elif loop.last %} and {% else %}, {% endif -%}
+          {{ states[entity.split('.')[0]][entity.split('.')[1]].name.split(' ') | last }}
+          {%- endfor %}
+  - light:
+    - name: Living Room
+      default_entity_id: light.living_room_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Master Bedroom
+      default_entity_id: light.master_bedroom_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: "Emma's Bedroom"
+      default_entity_id: light.emmas_bedroom_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Guest Room
+      default_entity_id: light.guest_room_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Kitchen
+      default_entity_id: light.kitchen_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Hallway Ground Floor
+      default_entity_id: light.hallway_ground_floor_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Hallway 1st Floor
+      default_entity_id: light.hallway_1st_floor_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Hallway 2nd Floor
+      default_entity_id: light.hallway_2nd_floor_assistant
+      turn_on: []
+      turn_off: []
+      set_level: []
+    - name: Bathroom 1st Floor
+      default_entity_id: light.bathroom_1st_floor_assistant
+      turn_on: []
+      turn_off: []
+    - name: Closet
+      default_entity_id: light.closet_assistant
+      turn_on: []
+      turn_off: []
+    - name: Office
+      default_entity_id: light.office_assistant
+      turn_on: []
+      turn_off: []
