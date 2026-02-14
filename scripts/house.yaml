@@ -2,7 +2,7 @@ good_night:
   alias: "[House] Good Night"
   sequence:
     - target:
-        entity_id: 
+        entity_id:
           - group.dnd_bedrooms
           - input_boolean.dnd_garden
       service: homeassistant.turn_on
@@ -13,11 +13,11 @@ good_night:
         entity_id: input_boolean.bruno_good_night_pressed
       service: input_boolean.turn_off
     - target:
-        entity_id: 
-         - input_boolean.presence_emmas_bedroom_sleeping
-         - input_boolean.sleeping_emmas_bedroom
-         - input_boolean.presence_master_bedroom_sleeping
-         - input_boolean.sleeping_master_bedroom
+        entity_id:
+          - input_boolean.presence_emmas_bedroom_sleeping
+          - input_boolean.sleeping_emmas_bedroom
+          - input_boolean.presence_master_bedroom_sleeping
+          - input_boolean.sleeping_master_bedroom
       service: homeassistant.turn_on
     - target:
         entity_id: group.presence_other_rooms
@@ -47,11 +47,11 @@ house_wake_up:
         entity_id: group.dnd_house
       service: homeassistant.turn_off
     - target:
-        entity_id: 
-         - input_boolean.presence_emmas_bedroom_sleeping
-         - input_boolean.sleeping_emmas_bedroom
-         - input_boolean.presence_master_bedroom_sleeping
-         - input_boolean.sleeping_master_bedroom
+        entity_id:
+          - input_boolean.presence_emmas_bedroom_sleeping
+          - input_boolean.sleeping_emmas_bedroom
+          - input_boolean.presence_master_bedroom_sleeping
+          - input_boolean.sleeping_master_bedroom
       service: homeassistant.turn_off
     - target:
         entity_id: group.presence_bedrooms
@@ -73,7 +73,7 @@ house_nobody_home:
     - service: light.turn_off
       entity_id: all
     - target:
-        entity_id: 
+        entity_id:
           - group.preence_bedrooms
           - group.presence_other_rooms
       service: homeassistant.turn_off

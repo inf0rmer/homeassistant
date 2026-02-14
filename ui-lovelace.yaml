@@ -139,16 +139,16 @@ views:
                 cards:
                   - title: Heating
                     type: glance
-                    entities: 
-                     - climate.hallway
-                     - climate.living_room
-                     - climate.dining_room
-                     - climate.master_bedroom
-                     - climate.emmas_bedroom
-                     - climate.library
-                     - climate.office
-                     - climate.hobby_room
-                     - climate.guest_room
+                    entities:
+                      - climate.hallway
+                      - climate.living_room
+                      - climate.dining_room
+                      - climate.master_bedroom
+                      - climate.emmas_bedroom
+                      - climate.library
+                      - climate.office
+                      - climate.hobby_room
+                      - climate.guest_room
               - type: horizontal-stack
                 cards:
                   - title: Energy Usage
@@ -172,7 +172,7 @@ views:
                         name: Outside
               - type: horizontal-stack
                 cards:
-                  - entities: 
+                  - entities:
                       - sensor.afvalinfo_afval_thuis_trash_today
                       - sensor.afvalinfo_afval_thuis_trash_tomorrow
                       - sensor.afvalinfo_afval_thuis_compost
@@ -404,7 +404,7 @@ views:
                   action: call-service
                   service: script.turn_on
                   service_data:
-                      entity_id: script.office_streaming_start
+                    entity_id: script.office_streaming_start
                 type: "custom:button-card"
           - type: horizontal-stack
             cards:
@@ -473,7 +473,7 @@ views:
               - entity: sensor.office_temperature
                 name: Temperature
             type: "custom:mini-graph-card"
- 
+
   - path: hobby-room
     title: Hobby Room
     panel: false
@@ -543,7 +543,7 @@ views:
               - entity: sensor.hobby_room_temperature
                 name: Temperature
             type: "custom:mini-graph-card"
-  
+
   - path: master-bedroom
     title: Master Bedroom
     panel: false

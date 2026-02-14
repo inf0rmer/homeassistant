@@ -31,7 +31,7 @@ http:
     - 10.0.0.0/8
 
 # Show links to resources in log and frontend
-#introduction:
+# introduction:
 
 # Enables the frontend
 frontend:
@@ -98,10 +98,10 @@ websocket_api:
 conversation:
 
 # Enables support for tracking state changes over time
-#history:
+# history:
 
 # View all events in a logbook
-#logbook:
+# logbook:
 
 # Track the sun
 sun:
