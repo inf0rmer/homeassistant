@@ -734,8 +734,7 @@ views:
             title: Lights
             type: entities
           - entities:
-              - entity: climate.library
-                attribute: current_temperature
+              - entity: sensor.library_temperature
                 name: Temperature
             type: "custom:mini-graph-card"
 

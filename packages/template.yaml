@@ -6,6 +6,9 @@ template:
     - name: living_room_sensor_temperature
       unit_of_measurement: '°C'
       state: "{{ state_attr('climate.living_room', 'current_temperature') }}"
+    - name: library_temperature
+      unit_of_measurement: '°C'
+      state: "{{ state_attr('climate.library', 'current_temperature') }}"
     - name: homelab_amps
       default_entity_id: sensor.homelab_amps
       unit_of_measurement: "A"
