@@ -192,6 +192,7 @@ views:
                       - light.living_room
                       - light.master_bedroom
                       - light.emmas_bedroom
+                      - light.library
                       - light.kitchen
                       - light.hallway_ground_floor
                       - light.hallway_1st_floor
@@ -711,6 +712,31 @@ views:
                 name: Temperature
               - entity: sensor.emmas_bedroom_sensor_light_level
                 name: Light Level
+            type: "custom:mini-graph-card"
+
+  - path: library
+    title: Library
+    panel: false
+    cards:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - entity: light.library
+            name: All Lights
+            theme: Backend-selected
+            type: light
+          - type: thermostat
+            entity: climate.library
+          - entities:
+              - entity: light.library_ceiling
+            show_header_toggle: false
+            title: Lights
+            type: entities
+          - entities:
+              - entity: climate.library
+                attribute: current_temperature
+                name: Temperature
             type: "custom:mini-graph-card"
 
   - path: guest-bedroom
