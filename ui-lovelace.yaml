@@ -26,6 +26,8 @@ views:
                     show_state: false
                     name: Do Not Disturb
                     size: 25%
+                    color_type: card
+                    color: "#FF9800"
                     styles:
                       card:
                         - font-size: 12px
@@ -111,6 +113,8 @@ views:
                     show_state: false
                     name: Guest Mode
                     size: 10%
+                    color_type: card
+                    color: "#FF9800"
                     styles:
                       card:
                         - font-size: 12px
@@ -233,6 +237,8 @@ views:
                     show_state: false
                     name: Do Not Disturb
                     size: 25%
+                    color_type: card
+                    color: "#FF9800"
                     styles:
                       card:
                         - font-size: 12px
@@ -343,6 +349,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -490,6 +498,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -560,6 +570,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -626,6 +638,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -753,6 +767,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -819,6 +835,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -883,6 +901,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
@@ -929,6 +949,8 @@ views:
                 show_state: false
                 name: Do Not Disturb
                 size: 25%
+                color_type: card
+                color: "#FF9800"
                 styles:
                   card:
                     - font-size: 12px
