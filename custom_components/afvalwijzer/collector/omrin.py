@@ -18,7 +18,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 _DEFAULT_TIMEOUT: tuple[float, float] = (5.0, 30.0)
 
 
-def _build_url(provider: str, postal_code: str, street_number: str, suffix: str) -> str:
+def _build_url(provider: str, postal_code: str, house_number: str, suffix: str) -> str:
     if provider not in SENSOR_COLLECTORS_OMRIN:
         raise ValueError(f"Invalid provider: {provider}, please verify")
 
@@ -26,7 +26,7 @@ def _build_url(provider: str, postal_code: str, street_number: str, suffix: str)
 
     return SENSOR_COLLECTORS_OMRIN[provider].format(
         corrected_postal_code,
-        street_number,
+        house_number,
         suffix,
     )
 
@@ -47,7 +47,7 @@ def _login(
     session: requests.Session,
     url: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     timeout: tuple[float, float],
@@ -59,12 +59,12 @@ def _login(
         "Password": None,
         # keep original behavior: use raw input postal_code here
         "PostalCode": postal_code,
-        "HouseNumber": int(street_number),
+        "HouseNumber": int(house_number),
         "HouseNumberExtension": suffix,
         "DeviceId": device_id or str(uuid.uuid4()),
-        "Platform": "Android",
+        "Platform": "iOS",
         "AppVersion": "4.0.3.273",
-        "OsVersion": "HomeAssistant 2024.1",
+        "OsVersion": "iPhone15,3 26.2.1",
     }
 
     response = session.post(
@@ -136,6 +136,7 @@ def _fetch_calendar(
 
 def _parse_waste_data_raw(
     waste_data_raw_temp: Sequence[dict[str, Any]],
+    postal_code: str = "",
 ) -> list[dict[str, str]]:
     waste_data_raw: list[dict[str, str]] = []
 
@@ -144,7 +145,9 @@ def _parse_waste_data_raw(
         if not date_str:
             continue
 
-        waste_type = waste_type_rename((item.get("type") or "").strip().lower())
+        waste_type = waste_type_rename(
+            (item.get("type") or "").strip().lower(), postal_code
+        )
         if not waste_type:
             continue
 
@@ -157,7 +160,7 @@ def _parse_waste_data_raw(
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     token: str | None = None,
@@ -168,7 +171,7 @@ def get_waste_data_raw(
 ) -> list[dict[str, str]]:
     """Return waste_data_raw."""
 
-    url = _build_url(provider, postal_code, street_number, suffix)
+    url = _build_url(provider, postal_code, house_number, suffix)
     session = session or requests.Session()
 
     try:
@@ -180,7 +183,7 @@ def get_waste_data_raw(
                 session,
                 url,
                 postal_code,
-                street_number,
+                house_number,
                 suffix,
                 timeout=timeout,
                 verify=verify,
@@ -197,7 +200,7 @@ def get_waste_data_raw(
             verify=verify,
         )
 
-        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp)
+        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp, postal_code)
         return waste_data_raw
 
     except requests.exceptions.RequestException as err:

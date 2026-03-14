@@ -28,12 +28,12 @@ def _fetch_address_list(
     session: requests.Session,
     base_url: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     *,
     timeout: tuple[float, float],
     verify: bool,
 ) -> list[dict[str, Any]]:
-    url_address = f"{base_url}/rest/adressen/{postal_code}-{street_number}"
+    url_address = f"{base_url}/rest/adressen/{postal_code}-{house_number}"
     response = session.get(url_address, timeout=timeout, verify=verify)
     response.raise_for_status()
     data = response.json()
@@ -77,6 +77,7 @@ def _fetch_waste_data_raw_temp(
 
 def _parse_waste_data_raw(
     waste_data_raw_temp: list[dict[str, Any]],
+    postal_code: str = "",
 ) -> list[dict[str, str]]:
     waste_data_raw: list[dict[str, str]] = []
 
@@ -85,7 +86,9 @@ def _parse_waste_data_raw(
         if not date_str:
             continue
 
-        waste_type = waste_type_rename((item.get("menu_title") or "").strip().lower())
+        waste_type = waste_type_rename(
+            (item.get("menu_title") or "").strip().lower(), postal_code
+        )
         if not waste_type:
             continue
 
@@ -98,7 +101,7 @@ def _parse_waste_data_raw(
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -112,16 +115,12 @@ def get_waste_data_raw(
 
     base_url = _build_base_url(provider)
 
-    # Preserve original intent: provider != "suez" computed, but original code never used it.
-    # Keep it as a local in case you later want provider-specific verify behavior.
-    _verify = provider != "suez"  # noqa: F841
-
     try:
         response_address = _fetch_address_list(
             session,
             base_url,
             postal_code,
-            street_number,
+            house_number,
             timeout=timeout,
             verify=verify,
         )
@@ -143,7 +142,7 @@ def get_waste_data_raw(
             verify=verify,
         )
 
-        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp)
+        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp, postal_code)
         return waste_data_raw
 
     except requests.exceptions.RequestException as err:
@@ -203,7 +202,7 @@ def _parse_notification_data_raw(
 def get_notification_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -225,7 +224,7 @@ def get_notification_data_raw(
             session,
             base_url,
             postal_code,
-            street_number,
+            house_number,
             timeout=timeout,
             verify=verify,
         )

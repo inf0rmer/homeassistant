@@ -78,7 +78,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
     if data.get(CONF_REFRESH_TOKEN):
         try:
             await hub.connect_with_refresh_token(refresh_token=data[CONF_REFRESH_TOKEN])
-        except TokenExpiredError:
+        except (TokenExpiredError, AuthorizationFailedError):
             await hub.connect(data[CONF_USERNAME], data[CONF_PASSWORD])
     else:
         await hub.connect(data[CONF_USERNAME], data[CONF_PASSWORD])
@@ -123,6 +123,9 @@ class ConfigFlow(BaseConfigFlow, domain=DOMAIN):
             )
 
         errors = {}
+        placeholders = {
+            "login_url": "https://skodaid.vwgroup.io",
+        }
 
         try:
             await validate_input(self.hass, user_input)
@@ -145,7 +148,10 @@ class ConfigFlow(BaseConfigFlow, domain=DOMAIN):
 
         # Only called if there was an error.
         return self.async_show_form(
-            step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+            step_id="user",
+            data_schema=STEP_USER_DATA_SCHEMA,
+            errors=errors,
+            description_placeholders=placeholders,
         )
 
     async def async_step_reauth(self, entry_data: dict[str, Any]) -> ConfigFlowResult:

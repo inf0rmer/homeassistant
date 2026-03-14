@@ -16,7 +16,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 _DEFAULT_TIMEOUT: tuple[float, float] = (5.0, 60.0)
 
 
-def _build_url(provider: str, postal_code: str, street_number: str) -> str:
+def _build_url(provider: str, postal_code: str, house_number: str) -> str:
     if provider not in SENSOR_COLLECTORS_KLIKOGROEP:
         raise ValueError(f"Invalid provider: {provider}, please verify")
 
@@ -25,7 +25,7 @@ def _build_url(provider: str, postal_code: str, street_number: str) -> str:
     provider_base_url = provider_config["url"]
 
     provider_path = (
-        f"/MyKliko/wasteCalendarJSON/{provider_id}/{postal_code}/{street_number}"
+        f"/MyKliko/wasteCalendarJSON/{provider_id}/{postal_code}/{house_number}"
     )
     return f"https://{provider_base_url}{provider_path}"
 
@@ -50,7 +50,9 @@ def _fetch_waste_data_raw_temp(
     return response.json()
 
 
-def _parse_waste_data_raw(waste_data_raw_temp: dict[str, Any]) -> list[dict[str, str]]:
+def _parse_waste_data_raw(
+    waste_data_raw_temp: dict[str, Any], postal_code: str = ""
+) -> list[dict[str, str]]:
     waste_data_raw: list[dict[str, str]] = []
 
     calendar = waste_data_raw_temp.get("calendar") or {}
@@ -61,7 +63,9 @@ def _parse_waste_data_raw(waste_data_raw_temp: dict[str, Any]) -> list[dict[str,
         waste_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d")
 
         for waste_code in waste_types:
-            waste_type = waste_type_rename((waste_code or "").strip().lower())
+            waste_type = waste_type_rename(
+                (waste_code or "").strip().lower(), postal_code
+            )
             if not waste_type:
                 continue
 
@@ -73,7 +77,7 @@ def _parse_waste_data_raw(waste_data_raw_temp: dict[str, Any]) -> list[dict[str,
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -83,7 +87,7 @@ def get_waste_data_raw(
     """Return waste_data_raw."""
 
     session = session or requests.Session()
-    url = _build_url(provider, postal_code, street_number)
+    url = _build_url(provider, postal_code, house_number)
 
     try:
         waste_data_raw_temp = _fetch_waste_data_raw_temp(
@@ -104,7 +108,7 @@ def get_waste_data_raw(
         return []
 
     try:
-        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp)
+        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp, postal_code)
         return waste_data_raw
     except (KeyError, TypeError, ValueError) as err:
         _LOGGER.error("KlikoGroep: Invalid and/or no data received from %s", url)

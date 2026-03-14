@@ -142,7 +142,7 @@ def _fetch_waste_data_raw_temp(
     access_token: str,
     postcode_id: str,
     street_id: str,
-    street_number: str,
+    house_number: str,
     *,
     days_forward: int = 60,
     timeout: tuple[float, float],
@@ -156,7 +156,7 @@ def _fetch_waste_data_raw_temp(
         params={
             "zipcodeId": postcode_id,
             "streetId": street_id,
-            "houseNumber": street_number,
+            "houseNumber": house_number,
             "fromDate": startdate,
             "untilDate": enddate,
             "size": "100",
@@ -169,7 +169,9 @@ def _fetch_waste_data_raw_temp(
     return response.json() or {}
 
 
-def _parse_waste_data_raw(waste_data_raw_temp: dict[str, Any]) -> list[dict[str, str]]:
+def _parse_waste_data_raw(
+    waste_data_raw_temp: dict[str, Any], postal_code: str = ""
+) -> list[dict[str, str]]:
     waste_data_raw: list[dict[str, str]] = []
 
     for item in waste_data_raw_temp.get("items") or []:
@@ -188,7 +190,7 @@ def _parse_waste_data_raw(waste_data_raw_temp: dict[str, Any]) -> list[dict[str,
         if exception.get("replacedBy"):
             continue
 
-        waste_type = waste_type_rename(name_nl)
+        waste_type = waste_type_rename(name_nl, postal_code)
         if not waste_type:
             continue
 
@@ -203,10 +205,10 @@ def _parse_waste_data_raw(waste_data_raw_temp: dict[str, Any]) -> list[dict[str,
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
-    *,
     street_name: str | None = None,
+    *,
     access_token: str | None = None,
     session: requests.Session | None = None,
     timeout: tuple[float, float] = _DEFAULT_TIMEOUT,
@@ -255,7 +257,7 @@ def get_waste_data_raw(
             access_token,
             postcode_id,
             street_id,
-            str(street_number),
+            str(house_number),
             timeout=timeout,
             verify=verify,
         )
@@ -264,7 +266,7 @@ def get_waste_data_raw(
             _LOGGER.error("No Waste data found!")
             return []
 
-        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp)
+        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp, postal_code)
         return waste_data_raw
 
     except requests.exceptions.RequestException as err:

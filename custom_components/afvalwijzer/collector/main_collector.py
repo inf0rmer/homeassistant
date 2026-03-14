@@ -3,11 +3,11 @@
 from ..common.waste_data_transformer import WasteDataTransformer
 from ..const.const import (
     _LOGGER,
-    SENSOR_COLLECTORS_AFVALALERT,
     SENSOR_COLLECTORS_AMSTERDAM,
     SENSOR_COLLECTORS_BURGERPORTAAL,
     SENSOR_COLLECTORS_CIRCULUS,
     SENSOR_COLLECTORS_DEAFVALAPP,
+    SENSOR_COLLECTORS_ICALENDAR,
     SENSOR_COLLECTORS_IRADO,
     SENSOR_COLLECTORS_KLIKOGROEP,
     SENSOR_COLLECTORS_MIJNAFVALWIJZER,
@@ -25,11 +25,11 @@ from ..const.const import (
 
 try:
     from . import (
-        afvalalert,
         amsterdam,
         burgerportaal,
         circulus,
         deafvalapp,
+        icalendar,
         irado,
         klikogroep,
         mijnafvalwijzer,
@@ -55,10 +55,10 @@ class MainCollector:
         self,
         provider: str,
         postal_code: str,
-        street_number: str,
+        house_number: str,
         suffix: str,
+        street_name: str,
         exclude_pickup_today,
-        date_isoformat,
         exclude_list: str,
         default_label: str,
     ):
@@ -66,10 +66,10 @@ class MainCollector:
         # Normalize input parameters
         self.provider = str(provider).strip().lower()
         self.postal_code = str(postal_code).strip().upper()
-        self.street_number = str(street_number).strip()
+        self.house_number = str(house_number).strip()
         self.suffix = str(suffix).strip().lower()
+        self.street_name = str(street_name).strip().lower()
         self.exclude_pickup_today = self._normalize_bool_param(exclude_pickup_today)
-        self.date_isoformat = self._normalize_bool_param(date_isoformat)
         self.exclude_list = str(exclude_list).strip().lower()
         self.default_label = str(default_label).strip()
 
@@ -99,15 +99,15 @@ class MainCollector:
             # list of providers with common parameter signatures
             common_providers = [
                 (SENSOR_COLLECTORS_MIJNAFVALWIJZER, mijnafvalwijzer.get_waste_data_raw),
-                (SENSOR_COLLECTORS_AFVALALERT, afvalalert.get_waste_data_raw),
                 (SENSOR_COLLECTORS_AMSTERDAM, amsterdam.get_waste_data_raw),
                 (SENSOR_COLLECTORS_BURGERPORTAAL, burgerportaal.get_waste_data_raw),
                 (SENSOR_COLLECTORS_CIRCULUS, circulus.get_waste_data_raw),
                 (SENSOR_COLLECTORS_DEAFVALAPP, deafvalapp.get_waste_data_raw),
+                (SENSOR_COLLECTORS_ICALENDAR, icalendar.get_waste_data_raw),
+                (SENSOR_COLLECTORS_IRADO, irado.get_waste_data_raw),
                 (SENSOR_COLLECTORS_KLIKOGROEP, klikogroep.get_waste_data_raw),
                 (SENSOR_COLLECTORS_MONTFERLAND, montferland.get_waste_data_raw),
                 (SENSOR_COLLECTORS_OMRIN, omrin.get_waste_data_raw),
-                (SENSOR_COLLECTORS_IRADO, irado.get_waste_data_raw),
                 (SENSOR_COLLECTORS_OPZET, opzet.get_waste_data_raw),
                 (SENSOR_COLLECTORS_RD4, rd4.get_waste_data_raw),
                 (SENSOR_COLLECTORS_RECYCLEAPP, recycleapp.get_waste_data_raw),
@@ -121,9 +121,15 @@ class MainCollector:
                 # sensor_set might be a list or a dict (using its keys)
                 keys = sensor_set.keys() if isinstance(sensor_set, dict) else sensor_set
                 if self.provider in keys:
-                    return getter(
-                        self.provider, self.postal_code, self.street_number, self.suffix
-                    )
+                    args = [
+                        self.provider,
+                        self.postal_code,
+                        self.house_number,
+                        self.suffix,
+                    ]
+                    if self.provider in SENSOR_COLLECTORS_RECYCLEAPP:
+                        args.append(self.street_name)
+                    return getter(*args)
             _LOGGER.error(f"Unknown provider: {self.provider}")
             raise ValueError(f"Unknown provider: {self.provider}")
 
@@ -151,7 +157,10 @@ class MainCollector:
                 keys = sensor_set.keys() if isinstance(sensor_set, dict) else sensor_set
                 if self.provider in keys:
                     result = getter(
-                        self.provider, self.postal_code, self.street_number, self.suffix
+                        self.provider,
+                        self.postal_code,
+                        self.house_number,
+                        self.suffix,
                     )
                     _LOGGER.debug(
                         f"Retrieved {len(result)} notification(s) from {self.provider}"

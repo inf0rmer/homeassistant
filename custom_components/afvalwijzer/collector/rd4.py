@@ -16,7 +16,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 _DEFAULT_TIMEOUT: tuple[float, float] = (5.0, 60.0)
 
 
-def _build_url(provider: str, postal_code: str, street_number: str, suffix: str) -> str:
+def _build_url(provider: str, postal_code: str, house_number: str, suffix: str) -> str:
     if provider not in SENSOR_COLLECTORS_RD4:
         raise ValueError(f"Invalid provider: {provider}, please verify")
 
@@ -25,7 +25,7 @@ def _build_url(provider: str, postal_code: str, street_number: str, suffix: str)
 
     return SENSOR_COLLECTORS_RD4[provider].format(
         corrected_postal_code,
-        street_number,
+        house_number,
         suffix,
         year_current,
     )
@@ -56,6 +56,7 @@ def _fetch_waste_data_raw_temp(
 
 def _parse_waste_data_raw(
     waste_data_raw_temp: list[dict[str, Any]],
+    postal_code: str = "",
 ) -> list[dict[str, str]]:
     waste_data_raw: list[dict[str, str]] = []
 
@@ -64,7 +65,9 @@ def _parse_waste_data_raw(
         if not date_str:
             continue
 
-        waste_type = waste_type_rename((item.get("type") or "").strip().lower())
+        waste_type = waste_type_rename(
+            (item.get("type") or "").strip().lower(), postal_code
+        )
         if not waste_type:
             continue
 
@@ -77,7 +80,7 @@ def _parse_waste_data_raw(
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -87,7 +90,7 @@ def get_waste_data_raw(
     """Return waste_data_raw."""
 
     session = session or requests.Session()
-    url = _build_url(provider, postal_code, street_number, suffix)
+    url = _build_url(provider, postal_code, house_number, suffix)
 
     try:
         waste_data_raw_temp = _fetch_waste_data_raw_temp(
@@ -103,7 +106,7 @@ def get_waste_data_raw(
             _LOGGER.error("No waste data found or address not found!")
             return []
 
-        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp)
+        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp, postal_code)
         return waste_data_raw
 
     except requests.exceptions.RequestException as err:

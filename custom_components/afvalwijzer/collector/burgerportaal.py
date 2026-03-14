@@ -112,7 +112,7 @@ def _fetch_address_list(
     session: requests.Session,
     org_id: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     id_token: str,
     *,
     timeout: tuple[float, float],
@@ -120,7 +120,7 @@ def _fetch_address_list(
 ) -> list[dict[str, Any]]:
     response = session.get(
         f"{_BASE_BURGERPORTAAL_URL}/organisations/{org_id}/address"
-        f"?zipcode={postal_code}&housenumber={street_number}",
+        f"?zipcode={postal_code}&housenumber={house_number}",
         headers={"authorization": id_token},
         timeout=timeout,
         verify=verify,
@@ -169,6 +169,7 @@ def _fetch_waste_data_raw_temp(
 
 def _parse_waste_data_raw(
     waste_data_raw_temp: list[dict[str, Any]],
+    postal_code: str = "",
 ) -> list[dict[str, str]]:
     waste_data_raw: list[dict[str, str]] = []
 
@@ -181,15 +182,16 @@ def _parse_waste_data_raw(
         if not fraction:
             continue
 
-        waste_type = waste_type_rename(fraction.strip().lower())
-        if not waste_type:
+        waste_types = waste_type_rename(fraction.strip().lower(), postal_code)
+        if not waste_types:
             continue
 
-        # Original behavior: take date part before "T"
-        date_part = collection_dt.split("T", 1)[0]
-        waste_date = datetime.strptime(date_part, "%Y-%m-%d").strftime("%Y-%m-%d")
+        for waste_type in waste_types.split("-"):
+            # Original behavior: take date part before "T"
+            date_part = collection_dt.split("T", 1)[0]
+            waste_date = datetime.strptime(date_part, "%Y-%m-%d").strftime("%Y-%m-%d")
 
-        waste_data_raw.append({"type": waste_type, "date": waste_date})
+            waste_data_raw.append({"type": waste_type, "date": waste_date})
 
     # Preserve original behavior: sorted by date
     return sorted(waste_data_raw, key=lambda d: d["date"])
@@ -198,7 +200,7 @@ def _parse_waste_data_raw(
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -226,7 +228,7 @@ def get_waste_data_raw(
             session,
             org_id,
             postal_code,
-            street_number,
+            house_number,
             id_token,
             timeout=timeout,
             verify=verify,
@@ -249,7 +251,7 @@ def get_waste_data_raw(
             verify=verify,
         )
 
-        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp)
+        waste_data_raw = _parse_waste_data_raw(waste_data_raw_temp, postal_code)
         return waste_data_raw
 
     except requests.exceptions.RequestException as err:

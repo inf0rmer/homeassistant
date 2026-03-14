@@ -28,13 +28,10 @@ WEEKDAY_MAP: dict[str, int] = {
 
 def _build_url(provider: str) -> str:
     """Build the base URL for the Amsterdam collector."""
-    if provider in SENSOR_COLLECTORS_AMSTERDAM:
-        url = SENSOR_COLLECTORS_AMSTERDAM[provider]
-    else:
-        url = SENSOR_COLLECTORS_AMSTERDAM.get("amsterdam")
-
-    if not url:
+    if provider not in SENSOR_COLLECTORS_AMSTERDAM:
         raise ValueError(f"Invalid provider: {provider}, please verify")
+
+    url = SENSOR_COLLECTORS_AMSTERDAM[provider]
     return url.rstrip("/")
 
 
@@ -126,12 +123,12 @@ def _generate_dates_for_year(
 
 
 def _build_query_params(
-    postal_code: str, street_number: str, suffix: str
+    postal_code: str, house_number: str, suffix: str
 ) -> list[dict[str, str]]:
     """Build query parameter variants for suffix handling."""
     base_params = {
         "postcode": postal_code,
-        "huisnummer": str(street_number),
+        "huisnummer": str(house_number),
     }
 
     if not suffix:
@@ -179,6 +176,35 @@ def _fetch_waste_data_raw_temp(
     raise ValueError(f"Invalid and/or no data received from {last_url or base_url}")
 
 
+def _parse_waste_data_raw(
+    waste_data_raw_temp: list[dict[str, Any]],
+    postal_code: str = "",
+) -> list[dict[str, str]]:
+    waste_data_raw: list[dict[str, str]] = []
+    today = datetime.now()
+
+    for item in waste_data_raw_temp:
+        if not _is_item_valid(item):
+            continue
+
+        code = (item.get("afvalwijzerFractieCode") or "").strip().lower()
+        waste_type = waste_type_rename(code, postal_code)
+        if not waste_type:
+            continue
+
+        waste_data_raw.extend(
+            {
+                "type": waste_type,
+                "date": date.replace(
+                    hour=0, minute=0, second=0, microsecond=0
+                ).strftime("%Y-%m-%d"),
+            }
+            for date in _process_collection_dates(item, today)
+        )
+
+    return sorted(waste_data_raw, key=lambda d: (d["date"], d["type"]))
+
+
 def _is_item_valid(item: dict[str, Any]) -> bool:
     """Validate a single API item."""
     freq = item.get("afvalwijzerAfvalkalenderFrequentie")
@@ -208,7 +234,7 @@ def _process_collection_dates(item: dict[str, Any], today: datetime) -> list[dat
             future_dates.extend(_generate_dates_for_year(day_delta, 1, today))
             continue
 
-        if "week" in frequency:
+        if "week" in frequency or "weken" in frequency:
             frequency_clean = (
                 frequency.replace(" weken", "").replace(" week", "").strip()
             )
@@ -233,7 +259,7 @@ def _process_collection_dates(item: dict[str, Any], today: datetime) -> list[dat
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -248,7 +274,7 @@ def get_waste_data_raw(
         postal_code = format_postal_code(postal_code)
         suffix = (suffix or "").strip()
 
-        params_list = _build_query_params(postal_code, str(street_number), suffix)
+        params_list = _build_query_params(postal_code, str(house_number), suffix)
 
         waste_data_raw_temp = _fetch_waste_data_raw_temp(
             session,
@@ -263,29 +289,8 @@ def get_waste_data_raw(
             _LOGGER.error("No Waste data found!")
             return []
 
-        waste_data_raw: list[dict[str, str]] = []
-        today = datetime.now()
-
-        for item in embedded:
-            if not _is_item_valid(item):
-                continue
-
-            code = (item.get("afvalwijzerFractieCode") or "").strip().lower()
-            waste_type = waste_type_rename(code)
-            if not waste_type:
-                continue
-
-            waste_data_raw.extend(
-                {
-                    "type": waste_type,
-                    "date": date.replace(
-                        hour=0, minute=0, second=0, microsecond=0
-                    ).strftime("%Y-%m-%d"),
-                }
-                for date in _process_collection_dates(item, today)
-            )
-
-        return sorted(waste_data_raw, key=lambda d: (d["date"], d["type"]))
+        waste_data_raw = _parse_waste_data_raw(embedded, postal_code)
+        return waste_data_raw
 
     except requests.exceptions.RequestException as err:
         _LOGGER.error("AMSTERDAM request error: %s", err)

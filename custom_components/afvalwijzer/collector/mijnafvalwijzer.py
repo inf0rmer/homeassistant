@@ -9,7 +9,7 @@ import re
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 
-from ..common.main_functions import format_postal_code
+from ..common.main_functions import format_postal_code, waste_type_rename
 from ..const.const import _LOGGER, SENSOR_COLLECTORS_MIJNAFVALWIJZER
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -20,7 +20,7 @@ _DEFAULT_TIMEOUT: tuple[float, float] = (5.0, 60.0)
 def _build_url(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
 ) -> str:
     if provider not in SENSOR_COLLECTORS_MIJNAFVALWIJZER:
@@ -30,7 +30,7 @@ def _build_url(
 
     return SENSOR_COLLECTORS_MIJNAFVALWIJZER[provider].format(
         corrected_postal_code,
-        street_number,
+        house_number,
         suffix,
     )
 
@@ -51,7 +51,7 @@ def _fetch_data(
     return response.json()
 
 
-def _parse_waste_data_raw(response: dict) -> list[dict]:
+def _parse_waste_data_raw(response: dict, postal_code: str = "") -> list[dict]:
     ophaaldagen_data = response.get("ophaaldagen", {}).get("data", [])
     ophaaldagen_next_data = response.get("ophaaldagenNext", {}).get("data", [])
 
@@ -59,13 +59,33 @@ def _parse_waste_data_raw(response: dict) -> list[dict]:
         raise KeyError("No 'ophaaldagen' data found")
 
     # Keep original behavior: limit next items to 25
-    return ophaaldagen_data + ophaaldagen_next_data[:25]
+    items = ophaaldagen_data + ophaaldagen_next_data[:25]
+
+    waste_data_raw: list[dict[str, str]] = []
+    for item in items:
+        date_str = item.get("date")
+        if not date_str:
+            continue
+
+        waste_type = waste_type_rename(
+            (item.get("type") or "").strip().lower(), postal_code
+        )
+        if not waste_type:
+            continue
+
+        # Fixes original bug: previous code created a tuple and returned datetime object.
+        # Keep intended output format consistent with other collectors: YYYY-MM-DD string.
+        waste_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+
+        waste_data_raw.append({"type": waste_type, "date": waste_date})
+
+    return waste_data_raw
 
 
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -75,7 +95,7 @@ def get_waste_data_raw(
     """Return waste_data_raw."""
 
     session = session or requests.Session()
-    url = _build_url(provider, postal_code, street_number, suffix)
+    url = _build_url(provider, postal_code, house_number, suffix)
 
     # Add afvaldata parameter to get afvaldata only from today onwards; this reduces the response size
     url = f"{url}&afvaldata={datetime.now().strftime('%Y-%m-%d')}"
@@ -88,8 +108,7 @@ def get_waste_data_raw(
             verify=verify,
         )
 
-        waste_data_raw = _parse_waste_data_raw(response)
-
+        waste_data_raw = _parse_waste_data_raw(response, postal_code)
         return waste_data_raw
 
     except requests.exceptions.RequestException as err:
@@ -158,7 +177,7 @@ def _parse_notification_data_raw(response: dict) -> list[dict]:
 def get_notification_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     session: requests.Session | None = None,
@@ -171,7 +190,7 @@ def get_notification_data_raw(
     Returns empty list if provider doesn't support notifications or if there are no notifications.
     """
     session = session or requests.Session()
-    url = _build_url(provider, postal_code, street_number, suffix)
+    url = _build_url(provider, postal_code, house_number, suffix)
 
     try:
         response = _fetch_data(

@@ -26,13 +26,13 @@ def _fetch_address_data(
     session: requests.Session,
     base_url: str,
     corrected_postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str,
     *,
     timeout: tuple[float, float],
     verify: bool,
 ) -> list[dict[str, Any]]:
-    address_url = f"{base_url}/adressen/{corrected_postal_code}:{street_number}{suffix}"
+    address_url = f"{base_url}/adressen/{corrected_postal_code}:{house_number}{suffix}"
     response = session.get(address_url, timeout=timeout, verify=verify)
     response.raise_for_status()
     data = response.json()
@@ -73,6 +73,7 @@ def _fetch_waste_data_raw_temp(
 def _parse_waste_data_raw(
     waste_data_raw_temp: list[dict[str, Any]],
     afvalstroom_response: list[dict[str, Any]],
+    postal_code: str = "",
 ) -> list[dict[str, str]]:
     # Build lookup dict once (faster and clearer than next(...) per item)
     afvalstroom_map: dict[Any, str] = {}
@@ -95,7 +96,7 @@ def _parse_waste_data_raw(
         if not title:
             continue
 
-        afval_type = waste_type_rename(title)
+        afval_type = waste_type_rename(title, postal_code)
         if not afval_type:
             continue
 
@@ -108,7 +109,7 @@ def _parse_waste_data_raw(
 def get_waste_data_raw(
     provider: str,
     postal_code: str,
-    street_number: str,
+    house_number: str,
     suffix: str = "",
     *,
     session: requests.Session | None = None,
@@ -128,7 +129,7 @@ def get_waste_data_raw(
             session,
             base_url,
             corrected_postal_code,
-            street_number,
+            house_number,
             suffix,
             timeout=timeout,
             verify=verify,
@@ -150,7 +151,7 @@ def get_waste_data_raw(
         )
 
         waste_data_raw = _parse_waste_data_raw(
-            waste_data_raw_temp, afvalstroom_response
+            waste_data_raw_temp, afvalstroom_response, postal_code
         )
         return waste_data_raw
 
