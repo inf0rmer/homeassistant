@@ -279,6 +279,65 @@ views:
             artwork: cover
             icon: mdi:television
             type: custom:mini-media-player
+          - type: horizontal-stack
+            cards:
+              - entity: media_player.sync_box
+                icon: "mdi:apple"
+                show_icon: true
+                show_state: false
+                name: Apple TV
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: huesyncbox.set_sync_state
+                  service_data:
+                    device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+                    sync: true
+                    input: input1
+                    mode: video
+                    intensity: high
+                type: "custom:button-card"
+              - entity: media_player.sync_box
+                icon: "mdi:sony-playstation"
+                show_icon: true
+                show_state: false
+                name: Playstation 5
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: huesyncbox.set_sync_state
+                  service_data:
+                    device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+                    sync: true
+                    input: input2
+                    mode: game
+                    intensity: intense
+                type: "custom:button-card"
+              - entity: media_player.sync_box
+                icon: "mdi:nintendo-switch"
+                show_icon: true
+                show_state: false
+                name: Nintendo Switch
+                size: 25%
+                styles:
+                  card:
+                    - font-size: 12px
+                tap_action:
+                  action: call-service
+                  service: huesyncbox.set_sync_state
+                  service_data:
+                    device_id: 3b9c9604911bac523cc1f78e6e3b2bca
+                    sync: true
+                    input: input3
+                    mode: game
+                    intensity: intense
+                type: "custom:button-card"
           - entity: light.living_room
             name: All Lights
             theme: Backend-selected
